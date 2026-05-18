@@ -233,7 +233,7 @@
                     <div class="bg-cardBg rounded-2xl border border-borderClr p-6 space-y-4">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                             <div>
-                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">AŞAMA 2: KATEGORİ SINIFLANDURMASI</h3>
+                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">AŞAMA 2: KATEGORİ SINIFLANDIRMASI</h3>
                                 <p class="text-xs text-slate-400 mt-1">Bu ekran, <strong class="text-indigo-400">yalnızca yoklaması alınmış (alana girmiş)</strong> takımların yarıştığı kategorileri gösterir. Yoklaması yapılmayan takımlar bu sevk listesinde görüntülenmez.</p>
                             </div>
                             <div class="relative w-full md:max-w-xs">
@@ -433,7 +433,7 @@
     <div id="toastContainer" class="fixed top-5 right-5 space-y-3 z-50 pointer-events-none"></div>
 
     <script>
-        // Apps Script Web App URL Adresiniz
+        // Sizin belirttiğiniz güncel canlı Google Apps Script Web App URL bağlantısı
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwifYtTb4yy7r2NHr97ds7XoZtxaa0xdBn_RW-twJpuT06L6Z8Qr-UIydinE4Dx9mGf/exec';
         
         const AUTHORIZED_USERS = {
@@ -876,6 +876,7 @@
                             saveActionCall = `submitBalonluAraba('${takim.id}')`;
                             break;
                         case 'Kagit Kule':
+                            // Kule durumunda yalnızca 'Ayakta' ve 'Yıkıldı' seçenekleri kısıtlanmıştır.
                             inputHtml = `
                                 <div class="flex items-center space-3">
                                     <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
@@ -1079,7 +1080,7 @@
                         <div class="bg-indigo-500 h-1.5 rounded-full" style="width: ${percentage}%"></div>
                     </div>
                 `;
-                grid.appendChild(card);
+                grid.appendChild(cat);
             });
         }
 
