@@ -233,7 +233,7 @@
                     <div class="bg-cardBg rounded-2xl border border-borderClr p-6 space-y-4">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                             <div>
-                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">AŞAMA 2: KATEGORİ SINIFLANDIRMASI</h3>
+                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">AŞAMA 2: KATEGORİ SINIFLANDURMASI</h3>
                                 <p class="text-xs text-slate-400 mt-1">Bu ekran, <strong class="text-indigo-400">yalnızca yoklaması alınmış (alana girmiş)</strong> takımların yarıştığı kategorileri gösterir. Yoklaması yapılmayan takımlar bu sevk listesinde görüntülenmez.</p>
                             </div>
                             <div class="relative w-full md:max-w-xs">
@@ -417,7 +417,7 @@
     <!-- ÖZEL ONAY MODAL KUTUSU -->
     <div id="customConfirmModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-cardBg rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-borderClr text-center">
-            <div class="w-14 h-14 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+            <div class="w-14 h-14 bg-amber-500/10 text-amber-400 border border-borderClr rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
             <h3 class="text-base font-black text-white mb-2">İşlemi Onaylıyor Musunuz?</h3>
@@ -433,7 +433,8 @@
     <div id="toastContainer" class="fixed top-5 right-5 space-y-3 z-50 pointer-events-none"></div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxv88q18pOyCwN5RKgIt4_vtEtICu7B5R-zcbRHhVDCY_421yRVWU2iiF1JmlUZ6far/exec';
+        // Apps Script Web App URL Adresiniz
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwifYtTb4yy7r2NHr97ds7XoZtxaa0xdBn_RW-twJpuT06L6Z8Qr-UIydinE4Dx9mGf/exec';
         
         const AUTHORIZED_USERS = {
             "serkantutuncu": "G.st2807",
@@ -764,7 +765,6 @@
                     </div>
                 `;
 
-                // Türkçe karakter ve İngilizce uyumluluğunu kontrol et
                 const kat = takim.kategori;
                 if (kat === "Mini Sumo") {
                     listMiniSumo.innerHTML += cardHtml;
@@ -828,19 +828,16 @@
                 const dotStyle = isCheckedIn ? "bg-[#10b981]" : "bg-[#8fa0b5]";
                 const statusText = isCheckedIn ? "ALANDA" : "BEKLENİYOR";
 
-                // Formüllü gösterim için birleşik takım adı
                 const birlesikTakimAdi = `${takim.id} ${takim.takimAdi}`;
 
                 let inputHtml = "";
                 let saveActionCall = "";
 
                 if (!isCheckedIn) {
-                    inputHtml = `<div class="text-[10px] text-slate-500 italic"><i class="fas fa-exclamation-triangle mr-1"></i> Giriş Yapılmadan Hakem Verisi Girilemez</div>`;
+                    inputHtml = `<div class="text-[10px] text-slate-500 italic"><i class="fas fa-exclamation-triangle mr-1"></i> Giriş Yapılmadan Hakem Verisi Giriş Yapılamaz</div>`;
                 } else {
                     switch (activeResultsCategory) {
                         case 'Mini Sumo':
-                            // minisumo: Sıra No | takimid | takimadi
-                            // Eleme fiksürü kurgusu daha sonra e-tablo tarafında yapılacağı için, hakem arayüzünde sadece onay/not amaçlı bir alan bırakıyoruz.
                             inputHtml = `
                                 <div class="flex items-center space-x-3">
                                     <span class="text-xs text-slate-400 font-bold">Eleme Turnuvası Aktif. Turnuva ağacını e-tablodan takip edin.</span>
@@ -849,7 +846,6 @@
                             saveActionCall = `saveHakemResult('${takim.id}', '${activeResultsCategory}', {})`;
                             break;
                         case 'Cizgi Izleyen':
-                            // cizgiizleyen: Sıra No | takimid | takimadi | Süre | Ceza | Toplam
                             inputHtml = `
                                 <div class="flex items-center space-3">
                                     <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
@@ -865,7 +861,6 @@
                             saveActionCall = `submitCizgiIzleyen('${takim.id}')`;
                             break;
                         case 'Balonlu Araba':
-                            // balonluaraba: Sıra No | takimid | takimadi | 1. Deneme | 2. Deneme | Maksimum
                             inputHtml = `
                                 <div class="flex items-center space-3">
                                     <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
@@ -881,7 +876,6 @@
                             saveActionCall = `submitBalonluAraba('${takim.id}')`;
                             break;
                         case 'Kagit Kule':
-                            // kagitkule: Sıra No | takimid | takimadi | durum | yükseklik | süre
                             inputHtml = `
                                 <div class="flex items-center space-3">
                                     <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
@@ -904,7 +898,6 @@
                             saveActionCall = `submitKagitKule('${takim.id}')`;
                             break;
                         case 'Kagit Roket':
-                            // kagitroket: Sıra No | takimid | takimadi | 1.deneme | 2. deneme | maksimum mesafe
                             inputHtml = `
                                 <div class="flex items-center space-3">
                                     <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
@@ -946,7 +939,6 @@
             });
         }
 
-        // Çizgi İzleyen Sonuç Gönderimi
         function submitCizgiIzleyen(takimId) {
             const sure = parseFloat(document.getElementById(`cizgi_sure_${takimId}`).value) || 0;
             const ceza = parseFloat(document.getElementById(`cizgi_ceza_${takimId}`).value) || 0;
@@ -962,7 +954,6 @@
             });
         }
 
-        // Balonlu Araba Sonuç Gönderimi
         function submitBalonluAraba(takimId) {
             const d1 = parseFloat(document.getElementById(`balon_d1_${takimId}`).value) || 0;
             const d2 = parseFloat(document.getElementById(`balon_d2_${takimId}`).value) || 0;
@@ -978,7 +969,6 @@
             });
         }
 
-        // Kağıt Kule Sonuç Gönderimi
         function submitKagitKule(takimId) {
             const durum = document.getElementById(`kule_durum_${takimId}`).value;
             const yukseklik = parseFloat(document.getElementById(`kule_yukseklik_${takimId}`).value) || 0;
@@ -996,7 +986,6 @@
             });
         }
 
-        // Kağıt Roket Sonuç Gönderimi
         function submitKagitRoket(takimId) {
             const d1 = parseFloat(document.getElementById(`roket_d1_${takimId}`).value) || 0;
             const d2 = parseFloat(document.getElementById(`roket_d2_${takimId}`).value) || 0;
@@ -1012,37 +1001,49 @@
             });
         }
 
-        // Ortak Sonuç Gönderme Fonksiyonu (Google Sheets doPost "saveResult" tetiği)
         function saveHakemResult(takimId, kategori, payload) {
             setConnectionStatus("loading");
             showToast("Sonuç e-tabloya iletiliyor...", "info");
 
-            const formData = new FormData();
-            formData.append("action", "saveResult");
-            formData.append("takimid", takimId);
-            formData.append("kategori", kategori);
+            const params = new URLSearchParams();
+            params.append("action", "saveResult");
+            params.append("takimid", takimId);
+            params.append("kategori", kategori);
             
-            // Tüm ek parametreleri FormData'ya ekliyoruz
             Object.keys(payload).forEach(key => {
-                formData.append(key, payload[key]);
+                params.append(key, payload[key]);
             });
 
-            fetch(scriptURL, { method: 'POST', body: formData })
-                .then(res => res.text())
-                .then(result => {
-                    if (result === "SUCCESS_SAVED") {
-                        showToast("Sonuç başarıyla kaydedildi!", "success");
-                    } else {
-                        showToast("Sonuç taslak olarak kaydedildi.", "success");
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    showToast("Bağlantı hatası! Sonuç e-tabloya gönderilemedi.", "error");
-                })
-                .finally(() => {
-                    setConnectionStatus("active");
-                });
+            fetch(scriptURL, { 
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params 
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("HTTP Hata Kodu: " + res.status);
+                }
+                return res.json(); 
+            })
+            .then(result => {
+                if (result.success && result.message === "SUCCESS_SAVED") {
+                    showToast("Sonuç başarıyla e-tabloya kaydedildi!", "success");
+                    setTimeout(verileriYukle, 1000);
+                } else if (!result.success && result.error) {
+                    showToast("Hata: " + result.error, "error");
+                } else {
+                    showToast("Sonuç kaydedilirken beklenmeyen bir durum oluştu.", "warning");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast("Bağlantı hatası! Sonuç gönderilemedi. Detay: " + err.message, "error");
+            })
+            .finally(() => {
+                setConnectionStatus("active");
+            });
         }
 
         function renderStats() {
@@ -1095,27 +1096,40 @@
             document.getElementById('loader').classList.remove('hidden');
             document.getElementById('tab-checkin').classList.add('hidden');
 
-            const formData = new FormData();
-            formData.append("action", "checkin");
-            formData.append("id", id);
-            formData.append("status", targetStatus);
+            const params = new URLSearchParams();
+            params.append("action", "checkin");
+            params.append("id", id);
+            params.append("status", targetStatus);
 
-            fetch(scriptURL, { method: 'POST', body: formData })
-                .then(res => res.text())
-                .then(result => {
-                    if (result === "SUCCESS_CHECKIN") {
-                        showToast("Takım durumu başarıyla güncellendi.", "success");
-                    } else {
-                        showToast("İşlem tamamlanamadı. Lütfen tekrar deneyin.", "error");
-                    }
-                })
-                .catch(err => {
-                    showToast("Bağlantı hatası oluştu!", "error");
-                    console.error("Bağlantı hatası", err);
-                })
-                .finally(() => {
-                    verileriYukle();
-                });
+            fetch(scriptURL, { 
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params 
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("HTTP Hata Kodu: " + res.status);
+                }
+                return res.json(); 
+            })
+            .then(result => {
+                if (result.success && result.message === "SUCCESS_CHECKIN") {
+                    showToast("Takım durumu başarıyla güncellendi.", "success");
+                } else if (!result.success && result.error) {
+                    showToast("İşlem tamamlanamadı. Hata: " + result.error, "error");
+                } else {
+                    showToast("İşlem tamamlanamadı. Lütfen tekrar deneyin.", "error");
+                }
+            })
+            .catch(err => {
+                showToast("Bağlantı hatası oluştu! Detay: " + err.message, "error");
+                console.error("Bağlantı hatası", err);
+            })
+            .finally(() => {
+                verileriYukle();
+            });
         }
 
         function switchTab(tabName) {
