@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEM Yarışması - Yönetici Kontrol Paneli</title>
+    <title>STEM Yarışması - Check-In Kontrol Paneli</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts (Montserrat) -->
@@ -60,7 +60,7 @@
                     <i class="fa-solid fa-user-shield text-2xl"></i>
                 </div>
                 <h2 class="text-2xl font-black tracking-tight text-white uppercase">Sistem Girişi</h2>
-                <p class="text-xs text-slate-400 mt-1 font-semibold tracking-wider">STEM Yönetim Masası Yetkilendirmesi</p>
+                <p class="text-xs text-slate-400 mt-1 font-semibold tracking-wider">Yönetim Giriş Masası Yetkilendirmesi</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4 relative">
@@ -72,7 +72,7 @@
                     <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5">Kullanıcı Adı</label>
                     <div class="relative">
                         <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                        <input type="text" id="username" required placeholder="Kullanıcı adı" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                        <input type="text" id="username" required placeholder="serkantutuncu" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
                     </div>
                 </div>
 
@@ -102,20 +102,17 @@
                         <i class="fa-solid fa-atom text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="font-extrabold text-sm leading-tight tracking-wider text-indigo-400">STEM YÖNETİM</h1>
-                        <span class="text-[10px] text-slate-500 font-black uppercase tracking-widest">KONTROL MERKEZİ</span>
+                        <h1 class="font-extrabold text-sm leading-tight tracking-wider text-indigo-400">STEM ADMİN</h1>
+                        <span class="text-[10px] text-slate-500 font-black uppercase tracking-widest">KABUL MASASI</span>
                     </div>
                 </div>
 
                 <nav class="space-y-1.5">
                     <button onclick="switchTab('checkin')" id="nav-checkin" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 bg-indigo-950/40 text-indigo-400 border-l-4 border-indigo-500">
-                        <i class="fa-solid fa-clipboard-user text-base"></i> Takım Check-In (Alanda)
+                        <i class="fa-solid fa-clipboard-user text-base"></i> 1. Adım: Takım Check-In
                     </button>
-                    <button onclick="switchTab('results')" id="nav-results" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 text-slate-400 hover:bg-slate-900/50 hover:text-white">
-                        <i class="fa-solid fa-stopwatch text-base"></i> Kategoriye Özel Skor Girişi
-                    </button>
-                    <button onclick="switchTab('live')" id="nav-live" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 text-slate-400 hover:bg-slate-900/50 hover:text-white">
-                        <i class="fa-solid fa-ranking-star text-base text-rose-500 animate-pulse"></i> Canlı Sonuçlar Portalı
+                    <button onclick="switchTab('routing')" id="nav-routing" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 text-slate-400 hover:bg-slate-900/50 hover:text-white">
+                        <i class="fa-solid fa-network-wired text-base"></i> 2. Adım: Kategori Dağılımı
                     </button>
                 </nav>
             </div>
@@ -126,9 +123,9 @@
                         <span id="sync-indicator" class="h-2.5 w-2.5 rounded-full bg-amber-500 animate-ping"></span>
                         <span id="sync-status" class="text-[11px] font-bold text-slate-300">Yükleniyor...</span>
                     </div>
-                    <p class="text-[10px] text-slate-500 leading-normal mb-3">Verileriniz doğrudan Google E-Tablonuzdan eşzamanlanır.</p>
+                    <p class="text-[10px] text-slate-500 leading-normal mb-3">E-Tablonuzdaki gerçek başvurular çekiliyor.</p>
                     <button onclick="fetchDataFromGoogle()" class="w-full py-2 bg-gradient-to-r from-indigo-900 to-purple-900 text-white text-[10px] font-bold rounded-xl hover:opacity-95 transition-all flex items-center justify-center gap-1.5">
-                        <i id="sync-icon" class="fa-solid fa-rotate animate-spin"></i> Şimdi Yenile
+                        <i id="sync-icon" class="fa-solid fa-rotate"></i> Şimdi Yenile
                     </button>
                 </div>
 
@@ -145,13 +142,17 @@
         <main class="flex-1 p-6 md:p-10 overflow-x-hidden flex flex-col bg-slate-900">
             <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div>
-                    <span id="section-tag" class="text-[10px] font-black text-indigo-400 uppercase tracking-widest bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-md">Yarışma Kontrolü</span>
-                    <h2 id="section-title" class="text-2xl md:text-3xl font-black text-white mt-3 tracking-tight">Takım Check-In (Alanda)</h2>
+                    <span id="section-tag" class="text-[10px] font-black text-indigo-400 uppercase tracking-widest bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-md">Yarışma Başlangıcı</span>
+                    <h2 id="section-title" class="text-2xl md:text-3xl font-black text-white mt-3 tracking-tight">1. Adım: Takım Check-In</h2>
                 </div>
-                <div id="info-badge" class="text-xs text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-4 max-w-md hidden">
-                    <div class="flex gap-2.5 items-start">
-                        <i class="fa-solid fa-info-circle text-base mt-0.5 shrink-0"></i>
-                        <p class="leading-relaxed">E-Tablonuzdaki tüm başvuru verileri başarıyla yüklendi.</p>
+                <div id="stats-badge" class="flex gap-4">
+                    <div class="bg-slate-950/50 border border-slate-800 px-4 py-2.5 rounded-2xl text-center min-w-[90px]">
+                        <span class="block text-[10px] text-slate-500 font-bold uppercase">Toplam</span>
+                        <span id="stat-total" class="text-lg font-black text-white">0</span>
+                    </div>
+                    <div class="bg-emerald-500/10 border border-emerald-500/20 px-4 py-2.5 rounded-2xl text-center min-w-[90px]">
+                        <span class="block text-[10px] text-emerald-500 font-bold uppercase">Alanda</span>
+                        <span id="stat-checked" class="text-lg font-black text-emerald-400">0</span>
                     </div>
                 </div>
             </header>
@@ -168,7 +169,7 @@
                         <div class="flex flex-wrap gap-2 w-full lg:w-auto">
                             <button onclick="setFilterStatus('all')" id="filter-status-all" class="px-3.5 py-2 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all bg-indigo-600 text-white">Tümü</button>
                             <button onclick="setFilterStatus('pending')" id="filter-status-pending" class="px-3.5 py-2 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all bg-slate-800 text-slate-400 hover:bg-slate-700">Alanda Olmayanlar</button>
-                            <button onclick="setFilterStatus('checked')" id="filter-status-checked" class="px-3.5 py-2 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all bg-slate-800 text-slate-400 hover:bg-slate-700">Giriş Yapanlar</button>
+                            <button onclick="setFilterStatus('checked')" id="filter-status-checked" class="px-3.5 py-2 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all bg-slate-800 text-slate-400 hover:bg-slate-700">Giriş Yapanlar (Alanda)</button>
                         </div>
                     </div>
                 </div>
@@ -183,14 +184,14 @@
                                     <th class="py-4 px-6">Takım Bilgisi</th>
                                     <th class="py-4 px-6">Kategori</th>
                                     <th class="py-4 px-6">Öğrenciler</th>
-                                    <th class="py-4 px-6">Alan Yoklaması</th>
+                                    <th class="py-4 px-6">Durum</th>
                                     <th class="py-4 px-6 text-right">Eylem</th>
                                 </tr>
                             </thead>
                             <tbody id="checkin-table-body" class="text-xs divide-y divide-slate-800/40">
                                 <tr>
                                     <td colspan="6" class="py-12 text-center text-slate-500 font-bold">
-                                        <i class="fa-solid fa-spinner animate-spin text-xl text-indigo-500 mb-2 block"></i> Gerçek başvurularınız Google E-Tablo'dan yükleniyor...
+                                        <i class="fa-solid fa-spinner animate-spin text-xl text-indigo-500 mb-2 block"></i> Gerçek başvurularınız E-Tablo'dan yükleniyor...
                                     </td>
                                 </tr>
                             </tbody>
@@ -199,132 +200,61 @@
                 </div>
             </div>
 
-            <!-- TAB 2: SONUÇ GİRİŞİ -->
-            <div id="tab-content-results" class="tab-content hidden space-y-6">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Giriş Formu Kartı -->
-                    <div class="lg:col-span-1 bg-slate-950/40 border border-slate-800/80 rounded-2xl p-6 shadow-sm h-fit">
-                        <h3 class="text-sm font-black text-white mb-5 flex items-center gap-2 uppercase tracking-wider">
-                            <i class="fa-solid fa-stopwatch text-indigo-500"></i> Yeni Derece / Skor Girişi
-                        </h3>
-                        <form id="score-form" onsubmit="saveTeamResult(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">Takım Seçin (Yalnızca Giriş Yapanlar)</label>
-                                <select id="result-team-select" onchange="adaptFormToCategory()" required class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500 transition-all">
-                                    <option value="" disabled selected>Önce bir takım seçin...</option>
-                                </select>
-                            </div>
+            <!-- TAB 2: KATEGORİ DAĞILIMI (CHECK-IN YAPANLARIN SEVK EDİLMESİ) -->
+            <div id="tab-content-routing" class="tab-content hidden space-y-6">
+                <div class="bg-slate-950/40 border border-slate-800/80 rounded-3xl p-6 mb-4">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-2">Aşama 2: Kategori Sınıflandırması</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Bu ekran, <b>yalnızca yoklaması alınmış (alana girmiş)</b> takımların yarıştığı kategorileri gösterir. Yoklaması yapılmayan takımlar bu sevk listesinde görüntülenmez.</p>
+                </div>
 
-                            <!-- Seçilen Takım Kategori Bilgi Baloncuğu -->
-                            <div id="category-info-box" class="hidden bg-indigo-950/50 border border-indigo-500/20 p-4 rounded-xl text-xs space-y-1">
-                                <p class="font-bold text-indigo-400">Kategori: <span id="info-category-name" class="underline">Yükleniyor...</span></p>
-                                <p id="info-scoring-rule" class="text-slate-400 text-[11px] leading-relaxed">Puan kuralı açıklaması</p>
-                            </div>
-
-                            <!-- Dinamik Form Alanları -->
-                            <div id="dynamic-fields" class="space-y-4"></div>
-
-                            <div>
-                                <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">Hakem / Yönetici Notu</label>
-                                <textarea id="result-note" placeholder="Ekipman problemi, pist dışı cezası veya hakem yorumu..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500 transition-all h-24 resize-none"></textarea>
-                            </div>
-
-                            <button type="submit" id="save-result-btn" class="w-full py-3.5 bg-gradient-to-r from-vurgu to-vurguAlt text-white text-xs font-extrabold rounded-xl transition-all shadow-lg shadow-indigo-950 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-floppy-disk"></i> Skor Kaydet ve Yayınla
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Girilen Dereceler Tablosu -->
-                    <div class="lg:col-span-2 bg-slate-950/40 border border-slate-800/80 rounded-2xl p-6 shadow-sm overflow-hidden">
-                        <h3 class="text-sm font-black text-white mb-5 flex items-center gap-2 uppercase tracking-wider">
-                            <i class="fa-solid fa-list-ol text-indigo-500"></i> Derecelendirilen Son Takımlar
-                        </h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="border-b border-slate-800 text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
-                                        <th class="py-3 px-4">Takım No</th>
-                                        <th class="py-3 px-4">Takım Adı</th>
-                                        <th class="py-3 px-4">Kategori</th>
-                                        <th class="py-3 px-4">Süre</th>
-                                        <th class="py-3 px-4">Skor / Derece</th>
-                                        <th class="py-3 px-4 text-right">Eylem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="results-table-body" class="text-xs divide-y divide-slate-800/40">
-                                    <tr>
-                                        <td colspan="6" class="py-8 text-center text-slate-500 font-medium">Henüz hiçbir takımın derecesi girilmedi.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Mini Sumo Paneli -->
+                    <div class="bg-slate-950/40 border border-slate-800 rounded-2xl p-5 space-y-3">
+                        <div class="flex justify-between items-center border-b border-slate-800/60 pb-3">
+                            <span class="text-xs font-black text-indigo-400 uppercase tracking-wider"><i class="fa-solid fa-robot mr-1.5"></i> Mini Sumo</span>
+                            <span id="count-minisumo" class="bg-indigo-500/10 text-indigo-400 px-2.5 py-0.5 rounded text-[10px] font-bold">0 Alanda</span>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: CANLI SONUÇLAR PORTALI -->
-            <div id="tab-content-live" class="tab-content hidden space-y-6 max-w-5xl mx-auto">
-                <div class="bg-gradient-to-r from-vurgu to-vurguAlt border border-indigo-500/20 rounded-3xl p-8 text-center shadow-xl relative overflow-hidden">
-                    <div class="absolute -top-20 -left-20 w-60 h-60 bg-white/5 rounded-full blur-3xl"></div>
-                    <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-white/5 rounded-full blur-3xl"></div>
-                    
-                    <span class="px-3 py-1 bg-rose-500 text-white text-[10px] font-black rounded-full tracking-widest uppercase animate-pulse"><i class="fa-solid fa-satellite-dish mr-1"></i> CANLI LİDERLİK TABLOSU</span>
-                    <h3 class="text-2xl font-black text-white mt-4 mb-2 tracking-tight">STEM YARIŞMASI BAŞARI TAHTASI</h3>
-                    <p class="text-xs text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">Hakem masası tarafından kaydedilen dereceler anlık olarak sıralanarak bu ekranda seyircilere sunulur.</p>
-                </div>
-
-                <div class="bg-slate-950/40 border border-slate-800/80 rounded-2xl p-6 shadow-sm">
-                    <!-- Kategori Seçim Filtresi -->
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-800/60">
-                        <span class="text-xs font-black text-indigo-400 tracking-wider uppercase"><i class="fa-solid fa-trophy mr-2 text-indigo-500"></i> Sıralamaları Filtrele</span>
-                        <select id="live-category-filter" onchange="renderLiveLeaderboard()" class="bg-slate-950 border border-slate-800 rounded-xl py-2 px-4 text-xs font-bold text-white focus:outline-none focus:border-indigo-500 transition-all">
-                            <option value="Mini Sumo">Mini Sumo Yarışması</option>
-                            <option value="Kagit Kule">Kağıt Kule Yarışması</option>
-                            <option value="Kagit Roket">Kağıt Roket Yarışması</option>
-                            <option value="Cizgi Izleyen">Çizgi İzleyen Yarışması</option>
-                        </select>
+                        <ul id="list-minisumo" class="divide-y divide-slate-800/40 text-xs text-slate-300 max-h-60 overflow-y-auto space-y-1">
+                            <li class="py-2 text-center text-slate-500 font-semibold">Giriş yapmış takım bulunamadı.</li>
+                        </ul>
                     </div>
 
-                    <!-- Canlı Skor Sıralaması -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="border-b border-slate-800 text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
-                                    <th class="py-3 px-4 text-center w-20">Sıra</th>
-                                    <th class="py-3 px-4 w-28">Takım No</th>
-                                    <th class="py-3 px-4">Takım Adı</th>
-                                    <th class="py-3 px-4">Okul / Kurum</th>
-                                    <th class="py-3 px-4 text-center">Süre</th>
-                                    <th class="py-3 px-4 text-right">Skor / Puan</th>
-                                </tr>
-                            </thead>
-                            <tbody id="live-leaderboard-body" class="text-sm divide-y divide-slate-800/40">
-                                <!-- Dinamik doldurulacak -->
-                            </tbody>
-                        </table>
+                    <!-- Kağıt Kule Paneli -->
+                    <div class="bg-slate-950/40 border border-slate-800 rounded-2xl p-5 space-y-3">
+                        <div class="flex justify-between items-center border-b border-slate-800/60 pb-3">
+                            <span class="text-xs font-black text-purple-400 uppercase tracking-wider"><i class="fa-solid fa-building mr-1.5"></i> Kağıt Kule</span>
+                            <span id="count-kagitkule" class="bg-purple-500/10 text-purple-400 px-2.5 py-0.5 rounded text-[10px] font-bold">0 Alanda</span>
+                        </div>
+                        <ul id="list-kagitkule" class="divide-y divide-slate-800/40 text-xs text-slate-300 max-h-60 overflow-y-auto space-y-1">
+                            <li class="py-2 text-center text-slate-500 font-semibold">Giriş yapmış takım bulunamadı.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Kağıt Roket Paneli -->
+                    <div class="bg-slate-950/40 border border-slate-800 rounded-2xl p-5 space-y-3">
+                        <div class="flex justify-between items-center border-b border-slate-800/60 pb-3">
+                            <span class="text-xs font-black text-rose-400 uppercase tracking-wider"><i class="fa-solid fa-rocket mr-1.5"></i> Kağıt Roket</span>
+                            <span id="count-kagitroket" class="bg-rose-500/10 text-rose-400 px-2.5 py-0.5 rounded text-[10px] font-bold">0 Alanda</span>
+                        </div>
+                        <ul id="list-kagitroket" class="divide-y divide-slate-800/40 text-xs text-slate-300 max-h-60 overflow-y-auto space-y-1">
+                            <li class="py-2 text-center text-slate-500 font-semibold">Giriş yapmış takım bulunamadı.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Çizgi İzleyen Paneli -->
+                    <div class="bg-slate-950/40 border border-slate-800 rounded-2xl p-5 space-y-3">
+                        <div class="flex justify-between items-center border-b border-slate-800/60 pb-3">
+                            <span class="text-xs font-black text-emerald-400 uppercase tracking-wider"><i class="fa-solid fa-route mr-1.5"></i> Çizgi İzleyen</span>
+                            <span id="count-cizgiizleyen" class="bg-emerald-500/10 text-emerald-400 px-2.5 py-0.5 rounded text-[10px] font-bold">0 Alanda</span>
+                        </div>
+                        <ul id="list-cizgiizleyen" class="divide-y divide-slate-800/40 text-xs text-slate-300 max-h-60 overflow-y-auto space-y-1">
+                            <li class="py-2 text-center text-slate-500 font-semibold">Giriş yapmış takım bulunamadı.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
         </main>
-    </div>
-
-    <!-- ONAY MODAL overlay'i -->
-    <div id="confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm px-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl">
-            <div class="flex items-center gap-3 text-rose-500 mb-3">
-                <div class="h-10 w-10 rounded-full bg-rose-500/10 flex items-center justify-center">
-                    <i class="fa-solid fa-circle-exclamation text-lg"></i>
-                </div>
-                <h4 class="font-extrabold text-sm text-slate-100">İşlemi Onaylıyor musunuz?</h4>
-            </div>
-            <p id="confirm-modal-text" class="text-xs text-slate-400 leading-relaxed"></p>
-            <div class="flex gap-2 justify-end mt-5">
-                <button id="confirm-cancel" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 bg-slate-800 hover:bg-slate-700 transition-all">Vazgeç</button>
-                <button id="confirm-approve" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-all">Evet, Uygula</button>
-            </div>
-        </div>
     </div>
 
     <!-- TOAST BİLDİRİM KUTUSU -->
@@ -338,12 +268,11 @@
     <script>
         // Google Apps Script Web App URL
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxv88q18pOyCwN5RKgIt4_vtEtICu7B5R-zcbRHhVDCY_421yRVWU2iiF1JmlUZ6far/exec';
-        // Sizin Google E-Tablonuzun Canlı CSV Yayın Adresi
+        // Google E-Tablonuzun Canlı CSV Yayın Adresi
         const csvPublishedURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRVfTp7wZiJaJ95n2H7NWiEWQIvn6SX7V6t8hK0FbsqCirFD-Os7KIMe4O1_Im3uOERV3VUYwdKcYod/pub?output=csv';
         
         let allTeams = [];
         let filterStatus = 'all';
-        let deleteTargetId = null;
 
         // Sayfa Yüklendiğinde Oturum Kontrolü
         window.onload = function() {
@@ -352,19 +281,6 @@
                 document.getElementById('login-container').classList.add('hidden');
                 document.getElementById('admin-panel').classList.remove('hidden');
                 fetchDataFromGoogle();
-            }
-
-            // Onay Modali İptal Düğmesi
-            document.getElementById('confirm-cancel').onclick = function() {
-                document.getElementById('confirm-modal').classList.add('hidden');
-                deleteTargetId = null;
-            }
-            // Onay Modali Onay Düğmesi
-            document.getElementById('confirm-approve').onclick = function() {
-                if (deleteTargetId !== null) {
-                    executeResetResult(deleteTargetId);
-                }
-                document.getElementById('confirm-modal').classList.add('hidden');
             }
         };
 
@@ -408,7 +324,6 @@
                     const parsedData = parseCSV(csvText);
                     processParsedTeams(parsedData);
                     setSyncState('online', 'Bağlantı Aktif');
-                    document.getElementById('info-badge').classList.remove('hidden');
                     refreshAllViews();
                 })
                 .catch(error => {
@@ -455,7 +370,6 @@
             const headers = lines[0].map(h => h.trim());
 
             // Dinamik Sütun İndekslerini Bulma
-            let timestampIdx = 0;
             let idIdx = headers.findIndex(h => /Takım No|ID|No/i.test(h));
             let mentorIdx = headers.findIndex(h => /Mentör|Yönetici/i.test(h));
             let teamNameIdx = headers.findIndex(h => /Takım Adı|Team/i.test(h));
@@ -464,12 +378,7 @@
             let ogrenci1Idx = headers.findIndex(h => /Öğrenci 1|ogrenci_1|1\. Öğrenci/i.test(h));
             let ogrenci2Idx = headers.findIndex(h => /Öğrenci 2|ogrenci_2|2\. Öğrenci/i.test(h));
             let ogrenci3Idx = headers.findIndex(h => /Öğrenci 3|ogrenci_3|3\. Öğrenci/i.test(h));
-            
-            // Sonradan Eklenebilecek Sonuç Sütunları
             let checkinIdx = headers.findIndex(h => /Check-In|Yoklama|Alanda/i.test(h));
-            let timeIdx = headers.findIndex(h => /Süre|Zaman|Time/i.test(h));
-            let scoreIdx = headers.findIndex(h => /Skor|Puan|Score/i.test(h));
-            let noteIdx = headers.findIndex(h => /Not|Yorum/i.test(h));
 
             // Eşleşmeyen İndekslere Varsayılan Sıraları Atama
             if (idIdx === -1) idIdx = 1;
@@ -481,9 +390,6 @@
             if (ogrenci2Idx === -1) ogrenci2Idx = 7;
             if (ogrenci3Idx === -1) ogrenci3Idx = 8;
             if (checkinIdx === -1) checkinIdx = 9;
-            if (timeIdx === -1) timeIdx = 10;
-            if (scoreIdx === -1) scoreIdx = 11;
-            if (noteIdx === -1) noteIdx = 12;
 
             allTeams = [];
             for (let i = 1; i < lines.length; i++) {
@@ -494,16 +400,13 @@
                 const isChecked = (rawCheckIn === 'TRUE' || rawCheckIn === 'YOKLAMA' || rawCheckIn === 'VAR' || rawCheckIn === 'ALANDA');
 
                 allTeams.push({
-                    id: parseInt(row[idIdx]) || i + 100, // ID yoksa geçici üret
+                    id: parseInt(row[idIdx]) || i + 100,
                     mentor: row[mentorIdx] || "",
                     teamName: row[teamNameIdx] || "",
                     school: row[schoolIdx] || "",
                     category: row[categoryIdx] || "Mini Sumo",
-                    students: [row[ogrenci1Idx], row[ogrenci2Idx], row[ogrenci3Idx]].filter(s => s),
-                    checkedIn: isChecked,
-                    time: row[timeIdx] || null,
-                    score: row[scoreIdx] ? parseInt(row[scoreIdx]) : null,
-                    note: row[noteIdx] || ""
+                    students: [row[ogrenci1Idx], row[ogrenci2Idx], row[ogrenci3Idx]].filter(s => s && s.trim() !== ""),
+                    checkedIn: isChecked
                 });
             }
         }
@@ -514,7 +417,7 @@
             if (!team) return;
 
             const targetStatus = !team.checkedIn;
-            showToast("İşlem E-Tabloya yazılıyor...");
+            showToast("Yoklama durumu E-Tabloya yazılıyor...");
 
             const formData = new FormData();
             formData.append('action', 'checkin');
@@ -526,7 +429,7 @@
                 .then(result => {
                     if (result === "SUCCESS") {
                         showToast(`✔️ ${team.teamName} Yoklama durumu güncellendi.`);
-                        fetchDataFromGoogle(); // Güncel listeyi çek
+                        fetchDataFromGoogle(); // Güncel listeyi tekrar çek
                     } else {
                         showToast("❌ Kayıt güncellenirken e-tablo hatası oluştu.");
                     }
@@ -609,254 +512,51 @@
             `).join('');
         }
 
-        // SKOR SEÇİM VE KATEGORİ ADAPTASYONLARI
-        function populateTeamDropdown() {
-            const select = document.getElementById('result-team-select');
-            if (!select) return;
+        // 2. ADIM: KATEGORİLERE DAĞILIM GÖRÜNÜMÜNÜ ÇİZME
+        function renderRoutingCategoryLists() {
+            const categories = {
+                minisumo: { element: document.getElementById('list-minisumo'), count: document.getElementById('count-minisumo'), matches: ["mini sumo", "sumo"] },
+                kagitkule: { element: document.getElementById('list-kagitkule'), count: document.getElementById('count-kagitkule'), matches: ["kagit kule", "kağıt kule"] },
+                kagitroket: { element: document.getElementById('list-kagitroket'), count: document.getElementById('count-kagitroket'), matches: ["kagit roket", "kağıt roket"] },
+                cizgiizleyen: { element: document.getElementById('list-cizgiizleyen'), count: document.getElementById('count-cizgiizleyen'), matches: ["cizgi izleyen", "çizgi izleyen"] }
+            };
 
+            // Sadece Check-In yapmış takımları al
             const checkedInTeams = allTeams.filter(t => t.checkedIn);
 
-            if (checkedInTeams.length === 0) {
-                select.innerHTML = `<option value="" disabled selected>Önce alanda check-in yapılmış takımlar olmalıdır.</option>`;
-                document.getElementById('category-info-box').classList.add('hidden');
-                return;
-            }
+            // Her kategoriyi sırayla filtrele ve çiz
+            for (const key in categories) {
+                const cat = categories[key];
+                const listContainer = cat.element;
+                const countBadge = cat.count;
 
-            select.innerHTML = `<option value="" disabled selected>Yarışacak takımı seçin...</option>` + 
-                checkedInTeams.map(t => `
-                    <option value="${t.id}">${t.teamName} (No: #${t.id} - ${t.category})</option>
-                `).join('');
-        }
+                if (!listContainer) continue;
 
-        function adaptFormToCategory() {
-            const select = document.getElementById('result-team-select');
-            const infoBox = document.getElementById('category-info-box');
-            const infoName = document.getElementById('info-category-name');
-            const infoRule = document.getElementById('info-scoring-rule');
-            const dynamicContainer = document.getElementById('dynamic-fields');
-
-            if (!select || !select.value) return;
-
-            const team = allTeams.find(t => t.id === parseInt(select.value));
-            if (!team) return;
-
-            infoBox.classList.remove('hidden');
-            infoName.innerText = team.category;
-            dynamicContainer.innerHTML = '';
-
-            if (team.category.toLowerCase().includes("cizgi")) {
-                infoRule.innerText = "Yarışma kuralı: Parkuru en hızlı bitiren üst sıraya geçer. Süreyi 'Dakika:Saniye.Salise' formatında yazın.";
-                dynamicContainer.innerHTML = `
-                    <div>
-                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">Parkur Süresi (Örn: 01:23.45)</label>
-                        <input type="text" id="result-time" placeholder="00:00.00" required class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500 font-mono">
-                    </div>
-                `;
-            } else if (team.category.toLowerCase().includes("kule")) {
-                infoRule.innerText = "Yarışma kuralı: Kule yüksekliği (cm) en yüksek olan kazanır.";
-                dynamicContainer.innerHTML = `
-                    <div>
-                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">Kule Yüksekliği (Santimetre / cm)</label>
-                        <input type="number" id="result-score" placeholder="Örn: 145" required min="0" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500">
-                    </div>
-                `;
-            } else if (team.category.toLowerCase().includes("roket")) {
-                infoRule.innerText = "Yarışma kuralı: Jürinin belirlediği fırlatma mesafesi puanı (En yüksek puan kazanır).";
-                dynamicContainer.innerHTML = `
-                    <div>
-                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">Fırlatma Puanı / Mesafe Skoru</label>
-                        <input type="number" id="result-score" placeholder="Örn: 90" required min="0" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500">
-                    </div>
-                `;
-            } else {
-                infoRule.innerText = "Yarışma kuralı: Dohyo dışına çıkarma galibiyet skorları (En çok puan alan kazanır).";
-                dynamicContainer.innerHTML = `
-                    <div>
-                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">Galibiyet Puanı</label>
-                        <input type="number" id="result-score" placeholder="Örn: 15" required min="0" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500">
-                    </div>
-                `;
-            }
-        }
-
-        // DERECELERİ E-TABLOYA GÖNDERME
-        function saveTeamResult(event) {
-            event.preventDefault();
-            const select = document.getElementById('result-team-select');
-            const noteInput = document.getElementById('result-note');
-            const saveBtn = document.getElementById('save-result-btn');
-
-            if (!select.value) return;
-
-            const teamId = parseInt(select.value);
-            const team = allTeams.find(t => t.id === teamId);
-            if (!team) return;
-
-            const timeInput = document.getElementById('result-time');
-            const scoreInput = document.getElementById('result-score');
-
-            const timeVal = timeInput ? timeInput.value : "";
-            const scoreVal = scoreInput ? scoreInput.value : "";
-
-            saveBtn.disabled = true;
-            saveBtn.innerText = "E-Tabloya Kaydediliyor...";
-
-            const formData = new FormData();
-            formData.append('action', 'save_result');
-            formData.append('id', teamId);
-            formData.append('time', timeVal);
-            formData.append('score', scoreVal);
-            formData.append('note', noteInput.value);
-
-            fetch(scriptURL, { method: 'POST', body: formData })
-                .then(res => res.text())
-                .then(result => {
-                    saveBtn.disabled = false;
-                    saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Skor Kaydet ve Yayınla`;
-                    
-                    if (result === "SUCCESS") {
-                        showToast(`✔️ ${team.teamName} derecesi kaydedildi.`);
-                        document.getElementById('score-form').reset();
-                        document.getElementById('category-info-box').classList.add('hidden');
-                        fetchDataFromGoogle(); // Tabloyu tazele
-                    } else {
-                        showToast("❌ Kayıt başarısız.");
-                    }
-                })
-                .catch(err => {
-                    saveBtn.disabled = false;
-                    saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Skor Kaydet ve Yayınla`;
-                    console.error(err);
-                    showToast("🌐 Bağlantı kurulamadı. İnterneti kontrol edin.");
+                // İlgili kategoriye uyan takımlar
+                const matches = checkedInTeams.filter(t => {
+                    const normalizedCat = t.category.toLowerCase().trim();
+                    return cat.matches.some(pattern => normalizedCat.includes(pattern));
                 });
-        }
 
-        function renderResultsTable() {
-            const tbody = document.getElementById('results-table-body');
-            if (!tbody) return;
+                // Sayaç Güncelle
+                countBadge.innerText = `${matches.length} Alanda`;
 
-            const graded = allTeams.filter(t => t.score !== null || (t.time && t.time !== ""));
-
-            if (graded.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-slate-500 font-bold">Henüz sonuç kaydı girilmedi.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = [...graded].reverse().map(t => `
-                <tr class="hover:bg-slate-950/20 transition-all">
-                    <td class="py-3.5 px-4 font-mono font-black text-slate-400">#${t.id}</td>
-                    <td class="py-3.5 px-4 font-bold text-white">${t.teamName}</td>
-                    <td class="py-3.5 px-4 font-semibold text-slate-400">${t.category}</td>
-                    <td class="py-3.5 px-4 font-mono font-bold text-emerald-400">${t.time ? `<i class="fa-regular fa-clock mr-1"></i>` + t.time : '-'}</td>
-                    <td class="py-3.5 px-4 font-black text-indigo-400 text-sm">${t.score !== null ? t.score + ' Puan/Değer' : '-'}</td>
-                    <td class="py-3.5 px-4 text-right">
-                        <button onclick="requestResetResult(${t.id})" class="text-rose-400 hover:text-rose-300 text-xs font-bold transition-all">
-                            <i class="fa-solid fa-trash-can mr-1"></i> Derece Sil
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function requestResetResult(teamId) {
-            deleteTargetId = teamId;
-            const team = allTeams.find(t => t.id === teamId);
-            if (!team) return;
-
-            document.getElementById('confirm-modal-text').innerText = `${team.teamName} takımına ait süre ve tüm skor kayıtları tamamen sıfırlanacaktır. Devam etmek istiyor musunuz?`;
-            document.getElementById('confirm-modal').classList.remove('hidden');
-        }
-
-        function executeResetResult(teamId) {
-            showToast("Siliniyor...");
-            const formData = new FormData();
-            formData.append('action', 'save_result');
-            formData.append('id', teamId);
-            formData.append('time', "");
-            formData.append('score', "");
-            formData.append('note', "");
-
-            fetch(scriptURL, { method: 'POST', body: formData })
-                .then(res => res.text())
-                .then(result => {
-                    if (result === "SUCCESS") {
-                        showToast("Derece silindi.");
-                        fetchDataFromGoogle();
-                    } else {
-                        showToast("❌ İşlem başarısız.");
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    showToast("🌐 Bağlantı hatası.");
-                });
-        }
-
-        // CANLI SEYİRCİ SKOR TAHTASI LİSTELEME
-        function renderLiveLeaderboard() {
-            const tbody = document.getElementById('live-leaderboard-body');
-            const filterSelect = document.getElementById('live-category-filter');
-
-            if (!tbody || !filterSelect) return;
-
-            const targetCategory = filterSelect.value;
-            let liveList = allTeams.filter(t => t.category.toLowerCase().includes(targetCategory.toLowerCase().replace("Kagit ", "").replace("Cizgi ", "").trim()) && (t.score !== null || (t.time && t.time !== "")));
-
-            // Kategori kurallarına göre sıralama algoritmaları
-            if (targetCategory.toLowerCase().includes("cizgi")) {
-                // Çizgi izleyende süreye göre (Artan sıralama - En küçük süre liderdir)
-                liveList.sort((a, b) => {
-                    if (!a.time) return 1;
-                    if (!b.time) return -1;
-                    return a.time.localeCompare(b.time);
-                });
-            } else {
-                // Kağıt kule, roket, mini sumo için skora göre (Azalan sıralama - En yüksek değer liderdir)
-                liveList.sort((a, b) => (b.score || 0) - (a.score || 0));
-            }
-
-            if (liveList.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="py-16 text-center text-slate-500">
-                            <i class="fa-solid fa-hourglass-start text-3xl text-slate-700 block mb-3 animate-pulse"></i>
-                            Bu kategoride henüz sonuç girilmedi.<br>
-                            <span class="text-xs text-slate-600 font-medium">Hakemler veri kaydettikçe sıralama anlık güncellenir.</span>
-                        </td>
-                    </tr>`;
-                return;
-            }
-
-            tbody.innerHTML = liveList.map((t, index) => {
-                let badge = `${index + 1}`;
-
-                // İlk 3 dereceye özel rozetler
-                if (index === 0) {
-                    badge = `<span class="h-7 w-7 rounded-full bg-amber-400 text-amber-950 font-black flex items-center justify-center mx-auto text-xs shadow-md shadow-amber-400/20"><i class="fa-solid fa-trophy animate-bounce"></i></span>`;
-                } else if (index === 1) {
-                    badge = `<span class="h-7 w-7 rounded-full bg-slate-300 text-slate-900 font-black flex items-center justify-center mx-auto text-xs shadow-md shadow-slate-300/20"><i class="fa-solid fa-medal"></i></span>`;
-                } else if (index === 2) {
-                    badge = `<span class="h-7 w-7 rounded-full bg-orange-300 text-orange-950 font-black flex items-center justify-center mx-auto text-xs shadow-md shadow-orange-300/20"><i class="fa-solid fa-medal"></i></span>`;
+                if (matches.length === 0) {
+                    listContainer.innerHTML = `<li class="py-2.5 text-center text-slate-500 font-semibold italic">Giriş yapmış takım bulunamadı.</li>`;
+                    continue;
                 }
 
-                return `
-                    <tr class="hover:bg-slate-950/20 transition-all ${index < 3 ? 'bg-indigo-950/10' : ''}">
-                        <td class="py-4 px-4 text-center font-bold text-white">${badge}</td>
-                        <td class="py-4 px-4 font-mono text-indigo-400 font-bold">#${t.id}</td>
-                        <td class="py-4 px-4 font-bold text-white text-base">
-                            ${t.teamName}
-                            <span class="text-[10px] text-slate-500 block font-semibold mt-0.5">Öğrenciler: ${t.students.join(', ')}</span>
-                        </td>
-                        <td class="py-4 px-4 text-slate-400 font-medium">${t.school}</td>
-                        <td class="py-4 px-4 text-center font-mono font-bold text-emerald-400 text-sm">
-                            ${t.time ? `<i class="fa-regular fa-clock mr-1 text-emerald-500/80"></i>` + t.time : '-'}
-                        </td>
-                        <td class="py-4 px-4 text-right font-black text-indigo-300 text-base">
-                            ${t.score !== null ? t.score : '-'} <span class="text-[10px] text-slate-500 font-bold">${targetCategory === "Kagit Kule" ? 'cm' : 'Puan'}</span>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+                listContainer.innerHTML = matches.map(t => `
+                    <li class="py-2.5 flex justify-between items-center border-b border-slate-800/30">
+                        <div>
+                            <span class="font-mono text-indigo-400 font-bold mr-1.5">#${t.id}</span>
+                            <span class="font-bold text-slate-200">${t.teamName}</span>
+                            <span class="text-[10px] text-slate-500 block">Mentör: ${t.mentor} | Kurum: ${t.school}</span>
+                        </div>
+                        <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-semibold">${t.students.length} Öğrenci</span>
+                    </li>
+                `).join('');
+            }
         }
 
         // TABS GEÇİŞ SİNYALLERİ
@@ -874,21 +574,12 @@
             }
 
             const sectionTitle = document.getElementById('section-title');
-            const sectionTag = document.getElementById('section-tag');
-
             if (tabId === 'checkin') {
-                sectionTitle.innerText = "Takım Doğrulama & Check-In";
-                sectionTag.innerText = "Yarışma Kontrolü";
+                sectionTitle.innerText = "1. Adım: Takım Check-In";
                 renderCheckInTable();
-            } else if (tabId === 'results') {
-                sectionTitle.innerText = "Hakem Masası Puan Girişi";
-                sectionTag.innerText = "Yarışma Anı Girişleri";
-                populateTeamDropdown();
-                renderResultsTable();
-            } else if (tabId === 'live') {
-                sectionTitle.innerText = "Canlı Liderlik Tablosu";
-                sectionTag.innerText = "Yayın Portalı";
-                renderLiveLeaderboard();
+            } else if (tabId === 'routing') {
+                sectionTitle.innerText = "2. Adım: Kategori Dağılımı";
+                renderRoutingCategoryLists();
             }
         }
 
@@ -915,10 +606,12 @@
         }
 
         function refreshAllViews() {
+            // Sayaçları güncelle
+            document.getElementById('stat-total').innerText = allTeams.length;
+            document.getElementById('stat-checked').innerText = allTeams.filter(t => t.checkedIn).length;
+
             renderCheckInTable();
-            populateTeamDropdown();
-            renderResultsTable();
-            renderLiveLeaderboard();
+            renderRoutingCategoryLists();
         }
 
         function showToast(text) {
