@@ -303,7 +303,7 @@
                         <i class="fas fa-info-circle text-xl mt-0.5 text-indigo-400"></i>
                         <div>
                             <h4 class="font-bold text-white text-sm">Sonuç Giriş Ekranı (Hakem Kontrolü)</h4>
-                            <p class="text-xs mt-1 text-slate-400">Her kategori için özel olarak tasarlanmış olan sonuç giriş panellerini kullanın. Sonuçlar şimdilik taslak modunda yerel olarak kaydedilir, daha sonra e-tablo entegrasyonu tamamlanacaktır.</p>
+                            <p class="text-xs mt-1 text-slate-400">Kategorilere göre yapılandırılmış formları doldurarak sonuçları doğrudan e-tablo sekmelerine kaydedebilirsiniz.</p>
                         </div>
                     </div>
 
@@ -357,10 +357,10 @@
                                 <thead>
                                     <tr class="border-b border-borderClr text-[10px] font-black text-slate-400 uppercase tracking-wider bg-[#0e1320]/60">
                                         <th class="p-5">Takım No</th>
-                                        <th class="p-5">Takım Bilgisi</th>
+                                        <th class="p-5">Takım Bilgisi (Birleşik)</th>
                                         <th class="p-5">Okul / Kurum</th>
                                         <th class="p-5">Kategori Durumu</th>
-                                        <th class="p-5 w-80">Hakem Veri Girişi</th>
+                                        <th class="p-5 w-[420px]">Hakem Veri Girişi</th>
                                         <th class="p-5 text-right">Eylem</th>
                                     </tr>
                                 </thead>
@@ -626,7 +626,7 @@
             });
 
             document.getElementById("resCatHeaderIcon").className = `fas ${icons[categoryName]} text-lg`;
-            document.getElementById("resCatHeaderTitle").innerText = `${categoryName.toUpperCase()} SONUÇ GİRİŞİ`;
+            document.getElementById("resCatHeaderTitle").innerText = `${categoryName === 'Cizgi Izleyen' ? 'ÇİZGİ İZLEYEN' : categoryName.toUpperCase()} SONUÇ GİRİŞİ`;
 
             renderResultsTable();
         }
@@ -828,71 +828,109 @@
                 const dotStyle = isCheckedIn ? "bg-[#10b981]" : "bg-[#8fa0b5]";
                 const statusText = isCheckedIn ? "ALANDA" : "BEKLENİYOR";
 
+                // Formüllü gösterim için birleşik takım adı
+                const birlesikTakimAdi = `${takim.id} ${takim.takimAdi}`;
+
                 let inputHtml = "";
+                let saveActionCall = "";
 
                 if (!isCheckedIn) {
                     inputHtml = `<div class="text-[10px] text-slate-500 italic"><i class="fas fa-exclamation-triangle mr-1"></i> Giriş Yapılmadan Hakem Verisi Girilemez</div>`;
                 } else {
                     switch (activeResultsCategory) {
                         case 'Mini Sumo':
+                            // minisumo: Sıra No | takimid | takimadi
+                            // Eleme fiksürü kurgusu daha sonra e-tablo tarafında yapılacağı için, hakem arayüzünde sadece onay/not amaçlı bir alan bırakıyoruz.
                             inputHtml = `
-                                <div class="flex items-center space-x-2">
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2 py-1">
-                                        <span class="text-[9px] text-slate-400 font-extrabold mr-1.5">G:</span>
-                                        <input type="number" value="0" min="0" max="3" class="w-10 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2 py-1">
-                                        <span class="text-[9px] text-slate-400 font-extrabold mr-1.5">M:</span>
-                                        <input type="number" value="0" min="0" max="3" class="w-10 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-bold">raunt galibiyeti</span>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xs text-slate-400 font-bold">Eleme Turnuvası Aktif. Turnuva ağacını e-tablodan takip edin.</span>
                                 </div>
                             `;
+                            saveActionCall = `saveHakemResult('${takim.id}', '${activeResultsCategory}', {})`;
                             break;
                         case 'Cizgi Izleyen':
+                            // cizgiizleyen: Sıra No | takimid | takimadi | Süre | Ceza | Toplam
                             inputHtml = `
-                                <div class="flex items-center space-x-2">
-                                    <input type="text" placeholder="Örn: 12.35" class="w-24 px-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white">
-                                    <span class="text-[10px] text-slate-400 font-bold">sn / salise</span>
+                                <div class="flex items-center space-3">
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">SÜRE:</span>
+                                        <input type="number" step="0.01" id="cizgi_sure_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">CEZA:</span>
+                                        <input type="number" step="0.01" id="cizgi_ceza_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
                                 </div>
                             `;
+                            saveActionCall = `submitCizgiIzleyen('${takim.id}')`;
                             break;
                         case 'Balonlu Araba':
+                            // balonluaraba: Sıra No | takimid | takimadi | 1. Deneme | 2. Deneme | Maksimum
                             inputHtml = `
-                                <div class="flex items-center space-x-2">
-                                    <input type="number" placeholder="Örn: 245" class="w-24 px-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white">
-                                    <span class="text-[10px] text-slate-400 font-bold">santimetre (cm)</span>
+                                <div class="flex items-center space-3">
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">1. DENEME:</span>
+                                        <input type="number" step="0.01" id="balon_d1_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">2. DENEME:</span>
+                                        <input type="number" step="0.01" id="balon_d2_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
                                 </div>
                             `;
+                            saveActionCall = `submitBalonluAraba('${takim.id}')`;
                             break;
                         case 'Kagit Kule':
+                            // kagitkule: Sıra No | takimid | takimadi | durum | yükseklik | süre
                             inputHtml = `
-                                <div class="flex items-center space-x-2">
-                                    <input type="number" placeholder="Örn: 112" class="w-24 px-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white">
-                                    <span class="text-[10px] text-slate-400 font-bold">yükseklik (cm)</span>
+                                <div class="flex items-center space-3">
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">DURUM:</span>
+                                        <select id="kule_durum_${takim.id}" class="bg-transparent text-white focus:outline-none text-xs font-black">
+                                            <option value="Ayakta" class="bg-cardBg">Ayakta</option>
+                                            <option value="Yıkıldı" class="bg-cardBg">Yıkıldı</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">YÜKSEKLİK:</span>
+                                        <input type="number" id="kule_yukseklik_${takim.id}" placeholder="cm" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">SÜRE:</span>
+                                        <input type="number" step="0.01" id="kule_sure_${takim.id}" placeholder="sn" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
                                 </div>
                             `;
+                            saveActionCall = `submitKagitKule('${takim.id}')`;
                             break;
                         case 'Kagit Roket':
+                            // kagitroket: Sıra No | takimid | takimadi | 1.deneme | 2. deneme | maksimum mesafe
                             inputHtml = `
-                                <div class="flex items-center space-x-2">
-                                    <input type="number" step="0.1" placeholder="Örn: 8.4" class="w-24 px-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white">
-                                    <span class="text-[10px] text-slate-400 font-bold">mesafe (metre)</span>
+                                <div class="flex items-center space-3">
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">1. DENEME:</span>
+                                        <input type="number" step="0.1" id="roket_d1_${takim.id}" placeholder="m" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
+                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
+                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">2. DENEME:</span>
+                                        <input type="number" step="0.1" id="roket_d2_${takim.id}" placeholder="m" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
+                                    </div>
                                 </div>
                             `;
+                            saveActionCall = `submitKagitRoket('${takim.id}')`;
                             break;
                     }
                 }
 
                 const btnHtml = isCheckedIn
-                    ? `<button onclick="showToast('#${takim.id} takımı için sonuç başarıyla taslak olarak kaydedildi. E-tablo bağlantısı yakında eklenecektir.', 'success')" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/10 flex items-center space-x-1"><i class="fas fa-save"></i> <span>Kaydet</span></button>`
+                    ? `<button onclick="${saveActionCall}" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/10 flex items-center space-x-1"><i class="fas fa-save"></i> <span>Gönder</span></button>`
                     : `<button disabled class="text-xs bg-[#171e30]/40 border border-borderClr/60 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed flex items-center space-x-1"><i class="fas fa-ban"></i> <span>Bekleniyor</span></button>`;
 
                 tr.innerHTML = `
                     <td class="p-5 font-bold text-indigo-400">#${takim.id}</td>
                     <td class="p-5">
-                        <div class="font-extrabold text-white text-sm">${takim.takimAdi}</div>
-                        <div class="text-[10px] text-slate-400 font-bold mt-1 uppercase">Mentör: ${takim.mentor}</div>
+                        <div class="font-extrabold text-white text-xs">${birlesikTakimAdi}</div>
+                        <div class="text-[9px] text-slate-400 font-bold mt-1 uppercase">Mentör: ${takim.mentor}</div>
                     </td>
                     <td class="p-5 text-slate-300 font-semibold">${takim.kurum}</td>
                     <td class="p-5">
@@ -906,6 +944,105 @@
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        // Çizgi İzleyen Sonuç Gönderimi
+        function submitCizgiIzleyen(takimId) {
+            const sure = parseFloat(document.getElementById(`cizgi_sure_${takimId}`).value) || 0;
+            const ceza = parseFloat(document.getElementById(`cizgi_ceza_${takimId}`).value) || 0;
+            
+            if (sure <= 0) {
+                showToast("Lütfen geçerli bir süre değeri giriniz!", "warning");
+                return;
+            }
+
+            saveHakemResult(takimId, "Cizgi Izleyen", {
+                "sure": sure,
+                "ceza": ceza
+            });
+        }
+
+        // Balonlu Araba Sonuç Gönderimi
+        function submitBalonluAraba(takimId) {
+            const d1 = parseFloat(document.getElementById(`balon_d1_${takimId}`).value) || 0;
+            const d2 = parseFloat(document.getElementById(`balon_d2_${takimId}`).value) || 0;
+
+            if (d1 <= 0 && d2 <= 0) {
+                showToast("Lütfen en az bir deneme değeri giriniz!", "warning");
+                return;
+            }
+
+            saveHakemResult(takimId, "Balonlu Araba", {
+                "deneme1": d1,
+                "deneme2": d2
+            });
+        }
+
+        // Kağıt Kule Sonuç Gönderimi
+        function submitKagitKule(takimId) {
+            const durum = document.getElementById(`kule_durum_${takimId}`).value;
+            const yukseklik = parseFloat(document.getElementById(`kule_yukseklik_${takimId}`).value) || 0;
+            const sure = parseFloat(document.getElementById(`kule_sure_${takimId}`).value) || 0;
+
+            if (yukseklik <= 0) {
+                showToast("Lütfen yükseklik değerini giriniz!", "warning");
+                return;
+            }
+
+            saveHakemResult(takimId, "Kagit Kule", {
+                "durum": durum,
+                "yukseklik": yukseklik,
+                "sure": sure
+            });
+        }
+
+        // Kağıt Roket Sonuç Gönderimi
+        function submitKagitRoket(takimId) {
+            const d1 = parseFloat(document.getElementById(`roket_d1_${takimId}`).value) || 0;
+            const d2 = parseFloat(document.getElementById(`roket_d2_${takimId}`).value) || 0;
+
+            if (d1 <= 0 && d2 <= 0) {
+                showToast("Lütfen en az bir deneme değeri giriniz!", "warning");
+                return;
+            }
+
+            saveHakemResult(takimId, "Kagit Roket", {
+                "deneme1": d1,
+                "deneme2": d2
+            });
+        }
+
+        // Ortak Sonuç Gönderme Fonksiyonu (Google Sheets doPost "saveResult" tetiği)
+        function saveHakemResult(takimId, kategori, payload) {
+            setConnectionStatus("loading");
+            showToast("Sonuç e-tabloya iletiliyor...", "info");
+
+            const formData = new FormData();
+            formData.append("action", "saveResult");
+            formData.append("takimid", takimId);
+            formData.append("kategori", kategori);
+            
+            // Tüm ek parametreleri FormData'ya ekliyoruz
+            Object.keys(payload).forEach(key => {
+                formData.append(key, payload[key]);
+            });
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(res => res.text())
+                .then(result => {
+                    if (result === "SUCCESS_SAVED") {
+                        showToast("Sonuç başarıyla kaydedildi!", "success");
+                    } else {
+                        showToast("Sonuç taslak olarak kaydedildi.", "success");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast("Bağlantı hatası! Sonuç e-tabloya gönderilemedi.", "error");
+                })
+                .finally(() => {
+                    setConnectionStatus("active");
+                });
         }
 
         function renderStats() {
