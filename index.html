@@ -85,8 +85,8 @@
         <aside class="w-full md:w-64 bg-cardBg border-r border-borderClr flex flex-col justify-between">
             <div class="flex flex-col">
                 <div class="p-6 border-b border-[#1f293d]/50 flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center border border-indigo-500/20">
-                        <i class="fas fa-atom text-xl text-indigo-400"></i>
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400">
+                        <i class="fas fa-atom text-xl"></i>
                     </div>
                     <div>
                         <h1 class="font-black text-sm tracking-wider text-white uppercase">STEM ADMIN</h1>
@@ -131,7 +131,6 @@
                     </button>
                 </div>
 
-                <!-- Oturum ve Çıkış -->
                 <div class="flex items-center justify-between pt-1">
                     <div class="flex items-center space-x-1.5 text-slate-400">
                         <i class="fas fa-user text-[11px] text-indigo-400"></i>
@@ -145,24 +144,19 @@
             </div>
         </aside>
 
-        <!-- Sağ İçerik Alanı (Main Content) -->
+        <!-- Sağ İçerik Alanı -->
         <main class="flex-1 flex flex-col min-w-0 bg-darkBg">
-            
-            <!-- Üst Bar (Header) -->
             <header class="bg-cardBg border-b border-borderClr px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
                 <div>
                     <span class="text-[10px] bg-indigo-950 text-indigo-400 border border-indigo-800/30 px-2 py-1 rounded font-black uppercase tracking-wider">Yarışma Başlangıcı</span>
                     <h2 id="tabTitle" class="text-2xl font-extrabold text-white tracking-tight mt-1.5">1. Adım: Takım Check-In</h2>
                 </div>
                 
-                <!-- Sağ Üst Sayaç Kutuları -->
                 <div class="flex items-center space-x-3 self-end sm:self-auto">
-                    <!-- Toplam Sayaç -->
                     <div class="bg-[#111625] border border-borderClr px-5 py-2.5 rounded-xl text-center min-w-[80px]">
                         <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">TOPLAM</p>
                         <h4 id="headerStatTotal" class="text-lg font-black text-white mt-0.5">0</h4>
                     </div>
-                    <!-- Alandakiler Sayaç -->
                     <div class="bg-[#111625] border border-[#10b981]/20 px-5 py-2.5 rounded-xl text-center min-w-[80px] shadow-lg shadow-emerald-500/5">
                         <p class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider">ALANDA</p>
                         <h4 id="headerStatCheckedIn" class="text-lg font-black text-emerald-400 mt-0.5">0</h4>
@@ -170,10 +164,8 @@
                 </div>
             </header>
 
-            <!-- İçerik Gövdesi -->
             <div class="p-8 flex-1 overflow-y-auto">
                 
-                <!-- Yükleniyor Ekranı -->
                 <div id="loader" class="hidden py-32 text-center">
                     <i class="fas fa-circle-notch fa-spin text-4xl text-indigo-400 mb-4"></i>
                     <p class="text-slate-400 font-semibold text-sm">Veriler güvenli şekilde senkronize ediliyor...</p>
@@ -182,9 +174,7 @@
                 <!-- SEKME 1: TAKIM CHECK-IN -->
                 <section id="tab-checkin" class="space-y-6">
                     
-                    <!-- Arama, Filtreleme ve Üst Tablar Barı -->
                     <div class="bg-cardBg rounded-2xl border border-borderClr p-4 flex flex-col lg:flex-row gap-4 justify-between items-center">
-                        <!-- Sol: Arama Kutusu -->
                         <div class="relative w-full lg:max-w-md">
                             <i class="fas fa-search absolute left-4 top-3.5 text-slate-500"></i>
                             <input type="text" id="searchInput" onkeyup="tabloFiltrele()" 
@@ -192,7 +182,6 @@
                                    placeholder="Takım Adı, Okul, Mentör veya Takım No Ara...">
                         </div>
 
-                        <!-- Sağ: Filtreleme Buton Grubu -->
                         <div class="flex bg-[#0a0e17] p-1 rounded-xl border border-borderClr w-full lg:w-auto overflow-x-auto gap-1">
                             <button id="filterBtn-all" onclick="setStatusFilter('all')" class="flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 bg-indigo-600 text-white">
                                 TÜMÜ
@@ -206,7 +195,6 @@
                         </div>
                     </div>
 
-                    <!-- Takım Tablosu -->
                     <div class="bg-cardBg rounded-2xl border border-borderClr shadow-2xl overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
@@ -221,15 +209,33 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody" class="divide-y divide-borderClr/60 text-xs font-semibold">
-                                    <!-- Dinamik veriler JS ile buraya gelecek -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </section>
 
-                <!-- SEKME 2: KATEGORİ DAĞILIMI -->
+                <!-- SEKME 2: KATEGORİ DAĞILIMI (KURA ALANI) -->
                 <section id="tab-categoryDistribution" class="hidden space-y-6">
+                    <!-- Kura Çekim Kartı -->
+                    <div class="bg-gradient-to-r from-amber-600/10 via-amber-600/5 to-transparent border-2 border-amber-500/20 rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-2xl flex items-center justify-center text-xl flex-shrink-0">
+                                <i class="fas fa-random"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">MİNİ SUMO OTOMATİK KURA ÇEKİMİ</h3>
+                                <p class="text-xs text-slate-400 mt-1 leading-relaxed max-w-2xl">
+                                    Yoklama (Check-in) aşaması bittikten sonra bu butona basarak turnuva eşleşmelerini rastgele üretebilirsiniz. Eşleşmeler turnuva ağacı boyutuna (Son 16, Son 32 vb.) göre otomatik düzenlenecek ve <strong class="text-amber-400">"BAY" (Bay Geçme)</strong> slotları otomatik atanacaktır.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="triggerKuraCekimi()" class="px-6 py-4 bg-amber-600 hover:bg-amber-500 text-white font-black text-xs uppercase tracking-wider rounded-xl transition duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-amber-600/10 shrink-0">
+                            <i class="fas fa-trophy text-sm"></i>
+                            <span>RASTGELE KURA ÇEK VE EŞLEŞTİR</span>
+                        </button>
+                    </div>
+
                     <div class="bg-cardBg rounded-2xl border border-borderClr p-6 space-y-4">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                             <div>
@@ -245,9 +251,7 @@
                         </div>
                     </div>
 
-                    <!-- Kategori Dağılım Grid Yapısı -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Mini Sumo Kutusu -->
                         <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
                             <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
                                 <div class="flex items-center space-x-2">
@@ -259,7 +263,6 @@
                             <div id="list-miniSumo" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
                         </div>
 
-                        <!-- Kağıt Kule Kutusu -->
                         <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
                             <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
                                 <div class="flex items-center space-x-2">
@@ -271,7 +274,6 @@
                             <div id="list-kagitKule" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
                         </div>
 
-                        <!-- Kağıt Roket Kutusu -->
                         <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
                             <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
                                 <div class="flex items-center space-x-2">
@@ -283,7 +285,6 @@
                             <div id="list-kagitRoket" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
                         </div>
 
-                        <!-- Çizgi İzleyen Kutusu -->
                         <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
                             <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
                                 <div class="flex items-center space-x-2">
@@ -307,7 +308,6 @@
                         </div>
                     </div>
 
-                    <!-- 5 Kategori Seçici Barı -->
                     <div class="flex bg-cardBg p-1.5 rounded-2xl border border-borderClr overflow-x-auto gap-1">
                         <button onclick="setResultsCategory('Mini Sumo')" id="resCatBtn-MiniSumo" class="flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 bg-indigo-600 text-white flex items-center justify-center space-x-2">
                             <i class="fas fa-robot"></i>
@@ -331,7 +331,6 @@
                         </button>
                     </div>
 
-                    <!-- Seçili Kategori Başlığı ve Arama Kutusu -->
                     <div class="bg-cardBg rounded-2xl border border-borderClr p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-indigo-600/10 border border-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400">
@@ -344,16 +343,16 @@
                         </div>
                         <div class="relative w-full sm:max-w-xs">
                             <i class="fas fa-search absolute left-3 top-2.5 text-slate-500 text-xs"></i>
-                            <input type="text" id="resultsSearchInput" onkeyup="renderResultsTable()" 
+                            <input type="text" id="resultsSearchInput" onkeyup="tabloFiltrele()" 
                                    class="w-full pl-9 pr-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs text-white placeholder-slate-500 font-bold" 
                                    placeholder="Seçili Kategoride Takım Ara...">
                         </div>
                     </div>
 
-                    <!-- Dinamik Hakem Sonuç Tablosu -->
                     <div class="bg-cardBg rounded-2xl border border-borderClr shadow-2xl overflow-hidden">
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
+                            <!-- Diğer Kategoriler İçin Tablo Yapısı -->
+                            <table id="standardResultsTable" class="w-full text-left border-collapse">
                                 <thead>
                                     <tr class="border-b border-borderClr text-[10px] font-black text-slate-400 uppercase tracking-wider bg-[#0e1320]/60">
                                         <th class="p-5">Takım No</th>
@@ -365,7 +364,22 @@
                                     </tr>
                                 </thead>
                                 <tbody id="resultsTableBody" class="divide-y divide-borderClr/60 text-xs font-semibold">
-                                    <!-- Dinamik veriler JS ile seçilen kategoriye göre buraya gelecek -->
+                                </tbody>
+                            </table>
+
+                            <!-- Mini Sumo'ya Özel Maç Bazlı Tablo Yapısı -->
+                            <table id="sumoResultsTable" class="w-full text-left border-collapse hidden">
+                                <thead>
+                                    <tr class="border-b border-borderClr text-[10px] font-black text-slate-400 uppercase tracking-wider bg-[#0e1320]/60">
+                                        <th class="p-5">Maç Kodu / Kademe</th>
+                                        <th class="p-5">Robot 1 (Sol Kanat)</th>
+                                        <th class="p-5 text-center">Maç Skor Girişi</th>
+                                        <th class="p-5 text-right">Robot 2 (Sağ Kanat)</th>
+                                        <th class="p-5 text-center">Maç Kazananı</th>
+                                        <th class="p-5 text-right">Eylem</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sumoResultsTableBody" class="divide-y divide-borderClr/60 text-xs font-semibold">
                                 </tbody>
                             </table>
                         </div>
@@ -384,7 +398,7 @@
                                 <h3 id="statTotal" class="text-2xl font-black text-white mt-1">0</h3>
                             </div>
                         </div>
-                        <div class="bg-cardBg p-6 rounded-2xl border border-borderClr shadow-lg flex items-center space-x-4">
+                        <div class="bg-cardBg p-6 rounded-2xl border border-[#10b981]/20 shadow-lg flex items-center space-x-4">
                             <div class="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400 text-xl">
                                 <i class="fas fa-clipboard-check"></i>
                             </div>
@@ -433,8 +447,8 @@
     <div id="toastContainer" class="fixed top-5 right-5 space-y-3 z-50 pointer-events-none"></div>
 
     <script>
-        // Sizin belirttiğiniz güncel canlı Google Apps Script Web App URL bağlantısı
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwifYtTb4yy7r2NHr97ds7XoZtxaa0xdBn_RW-twJpuT06L6Z8Qr-UIydinE4Dx9mGf/exec';
+        // Yeni Web App URL'si doğrudan tanımlanıyor
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxRp5jIAhNPYm3uPwMwzQW7cx_ZVyvNWaF8TRJjrbXNegE-3m4M5wzFmuH5Uf3Cn5rV/exec';
         
         const AUTHORIZED_USERS = {
             "serkantutuncu": "G.st2807",
@@ -443,6 +457,8 @@
         };
 
         let localData = []; 
+        let categoryScoresData = []; // Aktif standard kategori skorlarını saklar
+        let sumoMatchesData = []; // Canlı Mini Sumo maç listesini saklar
         let modalResolveCallback = null; 
         let currentStatusFilter = 'all'; 
         let activeResultsCategory = 'Mini Sumo'; 
@@ -460,6 +476,19 @@
                 closeConfirmModal(true);
             });
         });
+
+        // Kategori adlarındaki Türkçe karakterleri temizler ve standartlaştırır
+        function temizleKategori(kat) {
+            if (!kat) return "";
+            return kat.toString().toLowerCase()
+                .replace(/ç/g, "c")
+                .replace(/ğ/g, "g")
+                .replace(/ı/g, "i")
+                .replace(/ö/g, "o")
+                .replace(/ş/g, "s")
+                .replace(/ü/g, "u")
+                .replace(/[^a-z0-9]/g, "");
+        }
 
         function setConnectionStatus(status) {
             const dot = document.getElementById("connectionDot");
@@ -566,10 +595,8 @@
         function showDashboard() {
             document.getElementById("loginScreen").classList.add("hidden");
             document.getElementById("dashboard").classList.remove("hidden");
-            
             const loggedInUser = sessionStorage.getItem("stemAdminUser") || "Yönetici";
             document.getElementById("activeUserSpan").innerText = loggedInUser;
-            
             verileriYukle();
         }
 
@@ -585,13 +612,11 @@
 
         function setStatusFilter(filterType) {
             currentStatusFilter = filterType;
-
             const buttons = {
                 'all': document.getElementById('filterBtn-all'),
                 'waiting': document.getElementById('filterBtn-waiting'),
                 'present': document.getElementById('filterBtn-present')
             };
-
             Object.keys(buttons).forEach(key => {
                 if (key === filterType) {
                     buttons[key].className = "flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 bg-indigo-600 text-white";
@@ -599,13 +624,11 @@
                     buttons[key].className = "flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 text-slate-400 hover:text-white";
                 }
             });
-
             renderCheckinTable();
         }
 
         function setResultsCategory(categoryName) {
             activeResultsCategory = categoryName;
-
             const categories = ["Mini Sumo", "Cizgi Izleyen", "Balonlu Araba", "Kagit Kule", "Kagit Roket"];
             const icons = {
                 "Mini Sumo": "fa-robot",
@@ -629,310 +652,550 @@
             document.getElementById("resCatHeaderIcon").className = `fas ${icons[categoryName]} text-lg`;
             document.getElementById("resCatHeaderTitle").innerText = `${categoryName === 'Cizgi Izleyen' ? 'ÇİZGİ İZLEYEN' : categoryName.toUpperCase()} SONUÇ GİRİŞİ`;
 
-            renderResultsTable();
+            const standardTable = document.getElementById("standardResultsTable");
+            const sumoTable = document.getElementById("sumoResultsTable");
+
+            if (categoryName === "Mini Sumo") {
+                standardTable.classList.add("hidden");
+                sumoTable.classList.remove("hidden");
+                fetchSumoMatches();
+            } else {
+                sumoTable.classList.add("hidden");
+                standardTable.classList.remove("hidden");
+                fetchCategoryScores(categoryName);
+            }
+        }
+
+        function fetchCategoryScores(categoryName) {
+            setConnectionStatus("loading");
+            const cleanCat = temizleKategori(categoryName);
+            fetch(`${scriptURL}?action=getScores&kategori=${cleanCat}&t=${Date.now()}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("HTTP Hata Kodu: " + res.status);
+                    return res.text();
+                })
+                .then(text => {
+                    let json;
+                    try {
+                        json = JSON.parse(text);
+                    } catch (e) {
+                        console.error("Skor JSON Ayrıştırma Hatası. Gelen ham veri:", text);
+                        throw new Error("Geçersiz JSON formatı.");
+                    }
+
+                    if (json.success && Array.isArray(json.data)) {
+                        categoryScoresData = json.data;
+                    } else {
+                        categoryScoresData = [];
+                    }
+                    renderResultsTable();
+                    setConnectionStatus("active");
+                })
+                .catch(err => {
+                    setConnectionStatus("error");
+                    categoryScoresData = [];
+                    renderResultsTable();
+                    console.error("Skorlar yüklenirken hata oluştu:", err);
+                });
+        }
+
+        function fetchSumoMatches() {
+            setConnectionStatus("loading");
+            fetch(`${scriptURL}?action=getScores&kategori=minisumo&t=${Date.now()}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("HTTP Hata Kodu: " + res.status);
+                    return res.text();
+                })
+                .then(text => {
+                    let json;
+                    try {
+                        json = JSON.parse(text);
+                    } catch (e) {
+                        console.error("Sumo JSON Ayrıştırma Hatası. Gelen ham veri:", text);
+                        throw new Error("Geçersiz JSON formatı.");
+                    }
+
+                    if (json.success && Array.isArray(json.data)) {
+                        sumoMatchesData = json.data.map(m => {
+                            let r1No = "BAY", r1Name = "BAY";
+                            if (m.id && m.id !== "BAY") {
+                                let parts = m.id.split(" - ");
+                                r1No = parts[0] || "";
+                                r1Name = parts.slice(1).join(" - ") || "";
+                            }
+                            
+                            let r2No = "BAY", r2Name = "BAY";
+                            if (m.takimAdi && m.takimAdi !== "BAY") {
+                                let parts = m.takimAdi.split(" - ");
+                                r2No = parts[0] || "";
+                                r2Name = parts.slice(1).join(" - ") || "";
+                            }
+                            
+                            let winnerNo = "";
+                            if (m.kolon6 && m.kolon6 !== "BAY" && m.kolon6 !== "") {
+                                winnerNo = m.kolon6.split(" - ")[0] || "";
+                            }
+
+                            return {
+                                MacKodu: m.sira,
+                                robot1No: r1No,
+                                robot1Name: r1Name,
+                                robot2No: r2No,
+                                robot2Name: r2Name,
+                                robot1Skor: m.kolon4 || "0",
+                                robot2Skor: m.kolon5 || "0",
+                                kazananNo: winnerNo,
+                                rawRobot1: m.id,
+                                rawRobot2: m.takimAdi,
+                                rawWinner: m.kolon6
+                            };
+                        });
+                        renderSumoResultsTable();
+                    } else {
+                        sumoMatchesData = [];
+                        renderSumoResultsTable();
+                    }
+                    setConnectionStatus("active");
+                })
+                .catch(err => {
+                    setConnectionStatus("error");
+                    showToast("Sumo maç listesi e-tablodan alınamadı!", "error");
+                    console.error(err);
+                });
         }
 
         function verileriYukle() {
             setConnectionStatus("loading");
-            document.getElementById('loader').classList.remove('hidden');
+            document.getElementById("loader").classList.remove("hidden");
             
-            document.getElementById('tab-checkin').classList.add('hidden');
-            document.getElementById('tab-categoryDistribution').classList.add('hidden');
-            document.getElementById('tab-results').classList.add('hidden');
-            document.getElementById('tab-stats').classList.add('hidden');
+            fetch(`${scriptURL}?t=${Date.now()}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("HTTP Hata Kodu: " + res.status);
+                    return res.text();
+                })
+                .then(text => {
+                    let json;
+                    try {
+                        json = JSON.parse(text);
+                    } catch (jsonErr) {
+                        console.error("Takım JSON Ayrıştırma Hatası. Gelen ham veri:", text);
+                        showToast("E-Tablo verisi ayrıştırılamadı. Konsolu kontrol edin.", "error");
+                        throw new Error("Geçersiz JSON formatı.");
+                    }
 
-            fetch(scriptURL)
-                .then(res => res.json())
-                .then(data => {
-                    localData = data; 
-                    setConnectionStatus("active");
+                    // Sürüm 3.3.1 Apps Script raw array [] döndürdüğü için doğrudan json maplenir
+                    let rawList = Array.isArray(json) ? json : (json.data || []);
 
-                    renderCheckinTable();
-                    renderCategoryDistribution();
-                    renderResultsTable();
-                    renderStats();
-                    
-                    const currentActiveTab = getActiveTab();
-                    switchTab(currentActiveTab);
+                    localData = rawList.map(t => {
+                        const normalizedId = t.id || t.takimNo || "";
+                        const normalizedOkul = t.kurum || t.okul || "";
+                        const studentsList = [t.ogrenci1, t.ogrenci2, t.ogrenci3].filter(Boolean).join(", ");
+                        const normalizedDurum = t.durum ? t.durum.toString().trim() : "Bekliyor";
+
+                        return {
+                            takimNo: normalizedId,
+                            id: normalizedId,
+                            takimAdi: t.takimAdi || "",
+                            okul: normalizedOkul,
+                            kurum: normalizedOkul,
+                            mentor: t.mentor || "",
+                            kategori: t.kategori || "",
+                            ogrenciler: studentsList,
+                            durum: normalizedDurum
+                        };
+                    });
+                    renderAll();
                 })
                 .catch(err => {
                     setConnectionStatus("error");
-                    showToast("Veritabanı bağlantı hatası oluştu! Lütfen sayfayı yenileyin.", "error");
+                    showToast("Google Sheets bağlantı hatası!", "error");
                     console.error(err);
                 })
                 .finally(() => {
-                    document.getElementById('loader').classList.add('hidden');
+                    document.getElementById("loader").classList.add("hidden");
+                    setConnectionStatus("active");
                 });
         }
 
+        function renderAll() {
+            updateStats();
+            renderCheckinTable();
+            renderCategoryDistribution();
+            tabloFiltrele();
+        }
+
+        function updateStats() {
+            const total = localData.length;
+            const checkedIn = localData.filter(t => t.durum === "Check-in Yapıldı").length;
+            const waiting = total - checkedIn;
+
+            document.getElementById("headerStatTotal").innerText = total;
+            document.getElementById("headerStatCheckedIn").innerText = checkedIn;
+            document.getElementById("statTotal").innerText = total;
+            document.getElementById("statCheckedIn").innerText = checkedIn;
+            document.getElementById("statWaiting").innerText = waiting;
+
+            const catCounts = {};
+            localData.forEach(t => {
+                if(!catCounts[t.kategori]) catCounts[t.kategori] = { total: 0, present: 0 };
+                catCounts[t.kategori].total++;
+                if(t.durum === "Check-in Yapıldı") catCounts[t.kategori].present++;
+            });
+
+            const grid = document.getElementById("categoryStatsGrid");
+            grid.innerHTML = "";
+            Object.keys(catCounts).forEach(cat => {
+                const item = catCounts[cat];
+                const card = document.createElement("div");
+                card.className = "bg-[#0e1320] border border-borderClr p-4 rounded-xl flex flex-col justify-between";
+                card.innerHTML = `
+                    <h5 class="text-[11px] font-black uppercase text-slate-300 tracking-wider truncate">${cat}</h5>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                        <span class="text-lg font-black text-white">${item.present}</span>
+                        <span class="text-[10px] text-slate-500 font-bold">/ ${item.total} Takım</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1 rounded-full mt-2.5 overflow-hidden">
+                        <div class="bg-indigo-500 h-full rounded-full" style="width: ${(item.present/item.total)*100}%"></div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
         function renderCheckinTable() {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
+            const tbody = document.getElementById("tableBody");
+            tbody.innerHTML = "";
+            const search = document.getElementById("searchInput").value.toLowerCase().trim();
 
-            const searchQuery = document.getElementById("searchInput").value.toUpperCase();
+            let filtered = localData;
 
-            localData.forEach(takim => {
-                const isDone = takim.durum === "Check-in Yapıldı";
+            if (currentStatusFilter === "waiting") {
+                filtered = filtered.filter(t => t.durum !== "Check-in Yapıldı");
+            } else if (currentStatusFilter === "present") {
+                filtered = filtered.filter(t => t.durum === "Check-in Yapıldı");
+            }
 
-                const textContent = `${takim.id} ${takim.takimAdi} ${takim.mentor} ${takim.kurum} ${takim.kategori} ${takim.ogrenci1} ${takim.ogrenci2} ${takim.ogrenci3}`.toUpperCase();
-                if (searchQuery && textContent.indexOf(searchQuery) === -1) {
-                    return;
-                }
+            if (search) {
+                filtered = filtered.filter(t => 
+                    t.takimNo.toString().toLowerCase().includes(search) ||
+                    t.takimAdi.toLowerCase().includes(search) ||
+                    t.okul.toLowerCase().includes(search) ||
+                    t.mentor.toLowerCase().includes(search)
+                );
+            }
 
-                if (currentStatusFilter === 'waiting' && isDone) {
-                    return;
-                }
-                if (currentStatusFilter === 'present' && !isDone) {
-                    return;
-                }
+            if(filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-bold">Kayıt bulunamadı.</td></tr>`;
+                return;
+            }
 
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-[#161d2f]/50 transition border-b border-borderClr/40";
+            filtered.forEach(t => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-[#161b2e]/40 transition border-b border-borderClr/40";
                 
-                const badgeStyle = isDone 
-                    ? "bg-[#122824] text-[#10b981] border border-[#164e3f]" 
-                    : "bg-[#1b2330] text-[#8fa0b5] border border-[#2c384a]";
-                
-                const dotStyle = isDone ? "bg-[#10b981]" : "bg-[#8fa0b5]";
-                const statusText = isDone ? "ALANDA" : "BEKLENİYOR";
-                
-                const buttonHtml = isDone 
-                    ? `<button onclick="handleStatusChange('${takim.id}', 'Bekliyor')" class="flex items-center space-x-1 px-4 py-2.5 rounded-lg text-xs font-bold bg-checkOutBtn border border-rose-500/20 text-checkOutText hover:bg-rose-950/40 transition"><i class="fas fa-user-minus mr-1.5 text-xs"></i> CHECK-OUT</button>`
-                    : `<button onclick="handleStatusChange('${takim.id}', 'Check-in Yapıldı')" class="flex items-center space-x-1 px-4 py-2.5 rounded-lg text-xs font-bold bg-checkInBtn text-white hover:bg-indigo-700 shadow-lg shadow-indigo-600/10 transition"><i class="fas fa-user-check mr-1.5 text-xs"></i> CHECK-IN</button>`;
+                const isAlanda = t.durum === "Check-in Yapıldı";
+                const statusBadge = isAlanda 
+                    ? `<span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-black text-[9px] uppercase tracking-wider"><i class="fas fa-check-circle mr-1"></i>Alanda</span>`
+                    : `<span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-black text-[9px] uppercase tracking-wider"><i class="fas fa-clock mr-1"></i>Bekliyor</span>`;
 
-                const categoryBadge = `<span class="inline-flex px-2 py-1 bg-[#1a1f38] text-[#7085ff] border border-[#2b3566] text-[10px] font-black rounded-lg uppercase tracking-wider">${takim.kategori}</span>`;
+                const actionButton = isAlanda
+                    ? `<button onclick="toggleCheckin(${t.takimNo}, 'Bekliyor')" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-500/20 text-rose-400 font-bold text-[10px] rounded-lg transition uppercase">Giriş İptal</button>`
+                    : `<button onclick="toggleCheckin(${t.takimNo}, 'Check-in Yapıldı')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[10px] rounded-lg transition shadow-md uppercase">Alandan Onayla</button>`;
 
                 tr.innerHTML = `
-                    <td class="p-5 font-bold text-indigo-400">#${takim.id}</td>
+                    <td class="p-5 font-black text-indigo-400 text-sm">#${t.takimNo}</td>
                     <td class="p-5">
-                        <div class="font-extrabold text-white text-sm">${takim.takimAdi}</div>
-                        <div class="text-[10px] text-slate-400 font-bold mt-1 uppercase">Mentör: ${takim.mentor} | Kurum: ${takim.kurum}</div>
+                        <div class="font-extrabold text-white text-sm">${t.takimAdi}</div>
+                        <div class="text-[10px] text-slate-400 font-medium mt-0.5">${t.okul} <span class="mx-1 text-slate-600">•</span> Mentör: ${t.mentor}</div>
                     </td>
-                    <td class="p-5">${categoryBadge}</td>
-                    <td class="p-5">
-                        <div class="text-[11px] text-slate-300 font-semibold">${takim.ogrenci1}</div>
-                        ${takim.ogrenci2 ? `<div class="text-[11px] text-slate-400 mt-0.5">${takim.ogrenci2}</div>` : ''}
-                        ${takim.ogrenci3 ? `<div class="text-[11px] text-slate-400 mt-0.5">${takim.ogrenci3}</div>` : ''}
+                    <td class="p-5"><span class="bg-[#171e31] text-slate-300 border border-borderClr px-2 py-1 rounded font-bold text-[10px] uppercase">${t.kategori}</span></td>
+                    <td class="p-5 text-slate-400 font-medium text-[11px] max-w-[200px] truncate">${t.ogrenciler || "-"}</td>
+                    <td class="p-5 text-center">${statusBadge}</td>
+                    <td class="p-5 text-right flex justify-end items-center space-x-2 mt-1">
+                        ${actionButton}
+                        <button onclick="takimSil(${t.takimNo})" class="p-1.5 bg-transparent hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 text-slate-500 hover:text-rose-400 rounded-lg transition" title="Takımı Tamamen Sil">
+                            <i class="fas fa-trash-alt text-xs"></i>
+                        </button>
                     </td>
-                    <td class="p-5 text-center">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-extrabold tracking-wider ${badgeStyle}">
-                            <span class="w-1.5 h-1.5 rounded-full ${dotStyle}"></span>
-                            ${statusText}
-                        </span>
-                    </td>
-                    <td class="p-5 flex justify-end">${buttonHtml}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
+        function toggleCheckin(takimNo, yeniDurum) {
+            setConnectionStatus("loading");
+            const params = new URLSearchParams();
+            params.append("action", "checkin");
+            params.append("id", takimNo);
+            params.append("status", yeniDurum);
+
+            fetch(`${scriptURL}?t=${Date.now()}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString()
+            })
+            .then(res => res.json())
+            .then(json => {
+                if(json.success) {
+                    showToast(`#${takimNo} numaralı takım durumu güncellendi.`, "success");
+                    verileriYukle();
+                } else {
+                    showToast("Durum güncellenemedi: " + json.message, "error");
+                }
+            })
+            .catch(err => {
+                showToast("İşlem başarısız oldu!", "error");
+                console.error(err);
+            })
+            .finally(() => setConnectionStatus("active"));
+        }
+
+        async function takimSil(takimNo) {
+            const onay = await showConfirmModal(`#${takimNo} numaralı takımı sistemden tamamen silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`);
+            if(!onay) return;
+
+            setConnectionStatus("loading");
+            const params = new URLSearchParams();
+            params.append("action", "deleteTeam");
+            params.append("id", takimNo);
+
+            fetch(`${scriptURL}?t=${Date.now()}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString()
+            })
+            .then(res => res.json())
+            .then(json => {
+                if(json.success) {
+                    showToast(`#${takimNo} numaralı takım tamamen silindi.`, "success");
+                    verileriYukle();
+                } else {
+                    showToast("Silme işlemi başarısız: " + json.message, "error");
+                }
+            })
+            .catch(err => {
+                showToast("Silme hatası oluştu!", "error");
+                console.error(err);
+            })
+            .finally(() => setConnectionStatus("active"));
+        }
+
         function renderCategoryDistribution() {
-            const listMiniSumo = document.getElementById("list-miniSumo");
-            const listKagitKule = document.getElementById("list-kagitKule");
-            const listKagitRoket = document.getElementById("list-kagitRoket");
-            const listCizgiIzleyen = document.getElementById("list-cizgiIzleyen");
+            const search = document.getElementById("categorySearchInput").value.toLowerCase().trim();
+            const alandakiler = localData.filter(t => t.durum === "Check-in Yapıldı");
 
-            listMiniSumo.innerHTML = "";
-            listKagitKule.innerHTML = "";
-            listKagitRoket.innerHTML = "";
-            listCizgiIzleyen.innerHTML = "";
+            const lists = {
+                "minisumo": document.getElementById("list-miniSumo"),
+                "kagitkule": document.getElementById("list-kagitKule"),
+                "kagitroket": document.getElementById("list-kagitRoket"),
+                "cizgiizleyen": document.getElementById("list-cizgiIzleyen")
+            };
 
-            const searchQuery = document.getElementById("categorySearchInput").value.toUpperCase();
-            let counts = { "Mini Sumo": 0, "Kagit Kule": 0, "Kagit Roket": 0, "Cizgi Izleyen": 0 };
+            const counts = { "minisumo": 0, "kagitkule": 0, "kagitroket": 0, "cizgiizleyen": 0 };
 
-            const alandakiTakimlar = localData.filter(t => t.durum === "Check-in Yapıldı");
+            Object.keys(lists).forEach(k => { if(lists[k]) lists[k].innerHTML = ""; });
 
-            alandakiTakimlar.forEach(takim => {
-                const textContent = `${takim.id} ${takim.takimAdi} ${takim.mentor} ${takim.kurum} ${takim.ogrenci1} ${takim.ogrenci2} ${takim.ogrenci3}`.toUpperCase();
-                if (searchQuery && textContent.indexOf(searchQuery) === -1) {
-                    return;
+            alandakiler.forEach(t => {
+                const cCat = temizleKategori(t.kategori);
+                if (counts[cCat] !== undefined) {
+                    counts[cCat]++;
                 }
 
-                let ogrenciSayisi = 1;
-                if (takim.ogrenci3) ogrenciSayisi = 3;
-                else if (takim.ogrenci2) ogrenciSayisi = 2;
+                if (search && !(
+                    t.takimNo.toString().includes(search) ||
+                    t.takimAdi.toLowerCase().includes(search) ||
+                    t.okul.toLowerCase().includes(search)
+                )) return;
 
-                const cardHtml = `
-                    <div class="bg-[#0a0e17] border border-borderClr p-4 rounded-xl flex items-center justify-between hover:border-indigo-500/40 transition">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-black text-indigo-400">#${takim.id}</span>
-                                <h5 class="text-xs font-black text-white">${takim.takimAdi}</h5>
+                const container = lists[cCat];
+                if(container) {
+                    const row = document.createElement("div");
+                    row.className = "flex items-center justify-between p-3 bg-[#0a0e17]/60 border border-borderClr/40 rounded-xl hover:border-indigo-500/30 transition text-xs";
+                    row.innerHTML = `
+                        <div class="min-w-0 flex-1 pr-2">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="font-black text-indigo-400">#${t.takimNo}</span>
+                                <span class="font-bold text-white truncate">${t.takimAdi}</span>
                             </div>
-                            <p class="text-[10px] text-slate-500 font-bold mt-1 uppercase">Mentör: ${takim.mentor} | Kurum: ${takim.kurum}</p>
+                            <div class="text-[10px] text-slate-500 font-semibold truncate mt-0.5">${t.okul}</div>
                         </div>
-                        <span class="text-[10px] bg-[#1b2330] text-slate-300 px-2.5 py-1 rounded font-black border border-borderClr/60">${ogrenciSayisi} Öğrenci</span>
-                    </div>
-                `;
-
-                const kat = takim.kategori;
-                if (kat === "Mini Sumo") {
-                    listMiniSumo.innerHTML += cardHtml;
-                    counts["Mini Sumo"]++;
-                } else if (kat === "Kagit Kule" || kat === "Kağıt Kule") {
-                    listKagitKule.innerHTML += cardHtml;
-                    counts["Kagit Kule"]++;
-                } else if (kat === "Kagit Roket" || kat === "Kağıt Roket") {
-                    listKagitRoket.innerHTML += cardHtml;
-                    counts["Kagit Roket"]++;
-                } else if (kat === "Cizgi Izleyen" || kat === "Çizgi İzleyen") {
-                    listCizgiIzleyen.innerHTML += cardHtml;
-                    counts["Cizgi Izleyen"]++;
+                        <span class="flex-shrink-0 px-2 py-0.5 bg-indigo-950 text-indigo-400 border border-indigo-900/40 rounded font-black text-[9px]">SEVK EDİLDİ</span>
+                    `;
+                    container.appendChild(row);
                 }
             });
 
-            document.getElementById("count-miniSumo").innerText = `${counts["Mini Sumo"]} Alanda`;
-            document.getElementById("count-kagitKule").innerText = `${counts["Kagit Kule"]} Alanda`;
-            document.getElementById("count-kagitRoket").innerText = `${counts["Kagit Roket"]} Alanda`;
-            document.getElementById("count-cizgiIzleyen").innerText = `${counts["Cizgi Izleyen"]} Alanda`;
+            if(document.getElementById("count-miniSumo")) document.getElementById("count-miniSumo").innerText = `${counts["minisumo"]} Alanda`;
+            if(document.getElementById("count-kagitKule")) document.getElementById("count-kagitKule").innerText = `${counts["kagitkule"]} Alanda`;
+            if(document.getElementById("count-kagitRoket")) document.getElementById("count-kagitRoket").innerText = `${counts["kagitroket"]} Alanda`;
+            if(document.getElementById("count-cizgiIzleyen")) document.getElementById("count-cizgiIzleyen").innerText = `${counts["cizgiizleyen"]} Alanda`;
 
-            const emptyNotice = `<div class="text-center py-8 text-xs font-bold text-slate-500 italic">Giriş yapmış takım bulunamadı.</div>`;
-            if (listMiniSumo.innerHTML === "") listMiniSumo.innerHTML = emptyNotice;
-            if (listKagitKule.innerHTML === "") listKagitKule.innerHTML = emptyNotice;
-            if (listKagitRoket.innerHTML === "") listKagitRoket.innerHTML = emptyNotice;
-            if (listCizgiIzleyen.innerHTML === "") listCizgiIzleyen.innerHTML = emptyNotice;
+            Object.keys(lists).forEach(k => {
+                if(lists[k] && lists[k].innerHTML === "") {
+                    lists[k].innerHTML = `<div class="text-center py-6 text-slate-600 font-bold text-[11px]">Alanda veya kriterlere uygun takım yok.</div>`;
+                }
+            });
+        }
+
+        async function triggerKuraCekimi() {
+            const onay = await showConfirmModal("Mevcut tüm Mini Sumo kuralarını ve maç kodlarını sıfırlayıp, alandaki takımlarla YENİDEN rastgele turnuva ağacı oluşturmak istediğinize emin misiniz?");
+            if(!onay) return;
+
+            setConnectionStatus("loading");
+            showToast("Otomatik kura çekiliyor ve turnuva ağacı matrisi oluşturuluyor...", "warning");
+
+            const params = new URLSearchParams();
+            params.append("action", "generateBracket");
+
+            fetch(`${scriptURL}?${params.toString()}&t=${Date.now()}`, {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(json => {
+                if(json.success) {
+                    showToast("Rastgele kura çekimi başarıyla tamamlandı! Maçlar listelendi.", "success");
+                    verileriYukle();
+                } else {
+                    showToast("Kura çekilemedi: " + json.error, "error");
+                }
+            })
+            .catch(err => {
+                showToast("Kura servisinde teknik hata!", "error");
+                console.error(err);
+            })
+            .finally(() => setConnectionStatus("active"));
         }
 
         function renderResultsTable() {
-            const tbody = document.getElementById('resultsTableBody');
-            tbody.innerHTML = '';
+            const tbody = document.getElementById("resultsTableBody");
+            tbody.innerHTML = "";
+            const search = document.getElementById("resultsSearchInput").value.toLowerCase().trim();
 
-            const searchQuery = document.getElementById("resultsSearchInput").value.toUpperCase();
+            const targetClean = temizleKategori(activeResultsCategory);
+            const alandakiler = localData.filter(t => temizleKategori(t.kategori) === targetClean && t.durum === "Check-in Yapıldı");
 
-            const kategoriyeGoreTakimlar = localData.filter(t => {
-                let key = t.kategori;
-                if (activeResultsCategory === 'Cizgi Izleyen') return key === 'Cizgi Izleyen' || key === 'Çizgi İzleyen';
-                if (activeResultsCategory === 'Kagit Kule') return key === 'Kagit Kule' || key === 'Kağıt Kule';
-                if (activeResultsCategory === 'Kagit Roket') return key === 'Kagit Roket' || key === 'Kağıt Roket';
-                return key === activeResultsCategory;
-            });
-
-            if (kategoriyeGoreTakimlar.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-slate-500 italic font-bold">Bu kategoride henüz kayıtlı takım bulunamadı.</td></tr>`;
+            if(alandakiler.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-bold">Bu kategoride henüz alana giriş yapmış takım yok.</td></tr>`;
                 return;
             }
 
-            kategoriyeGoreTakimlar.forEach(takim => {
-                const textContent = `${takim.id} ${takim.takimAdi} ${takim.mentor} ${takim.kurum}`.toUpperCase();
-                if (searchQuery && textContent.indexOf(searchQuery) === -1) {
-                    return;
-                }
+            let filtered = alandakiler;
+            if(search) {
+                filtered = filtered.filter(t => 
+                    t.takimNo.toString().includes(search) ||
+                    t.takimAdi.toLowerCase().includes(search) ||
+                    t.okul.toLowerCase().includes(search)
+                );
+            }
 
-                const isCheckedIn = takim.durum === "Check-in Yapıldı";
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-[#161d2f]/50 transition border-b border-borderClr/40";
+            filtered.forEach(t => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-[#161b2e]/40 transition border-b border-borderClr/40 text-xs";
 
-                const badgeStyle = isCheckedIn 
-                    ? "bg-[#122824] text-[#10b981] border border-[#164e3f]" 
-                    : "bg-[#1b2330] text-[#8fa0b5] border border-[#2c384a]";
-                const dotStyle = isCheckedIn ? "bg-[#10b981]" : "bg-[#8fa0b5]";
-                const statusText = isCheckedIn ? "ALANDA" : "BEKLENİYOR";
-
-                const birlesikTakimAdi = `${takim.id} ${takim.takimAdi}`;
-
+                const cached = categoryScoresData.find(s => s.id.toString() === t.id.toString()) || {};
+                
                 let inputHtml = "";
-                let saveActionCall = "";
+                let saveActionCall = `saveStandardScore('${t.id}')`;
 
-                if (!isCheckedIn) {
-                    inputHtml = `<div class="text-[10px] text-slate-500 italic"><i class="fas fa-exclamation-triangle mr-1"></i> Giriş Yapılmadan Hakem Verisi Giriş Yapılamaz</div>`;
-                } else {
-                    switch (activeResultsCategory) {
-                        case 'Mini Sumo':
-                            inputHtml = `
-                                <div class="flex items-center space-x-3">
-                                    <span class="text-xs text-slate-400 font-bold">Eleme Turnuvası Aktif. Turnuva ağacını e-tablodan takip edin.</span>
-                                </div>
-                            `;
-                            saveActionCall = `saveHakemResult('${takim.id}', '${activeResultsCategory}', {})`;
-                            break;
-                        case 'Cizgi Izleyen':
-                            inputHtml = `
-                                <div class="flex items-center space-3">
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">SÜRE:</span>
-                                        <input type="number" step="0.01" id="cizgi_sure_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">CEZA:</span>
-                                        <input type="number" step="0.01" id="cizgi_ceza_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                </div>
-                            `;
-                            saveActionCall = `submitCizgiIzleyen('${takim.id}')`;
-                            break;
-                        case 'Balonlu Araba':
-                            inputHtml = `
-                                <div class="flex items-center space-3">
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">1. DENEME:</span>
-                                        <input type="number" step="0.01" id="balon_d1_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">2. DENEME:</span>
-                                        <input type="number" step="0.01" id="balon_d2_${takim.id}" placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                </div>
-                            `;
-                            saveActionCall = `submitBalonluAraba('${takim.id}')`;
-                            break;
-                        case 'Kagit Kule':
-                            // Kule durumunda yalnızca 'Ayakta' ve 'Yıkıldı' seçenekleri kısıtlanmıştır.
-                            inputHtml = `
-                                <div class="flex items-center space-3">
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">DURUM:</span>
-                                        <select id="kule_durum_${takim.id}" class="bg-transparent text-white focus:outline-none text-xs font-black">
-                                            <option value="Ayakta" class="bg-cardBg">Ayakta</option>
-                                            <option value="Yıkıldı" class="bg-cardBg">Yıkıldı</option>
-                                        </select>
-                                    </div>
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">YÜKSEKLİK:</span>
-                                        <input type="number" id="kule_yukseklik_${takim.id}" placeholder="cm" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">SÜRE:</span>
-                                        <input type="number" step="0.01" id="kule_sure_${takim.id}" placeholder="sn" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                </div>
-                            `;
-                            saveActionCall = `submitKagitKule('${takim.id}')`;
-                            break;
-                        case 'Kagit Roket':
-                            inputHtml = `
-                                <div class="flex items-center space-3">
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">1. DENEME:</span>
-                                        <input type="number" step="0.1" id="roket_d1_${takim.id}" placeholder="m" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                    <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 mr-2">
-                                        <span class="text-[9px] text-slate-400 font-black mr-1 uppercase">2. DENEME:</span>
-                                        <input type="number" step="0.1" id="roket_d2_${takim.id}" placeholder="m" class="w-16 bg-transparent text-white focus:outline-none text-xs text-center font-black">
-                                    </div>
-                                </div>
-                            `;
-                            saveActionCall = `submitKagitRoket('${takim.id}')`;
-                            break;
-                    }
+                const hasSaved = Object.keys(cached).length > 0 && (cached.kolon4 !== "0" && cached.kolon4 !== "" || cached.kolon5 !== "0" && cached.kolon5 !== "");
+                const disabledAttr = hasSaved ? 'disabled="true"' : '';
+
+                if (targetClean === "cizgiizleyen") {
+                    const valSure = cached.kolon4 !== undefined ? cached.kolon4 : "";
+                    const valCeza = cached.kolon5 !== undefined ? cached.kolon5 : "";
+                    inputHtml = `
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">SÜRE:</span>
+                                <input type="number" step="0.01" id="scoreSure-${t.id}" value="${valSure}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">CEZA:</span>
+                                <input type="number" step="0.01" id="scoreCeza-${t.id}" value="${valCeza}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                        </div>
+                    `;
+                } else if (targetClean === "balonluaraba") {
+                    const valD1 = cached.kolon4 !== undefined ? cached.kolon4 : "";
+                    const valD2 = cached.kolon5 !== undefined ? cached.kolon5 : "";
+                    inputHtml = `
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D1:</span>
+                                <input type="number" step="0.01" id="scoreD1-${t.id}" value="${valD1}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D2:</span>
+                                <input type="number" step="0.01" id="scoreD2-${t.id}" value="${valD2}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                        </div>
+                    `;
+                } else if (targetClean === "kagitkule") {
+                    const valDurum = cached.kolon4 || "Ayakta";
+                    const valYuk = cached.kolon5 !== undefined ? cached.kolon5 : "";
+                    const valSure = cached.kolon6 !== undefined ? cached.kolon6 : "";
+                    inputHtml = `
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">DURUM:</span>
+                                <select id="scoreDurum-${t.id}" ${disabledAttr} class="bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                                    <option value="Ayakta" ${valDurum === 'Ayakta' ? 'selected' : ''} class="bg-cardBg">Ayakta</option>
+                                    <option value="Yıkıldı" ${valDurum === 'Yıkıldı' ? 'selected' : ''} class="bg-cardBg">Yıkıldı</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">YÜKSEKLİK:</span>
+                                <input type="number" id="scoreYuk-${t.id}" value="${valYuk}" ${disabledAttr} placeholder="cm" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">SÜRE:</span>
+                                <input type="number" step="0.01" id="scoreKuleSure-${t.id}" value="${valSure}" ${disabledAttr} placeholder="sn" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                        </div>
+                    `;
+                } else if (targetClean === "kagitroket") {
+                    const valD1 = cached.kolon4 !== undefined ? cached.kolon4 : "";
+                    const valD2 = cached.kolon5 !== undefined ? cached.kolon5 : "";
+                    inputHtml = `
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D1:</span>
+                                <input type="number" step="0.1" id="scoreD1-${t.id}" value="${valD1}" ${disabledAttr} placeholder="m" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
+                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D2:</span>
+                                <input type="number" step="0.1" id="scoreD2-${t.id}" value="${valD2}" ${disabledAttr} placeholder="m" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
+                            </div>
+                        </div>
+                    `;
                 }
 
-                const btnHtml = isCheckedIn
-                    ? `<button onclick="${saveActionCall}" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/10 flex items-center space-x-1"><i class="fas fa-save"></i> <span>Gönder</span></button>`
-                    : `<button disabled class="text-xs bg-[#171e30]/40 border border-borderClr/60 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed flex items-center space-x-1"><i class="fas fa-ban"></i> <span>Bekleniyor</span></button>`;
+                const birlesikTakimAdi = `${t.id} ${t.takimAdi}`;
+                const isCheckedIn = t.durum === "Check-in Yapıldı";
+
+                // Düzelt / Gönder Buton Mekanizması
+                let btnHtml = "";
+                if (isCheckedIn) {
+                    if (hasSaved) {
+                        btnHtml = `<button id="btn_action_${t.id}" onclick="toggleEditResult('${t.id}', '${activeResultsCategory}')" class="text-xs bg-[#6d28d9] hover:bg-[#7c3aed] text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg flex items-center space-x-1.5"><i class="fas fa-edit text-xs"></i> <span>Düzelt</span></button>`;
+                    } else {
+                        btnHtml = `<button id="btn_action_${t.id}" onclick="${saveActionCall}" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/10 flex items-center space-x-1.5"><i class="fas fa-save"></i> <span>Gönder</span></button>`;
+                    }
+                } else {
+                    btnHtml = `<button disabled class="text-xs bg-[#171e30]/40 border border-borderClr/60 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed flex items-center space-x-1"><i class="fas fa-ban"></i> <span>Bekleniyor</span></button>`;
+                }
 
                 tr.innerHTML = `
-                    <td class="p-5 font-bold text-indigo-400">#${takim.id}</td>
+                    <td class="p-5 font-black text-indigo-400 text-sm">#${t.id}</td>
                     <td class="p-5">
                         <div class="font-extrabold text-white text-xs">${birlesikTakimAdi}</div>
-                        <div class="text-[9px] text-slate-400 font-bold mt-1 uppercase">Mentör: ${takim.mentor}</div>
                     </td>
-                    <td class="p-5 text-slate-300 font-semibold">${takim.kurum}</td>
-                    <td class="p-5">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-extrabold tracking-wider ${badgeStyle}">
-                            <span class="w-1.5 h-1.5 rounded-full ${dotStyle}"></span>
-                            ${statusText}
-                        </span>
-                    </td>
+                    <td class="p-5 text-slate-300 font-semibold">${t.kurum || t.okul}</td>
+                    <td class="p-5"><span class="px-2 py-0.5 ${hasSaved ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400 border border-borderClr'} rounded font-bold text-[10px]">${hasSaved ? 'KAYDEDİLMİŞ' : 'EKSİK'}</span></td>
                     <td class="p-5">${inputHtml}</td>
                     <td class="p-5 flex justify-end items-center h-full pt-6">${btnHtml}</td>
                 `;
@@ -940,214 +1203,251 @@
             });
         }
 
-        function submitCizgiIzleyen(takimId) {
-            const sure = parseFloat(document.getElementById(`cizgi_sure_${takimId}`).value) || 0;
-            const ceza = parseFloat(document.getElementById(`cizgi_ceza_${takimId}`).value) || 0;
+        function toggleEditResult(takimId, kategori) {
+            const btn = document.getElementById(`btn_action_${takimId}`);
             
-            if (sure <= 0) {
-                showToast("Lütfen geçerli bir süre değeri giriniz!", "warning");
-                return;
+            if (btn.classList.contains('bg-[#6d28d9]')) {
+                enableRowInputs(takimId, kategori, true);
+                
+                btn.className = "text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg flex items-center space-x-1.5";
+                btn.innerHTML = `<i class="fas fa-check"></i> <span>Kaydet</span>`;
+                btn.onclick = () => saveEditedResult(takimId, kategori);
             }
-
-            saveHakemResult(takimId, "Cizgi Izleyen", {
-                "sure": sure,
-                "ceza": ceza
-            });
         }
 
-        function submitBalonluAraba(takimId) {
-            const d1 = parseFloat(document.getElementById(`balon_d1_${takimId}`).value) || 0;
-            const d2 = parseFloat(document.getElementById(`balon_d2_${takimId}`).value) || 0;
-
-            if (d1 <= 0 && d2 <= 0) {
-                showToast("Lütfen en az bir deneme değeri giriniz!", "warning");
-                return;
+        function enableRowInputs(takimId, kategori, enable) {
+            const clean = temizleKategori(kategori);
+            if (clean === 'cizgiizleyen') {
+                document.getElementById(`scoreSure-${takimId}`).disabled = !enable;
+                document.getElementById(`scoreCeza-${takimId}`).disabled = !enable;
+            } else if (clean === 'balonluaraba') {
+                document.getElementById(`scoreD1-${takimId}`).disabled = !enable;
+                document.getElementById(`scoreD2-${takimId}`).disabled = !enable;
+            } else if (clean === 'kagitkule') {
+                document.getElementById(`scoreDurum-${takimId}`).disabled = !enable;
+                document.getElementById(`scoreYuk-${takimId}`).disabled = !enable;
+                document.getElementById(`scoreKuleSure-${takimId}`).disabled = !enable;
+            } else if (clean === 'kagitroket') {
+                document.getElementById(`scoreD1-${takimId}`).disabled = !enable;
+                document.getElementById(`scoreD2-${takimId}`).disabled = !enable;
             }
-
-            saveHakemResult(takimId, "Balonlu Araba", {
-                "deneme1": d1,
-                "deneme2": d2
-            });
         }
 
-        function submitKagitKule(takimId) {
-            const durum = document.getElementById(`kule_durum_${takimId}`).value;
-            const yukseklik = parseFloat(document.getElementById(`kule_yukseklik_${takimId}`).value) || 0;
-            const sure = parseFloat(document.getElementById(`kule_sure_${takimId}`).value) || 0;
-
-            if (yukseklik <= 0) {
-                showToast("Lütfen yükseklik değerini giriniz!", "warning");
-                return;
-            }
-
-            saveHakemResult(takimId, "Kagit Kule", {
-                "durum": durum,
-                "yukseklik": yukseklik,
-                "sure": sure
-            });
+        function saveEditedResult(takimId, kategori) {
+            saveStandardScore(takimId);
         }
 
-        function submitKagitRoket(takimId) {
-            const d1 = parseFloat(document.getElementById(`roket_d1_${takimId}`).value) || 0;
-            const d2 = parseFloat(document.getElementById(`roket_d2_${takimId}`).value) || 0;
-
-            if (d1 <= 0 && d2 <= 0) {
-                showToast("Lütfen en az bir deneme değeri giriniz!", "warning");
-                return;
-            }
-
-            saveHakemResult(takimId, "Kagit Roket", {
-                "deneme1": d1,
-                "deneme2": d2
-            });
-        }
-
-        function saveHakemResult(takimId, kategori, payload) {
-            setConnectionStatus("loading");
-            showToast("Sonuç e-tabloya iletiliyor...", "info");
-
+        function saveStandardScore(takimId) {
+            const targetClean = temizleKategori(activeResultsCategory);
             const params = new URLSearchParams();
             params.append("action", "saveResult");
             params.append("takimid", takimId);
-            params.append("kategori", kategori);
-            
-            Object.keys(payload).forEach(key => {
-                params.append(key, payload[key]);
-            });
+            params.append("kategori", activeResultsCategory);
 
-            fetch(scriptURL, { 
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: params 
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error("HTTP Hata Kodu: " + res.status);
-                }
-                return res.json(); 
-            })
-            .then(result => {
-                if (result.success && result.message === "SUCCESS_SAVED") {
-                    showToast("Sonuç başarıyla e-tabloya kaydedildi!", "success");
-                    setTimeout(verileriYukle, 1000);
-                } else if (!result.success && result.error) {
-                    showToast("Hata: " + result.error, "error");
-                } else {
-                    showToast("Sonuç kaydedilirken beklenmeyen bir durum oluştu.", "warning");
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                showToast("Bağlantı hatası! Sonuç gönderilemedi. Detay: " + err.message, "error");
-            })
-            .finally(() => {
-                setConnectionStatus("active");
-            });
-        }
-
-        function renderStats() {
-            const total = localData.length;
-            const checkedIn = localData.filter(t => t.durum === "Check-in Yapıldı").length;
-            const waiting = total - checkedIn;
-
-            document.getElementById('statTotal').innerText = total;
-            document.getElementById('statCheckedIn').innerText = checkedIn;
-            document.getElementById('statWaiting').innerText = waiting;
-
-            document.getElementById('headerStatTotal').innerText = total;
-            document.getElementById('headerStatCheckedIn').innerText = checkedIn;
-
-            const categories = [...new Set(localData.map(t => t.kategori))];
-            const grid = document.getElementById('categoryStatsGrid');
-            grid.innerHTML = '';
-
-            categories.forEach(cat => {
-                const catTotal = localData.filter(t => t.kategori === cat).length;
-                const catCheckedIn = localData.filter(t => t.kategori === cat && t.durum === "Check-in Yapıldı").length;
-                const percentage = catTotal > 0 ? (catCheckedIn / catTotal) * 100 : 0;
-                
-                const card = document.createElement('div');
-                card.className = "bg-[#0e1320]/60 border border-borderClr p-4 rounded-xl";
-                card.innerHTML = `
-                    <h4 class="font-black text-indigo-400 text-[10px] uppercase tracking-wider truncate" title="${cat}">${cat}</h4>
-                    <div class="mt-2 flex items-baseline space-x-2">
-                        <span class="text-lg font-black text-white">${catCheckedIn}/${catTotal}</span>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">ALANDA</span>
-                    </div>
-                    <div class="w-full bg-[#1b2330] h-1.5 rounded-full mt-2 overflow-hidden">
-                        <div class="bg-indigo-500 h-1.5 rounded-full" style="width: ${percentage}%"></div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        async function handleStatusChange(id, targetStatus) {
-            const isRevert = targetStatus === "Bekliyor";
-            const confirmMessage = isRevert
-                ? `#${id} numaralı takımı tekrar Lobiye aktarmak ve alana giriş durumunu iptal etmek istiyor musunuz?`
-                : `#${id} numaralı takımın yarışma alanına (ALAN) girişini onaylıyor musunuz?`;
-
-            const onayla = await showConfirmModal(confirmMessage);
-            if (!onayla) return;
+            if (targetClean === "cizgiizleyen") {
+                const sure = document.getElementById(`scoreSure-${takimId}`).value;
+                const ceza = document.getElementById(`scoreCeza-${takimId}`).value;
+                params.append("sure", sure);
+                params.append("ceza", ceza);
+            } else if (targetClean === "balonluaraba") {
+                const d1 = document.getElementById(`scoreD1-${takimId}`).value;
+                const d2 = document.getElementById(`scoreD2-${takimId}`).value;
+                params.append("deneme1", d1);
+                params.append("deneme2", d2);
+            } else if (targetClean === "kagitkule") {
+                const durum = document.getElementById(`scoreDurum-${takimId}`).value;
+                const yukseklik = document.getElementById(`scoreYuk-${takimId}`).value;
+                const sure = document.getElementById(`scoreKuleSure-${takimId}`).value;
+                params.append("durum", durum);
+                params.append("yukseklik", yukseklik);
+                params.append("sure", sure);
+            } else if (targetClean === "kagitroket") {
+                const d1 = document.getElementById(`scoreD1-${takimId}`).value;
+                const d2 = document.getElementById(`scoreD2-${takimId}`).value;
+                params.append("deneme1", d1);
+                params.append("deneme2", d2);
+            }
 
             setConnectionStatus("loading");
-            document.getElementById('loader').classList.remove('hidden');
-            document.getElementById('tab-checkin').classList.add('hidden');
-
-            const params = new URLSearchParams();
-            params.append("action", "checkin");
-            params.append("id", id);
-            params.append("status", targetStatus);
-
-            fetch(scriptURL, { 
+            fetch(`${scriptURL}?t=${Date.now()}`, { 
                 method: 'POST', 
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: params 
+                body: params.toString() 
             })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error("HTTP Hata Kodu: " + res.status);
-                }
-                return res.json(); 
-            })
-            .then(result => {
-                if (result.success && result.message === "SUCCESS_CHECKIN") {
-                    showToast("Takım durumu başarıyla güncellendi.", "success");
-                } else if (!result.success && result.error) {
-                    showToast("İşlem tamamlanamadı. Hata: " + result.error, "error");
+            .then(res => res.json())
+            .then(json => {
+                if(json.success) {
+                    showToast(`#${takimId} numaralı takım skoru başarıyla kaydedildi.`, "success");
+                    fetchCategoryScores(activeResultsCategory);
                 } else {
-                    showToast("İşlem tamamlanamadı. Lütfen tekrar deneyin.", "error");
+                    showToast("Skor kaydedilemedi: " + json.error, "error");
                 }
             })
             .catch(err => {
-                showToast("Bağlantı hatası oluştu! Detay: " + err.message, "error");
-                console.error("Bağlantı hatası", err);
+                showToast("Ağ hatası oluştu!", "error");
+                console.error(err);
             })
-            .finally(() => {
-                verileriYukle();
+            .finally(() => setConnectionStatus("active"));
+        }
+
+        function renderSumoResultsTable() {
+            const tbody = document.getElementById('sumoResultsTableBody');
+            tbody.innerHTML = '';
+            const search = document.getElementById("resultsSearchInput").value.toLowerCase().trim();
+
+            let filtered = sumoMatchesData;
+
+            if(search) {
+                filtered = filtered.filter(m => 
+                    m.MacKodu.toLowerCase().includes(search) ||
+                    m.robot1Name.toLowerCase().includes(search) ||
+                    m.robot2Name.toLowerCase().includes(search)
+                );
+            }
+
+            if(filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-bold">Kura çekimi yapılmamış veya arama kriterine uygun eşleşme bulunamadı.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(m => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-[#161b2e]/40 transition border-b border-borderClr/40 text-xs";
+
+                const isBay1 = m.robot1No === "BAY" || m.robot1Name.toUpperCase() === "BAY";
+                const isBay2 = m.robot2No === "BAY" || m.robot2Name.toUpperCase() === "BAY";
+
+                let r1Display = isBay1 ? `<span class="text-amber-500 font-black">BAY (Boş Geçti)</span>` : `<div class="font-extrabold text-white">#${m.robot1No} - ${m.robot1Name}</div>`;
+                let r2Display = isBay2 ? `<span class="text-amber-500 font-black">BAY (Boş Geçti)</span>` : `<div class="font-extrabold text-white text-right">#${m.robot2No} - ${m.robot2Name}</div>`;
+
+                let formHtml = "";
+                let kazananHtml = "";
+                let eylemHtml = "";
+
+                if (isBay1 || isBay2) {
+                    formHtml = `<div class="text-center text-slate-500 font-bold text-[11px]">Otomatik Geçiş Pasif</div>`;
+                    kazananHtml = `<div class="text-center"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded font-black text-[10px]">${isBay1 ? m.robot2Name : m.robot1Name}</span></div>`;
+                    eylemHtml = `<div class="text-right text-[10px] text-slate-500 font-semibold italic">İşlem Gerekmiyor</div>`;
+                } else {
+                    formHtml = `
+                        <div class="flex items-center justify-center space-x-2">
+                            <input type="number" min="0" max="3" id="sumoSkor1-${m.MacKodu}" value="${m.robot1Skor || 0}" class="w-14 text-center px-2 py-1.5 bg-[#0a0e17] border border-borderClr rounded-lg text-white font-black text-sm focus:ring-2 focus:ring-indigo-500">
+                            <span class="text-slate-600 font-bold">-</span>
+                            <input type="number" min="0" max="3" id="sumoSkor2-${m.MacKodu}" value="${m.robot2Skor || 0}" class="w-14 text-center px-2 py-1.5 bg-[#0a0e17] border border-borderClr rounded-lg text-white font-black text-sm focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    `;
+
+                    // Winner select matching with raw ID string (id - name)
+                    const isR1Selected = m.rawWinner === m.rawRobot1;
+                    const isR2Selected = m.rawWinner === m.rawRobot2;
+
+                    kazananHtml = `
+                        <div class="text-center">
+                            <select id="sumo_winner_${m.MacKodu}" class="bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 focus:outline-none text-white text-xs font-bold w-48">
+                                <option value="" ${m.rawWinner === "" ? "selected" : ""}>Seçilmedi</option>
+                                <option value="${m.rawRobot1}" ${isR1Selected ? "selected" : ""}>#${m.robot1No} - ${m.robot1Name}</option>
+                                <option value="${m.rawRobot2}" ${isR2Selected ? "selected" : ""}>#${m.robot2No} - ${m.robot2Name}</option>
+                            </select>
+                        </div>
+                    `;
+
+                    eylemHtml = `
+                        <div class="text-right">
+                            <button onclick="saveSumoMatchScore('${m.MacKodu}')" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-black text-[10px] uppercase tracking-wider rounded-lg transition shadow-md">
+                                Skor Gir
+                            </button>
+                        </div>
+                    `;
+                }
+
+                tr.innerHTML = `
+                    <td class="p-5 font-black text-slate-400 uppercase tracking-wider bg-[#0f1424]/40">${m.MacKodu}</td>
+                    <td class="p-5">${r1Display}</td>
+                    <td class="p-5">${formHtml}</td>
+                    <td class="p-5">${r2Display}</td>
+                    <td class="p-5">${kazananHtml}</td>
+                    <td class="p-5">${eylemHtml}</td>
+                `;
+                tbody.appendChild(tr);
             });
+        }
+
+        function saveSumoMatchScore(macKodu) {
+            const s1 = document.getElementById(`sumoSkor1-${macKodu}`).value;
+            const s2 = document.getElementById(`sumoSkor2-${macKodu}`).value;
+            const winnerSelect = document.getElementById(`sumo_winner_${macKodu}`);
+            const winner = winnerSelect ? winnerSelect.value : "";
+
+            if (winner === "" && (parseInt(s1) > 0 || parseInt(s2) > 0)) {
+                showToast("Skor girilmişse lütfen bir Maç Kazananı seçin!", "warning");
+                return;
+            }
+
+            setConnectionStatus("loading");
+            const params = new URLSearchParams();
+            params.append("action", "saveResult");
+            params.append("takimid", MacKoduNormalize(macKodu)); // MatchID normalleştirilerek backend'e gönderilir
+            params.append("kategori", "minisumo");
+            params.append("kolon4", s1);
+            params.append("kolon5", s2);
+            params.append("kolon6", winner);
+
+            fetch(`${scriptURL}?t=${Date.now()}`, { 
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString() 
+            })
+            .then(res => res.json())
+            .then(json => {
+                if (json.success) {
+                    showToast(`${macKodu} kodlu maç sonucu kaydedildi.`, "success");
+                    fetchSumoMatches();
+                } else {
+                    showToast("Skor kaydedilemedi: " + json.error, "error");
+                }
+            })
+            .catch(err => {
+                showToast("Bağlantı hatası!", "error");
+                console.error(err);
+            })
+            .finally(() => setConnectionStatus("active"));
+        }
+
+        // MacKodu değerinin (örn: QF_1, SF_2) backend'in (örn: qf_1, sf_2) eşleştirmesiyle tam uyuşması için normalleştirici
+        function MacKoduNormalize(macKodu) {
+            if (!macKodu) return "";
+            return macKodu.toString().toLowerCase().trim();
+        }
+
+        function tabloFiltrele() {
+            if (activeResultsCategory === "Mini Sumo" && !document.getElementById("tab-results").classList.contains("hidden")) {
+                renderSumoResultsTable();
+            } else {
+                renderResultsTable();
+            }
+            renderCheckinTable();
         }
 
         function switchTab(tabName) {
+            const tabs = ['checkin', 'categoryDistribution', 'results', 'stats'];
             const titles = {
                 'checkin': '1. Adım: Takım Check-In',
                 'categoryDistribution': '2. Adım: Kategori Dağılımı',
                 'results': '3. Adım: Hakem Sonuç Girişi',
                 'stats': '4. Adım: İstatistikler'
             };
-            document.getElementById('tabTitle').innerText = titles[tabName] || 'Yönetim Paneli';
 
-            const sekmeler = ['checkin', 'categoryDistribution', 'results', 'stats'];
-            sekmeler.forEach(s => {
-                const sect = document.getElementById(`tab-${s}`);
-                const btn = document.getElementById(`tabBtn-${s}`);
+            document.getElementById('tabTitle').innerText = titles[tabName];
+
+            tabs.forEach(t => {
+                const sect = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`tabBtn-${t}`);
                 
-                if (s === tabName) {
+                if (t === tabName) {
                     sect.classList.remove('hidden');
                     btn.className = "w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left bg-indigo-600 text-white shadow-lg shadow-indigo-600/10";
                 } else {
@@ -1159,18 +1459,6 @@
             if (tabName === 'results') {
                 setResultsCategory(activeResultsCategory);
             }
-        }
-
-        function getActiveTab() {
-            if (!document.getElementById('tab-checkin').classList.contains('hidden')) return 'checkin';
-            if (!document.getElementById('tab-categoryDistribution').classList.contains('hidden')) return 'categoryDistribution';
-            if (!document.getElementById('tab-results').classList.contains('hidden')) return 'results';
-            if (!document.getElementById('tab-stats').classList.contains('hidden')) return 'stats';
-            return 'checkin';
-        }
-
-        function tabloFiltrele() {
-            renderCheckinTable();
         }
     </script>
 </body>
