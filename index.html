@@ -13,17 +13,8 @@
         extend: {
           fontFamily: { sans: ['Montserrat', 'sans-serif'] },
           colors: {
-            bg: '#070b14',
-            bg2: '#0a1020',
-            card: '#0f1728',
-            card2: '#111b30',
-            line: '#20304c',
-            blue: '#3478ff',
-            cyan: '#20d4ff',
-            green: '#00e08a',
-            amber: '#ffbd2e',
-            purple: '#8b5cf6',
-            red: '#ff3f55'
+            bg: '#070b14', bg2: '#0a1020', card: '#0f1728', card2: '#111b30', line: '#20304c',
+            blue: '#3478ff', cyan: '#20d4ff', green: '#00e08a', amber: '#ffbd2e', purple: '#8b5cf6', red: '#ff3f55'
           }
         }
       }
@@ -44,13 +35,12 @@
 </head>
 <body class="font-sans selection:bg-blue selection:text-white">
 
-<!-- LOGIN -->
 <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#050914] p-4">
   <div class="panel w-full max-w-md rounded-[28px] p-8 relative overflow-hidden">
     <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue via-purple to-green"></div>
     <div class="text-center">
       <div class="mx-auto w-20 h-20 rounded-3xl bg-white border border-blue/25 flex items-center justify-center mb-5 overflow-hidden p-2 shadow-lg shadow-blue/20 ring-4 ring-white/10">
-        <img src="https://raw.githubusercontent.com/serkantutuncu9/index/refs/heads/main/logo_yazisiz.png" alt="Türkiye STEM Logosu" class="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]">
+        <img src="https://raw.githubusercontent.com/serkantutuncu9/index/refs/heads/main/logo_yazisiz.png" alt="Türkiye STEM Logosu" class="w-full h-full object-contain">
       </div>
       <h1 class="text-2xl font-black text-white">TÜRKİYE STEM YARIŞMASI</h1>
       <p class="mt-2 text-xs text-slate-400 font-bold">Yönetim Paneli</p>
@@ -64,15 +54,13 @@
   </div>
 </div>
 
-<!-- APP -->
 <div id="app" class="hidden min-h-screen">
   <div class="mx-auto max-w-[1800px] px-5 lg:px-8 py-7">
-    <!-- TOP BAR -->
     <header class="mb-7">
       <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-5">
         <div class="flex items-center gap-5 min-w-0">
           <div class="w-16 h-16 rounded-3xl bg-white border border-blue/20 flex items-center justify-center shadow-xl shadow-blue/20 shrink-0 overflow-hidden p-1.5 ring-4 ring-white/10">
-            <img src="https://raw.githubusercontent.com/serkantutuncu9/index/refs/heads/main/logo_yazisiz.png" alt="Türkiye STEM Logosu" class="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]">
+            <img src="https://raw.githubusercontent.com/serkantutuncu9/index/refs/heads/main/logo_yazisiz.png" alt="Türkiye STEM Logosu" class="w-full h-full object-contain">
           </div>
           <div class="min-w-0">
             <h1 class="text-2xl lg:text-3xl font-black text-white tracking-tight uppercase leading-tight">TÜRKİYE STEM YARIŞMASI</h1>
@@ -80,67 +68,45 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-4 xl:justify-end"> 
+        <div class="flex flex-wrap items-center gap-4 xl:justify-end">
           <div class="hidden lg:flex items-center gap-3 soft rounded-2xl px-4 py-3 border border-green/15">
-            <div class="relative flex items-center justify-center w-4 h-4">
-              <span class="absolute inline-flex h-4 w-4 rounded-full bg-green opacity-40 animate-ping"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green shadow-[0_0_14px_rgba(0,224,138,0.9)]"></span>
-            </div>
-            <div class="leading-tight">
-              <div class="text-[11px] text-slate-500 font-black uppercase tracking-wider">Sistem Durumu</div>
-              <div class="text-sm font-black text-green uppercase">Sistem Aktif</div>
-            </div>
+            <div class="relative flex items-center justify-center w-4 h-4"><span class="absolute inline-flex h-4 w-4 rounded-full bg-green opacity-40 animate-ping"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green shadow-[0_0_14px_rgba(0,224,138,0.9)]"></span></div>
+            <div class="leading-tight"><div class="text-[11px] text-slate-500 font-black uppercase tracking-wider">Sistem Durumu</div><div class="text-sm font-black text-green uppercase">Sistem Aktif</div></div>
           </div>
           <div class="flex items-center gap-3 soft rounded-2xl px-4 py-3">
             <div class="w-10 h-10 rounded-full border border-blue/25 bg-blue/10 text-blue flex items-center justify-center"><i class="fas fa-user"></i></div>
             <div class="leading-tight"><div id="activeUserName" class="text-sm font-black text-white uppercase">---</div><div id="roleName" class="text-xs font-black text-blue uppercase mt-1">Yönetici</div></div>
           </div>
-          <div class="hidden md:flex items-center gap-3 text-right">
-            <i class="fas fa-calendar-days text-blue text-xl"></i>
-            <div><div id="todayText" class="text-sm font-bold text-slate-300">---</div><div id="clockText" class="text-sm text-slate-400 font-semibold">---</div></div>
-          </div>
           <button onclick="handleLogout()" class="rounded-2xl border border-red/40 bg-red/10 hover:bg-red hover:text-white text-red px-5 py-4 text-sm font-black uppercase transition"><i class="fas fa-right-from-bracket mr-2"></i>Çıkış</button>
         </div>
       </div>
-
       <nav id="navTabs" class="mt-7 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3"></nav>
     </header>
 
-    <!-- STATS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
-      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-blue/10 border border-blue/25 text-blue"><i class="fas fa-users"></i></div><div><p class="text-sm text-slate-400 font-bold">Toplam Takım</p><h3 id="statTotal" class="text-3xl font-black text-white mt-1">0</h3><p class="text-xs text-slate-500 font-semibold mt-1">Kayıtlı takım</p></div></div>
-      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-green/10 border border-green/25 text-green"><i class="fas fa-clipboard-check"></i></div><div><p class="text-sm text-slate-400 font-bold">Alanda</p><h3 id="statPresent" class="text-3xl font-black text-green mt-1">0</h3><p class="text-xs text-slate-500 font-semibold mt-1">Takım alanda</p></div></div>
-      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-purple/10 border border-purple/25 text-purple"><i class="fas fa-trophy"></i></div><div><p class="text-sm text-slate-400 font-bold">Aktif Yarışma</p><h3 class="text-3xl font-black text-white mt-1">5</h3><p class="text-xs text-slate-500 font-semibold mt-1">Kategori aktif</p></div></div>
-      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-amber/10 border border-amber/25 text-amber"><i class="fas fa-user-shield"></i></div><div><p class="text-sm text-slate-400 font-bold">Aktif Kullanıcı</p><h3 id="statUsers" class="text-3xl font-black text-white mt-1">0</h3><p class="text-xs text-slate-500 font-semibold mt-1">Yetkili kullanıcı</p></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-blue/10 border border-blue/25 text-blue"><i class="fas fa-users"></i></div><div><p class="text-sm text-slate-400 font-bold">Toplam Takım</p><h3 id="statTotal" class="text-3xl font-black text-white mt-1">0</h3></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-green/10 border border-green/25 text-green"><i class="fas fa-clipboard-check"></i></div><div><p class="text-sm text-slate-400 font-bold">Alanda</p><h3 id="statPresent" class="text-3xl font-black text-green mt-1">0</h3></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-purple/10 border border-purple/25 text-purple"><i class="fas fa-trophy"></i></div><div><p class="text-sm text-slate-400 font-bold">Aktif Yarışma</p><h3 class="text-3xl font-black text-white mt-1">5</h3></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-amber/10 border border-amber/25 text-amber"><i class="fas fa-user-shield"></i></div><div><p class="text-sm text-slate-400 font-bold">Aktif Kullanıcı</p><h3 id="statUsers" class="text-3xl font-black text-white mt-1">0</h3></div></div>
     </section>
 
-    <!-- HOME -->
     <section id="tab-home" class="tabPage space-y-6">
       <div class="grid grid-cols-1 xl:grid-cols-[1fr_520px] gap-6">
         <div class="panel rounded-3xl p-6">
           <div class="flex items-center justify-between gap-4 mb-6"><h2 class="text-xl font-black text-white"><i class="fas fa-trophy text-amber mr-3"></i>Yarışmaların Durumu</h2><button onclick="switchTab('competitions')" class="text-blue hover:text-white font-black text-sm transition">Tümünü Yönet <i class="fas fa-arrow-right ml-1"></i></button></div>
           <div id="competitionMiniGrid" class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4"></div>
-          <div class="mt-5 rounded-2xl border border-blue/20 bg-blue/5 px-4 py-3 text-sm text-slate-400"><i class="fas fa-circle-info text-blue mr-2"></i>Kura çekimi sadece Mini Sumo kategorisi için yapılmaktadır.</div>
         </div>
-
         <div class="panel rounded-3xl p-6">
           <h2 class="text-xl font-black text-white mb-1"><i class="fas fa-bolt text-cyan mr-3"></i>Hızlı İşlemler</h2>
           <div class="space-y-4 mt-6">
-            <button id="quickCheckin" onclick="switchTab('checkin')" class="w-full rounded-2xl border border-green/30 bg-green/10 hover:bg-green/20 text-green px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-user-check text-2xl"></i><span class="text-left"><b class="block text-lg">Check-in Yap</b><small class="text-slate-400 font-semibold">Takım giriş/çıkış işlemleri</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
+            <button id="quickCheckin" onclick="switchTab('checkin')" class="w-full rounded-2xl border border-green/30 bg-green/10 hover:bg-green/20 text-green px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-user-check text-2xl"></i><span class="text-left"><b class="block text-lg">Check-in Yap</b><small class="text-slate-400 font-semibold">Takım giriş işlemleri</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
             <button id="quickResults" onclick="switchTab('results')" class="w-full rounded-2xl border border-blue/30 bg-blue/10 hover:bg-blue/20 text-blue px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-clipboard-list text-2xl"></i><span class="text-left"><b class="block text-lg">Sonuç Girişi</b><small class="text-slate-400 font-semibold">Yarışma sonuçlarını girin</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
             <button id="quickUsers" onclick="switchTab('users')" class="w-full rounded-2xl border border-amber/30 bg-amber/10 hover:bg-amber/20 text-amber px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-users-gear text-2xl"></i><span class="text-left"><b class="block text-lg">Yetki Yönetimi</b><small class="text-slate-400 font-semibold">Kullanıcı ve yetki ayarları</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
-            <button onclick="switchTab('stats')" class="w-full rounded-2xl border border-purple/30 bg-purple/10 hover:bg-purple/20 text-purple px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-chart-simple text-2xl"></i><span class="text-left"><b class="block text-lg">İstatistikler</b><small class="text-slate-400 font-semibold">Raporlar ve analizler</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
           </div>
         </div>
       </div>
-
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div class="panel rounded-3xl p-6"><div class="flex items-center justify-between mb-5"><h2 class="text-xl font-black text-white"><i class="fas fa-clock text-slate-300 mr-3"></i>Son Check-in İşlemleri</h2><button onclick="switchTab('checkin')" class="text-blue font-black text-sm">Tümünü Gör <i class="fas fa-arrow-right ml-1"></i></button></div><div id="recentCheckins"></div></div>
-        <div class="panel rounded-3xl p-6"><div class="flex items-center justify-between mb-5"><h2 class="text-xl font-black text-white"><i class="fas fa-clipboard-list text-slate-300 mr-3"></i>Sonuç Giriş Özeti</h2><button onclick="switchTab('results')" class="text-blue font-black text-sm">Tümünü Gör <i class="fas fa-arrow-right ml-1"></i></button></div><div id="resultSummary"></div></div>
-      </div>
     </section>
 
-    <!-- CHECKIN -->
     <section id="tab-checkin" class="tabPage hidden space-y-6">
       <div class="panel rounded-3xl p-6 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
         <div>
@@ -183,34 +149,79 @@
       </div>
     </section>
 
-    <!-- CATEGORY -->
-    <section id="tab-category" class="tabPage hidden space-y-6">
-      <div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">Kategori Dağılımı</h2><p class="text-sm text-slate-400 mt-1">Sadece alana giriş yapmış takımlar listelenir.</p></div>
-      <div id="categoryGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5"></div>
-    </section>
+    <section id="tab-category" class="tabPage hidden space-y-6"><div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">Kategori Dağılımı</h2></div><div id="categoryGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5"></div></section>
 
-    <!-- RESULTS -->
     <section id="tab-results" class="tabPage hidden space-y-6">
       <div class="panel rounded-3xl p-6"><div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4"><div><h2 class="text-xl font-black text-white">Sonuç Girişi</h2><p id="resultNote" class="text-sm text-slate-400 mt-1"></p></div><div id="resultCats" class="flex flex-wrap gap-2"></div></div></div>
       <div class="panel rounded-3xl overflow-hidden"><div class="p-6 border-b border-line"><h3 id="activeResultTitle" class="font-black text-white text-lg">---</h3></div><div class="overflow-x-auto"><table class="w-full min-w-[1000px] text-left"><thead id="resultsHead" class="bg-[#0a1020]"></thead><tbody id="resultsBody" class="divide-y divide-line/60"></tbody></table></div></div>
     </section>
 
-    <!-- COMPETITIONS -->
-    <section id="tab-competitions" class="tabPage hidden space-y-6">
-      <div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">Yarışmalar</h2><p class="text-sm text-slate-400 mt-1">Kura, yarışmayı bitir tetikleyicisi ve yarışma durumları.</p></div>
-      <div id="competitionCards" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div>
-    </section>
+    <section id="tab-competitions" class="tabPage hidden space-y-6"><div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">Yarışmalar</h2><p class="text-sm text-slate-400 mt-1">Kura, yarışmayı bitir tetikleyicisi ve yarışma durumları.</p></div><div id="competitionCards" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div></section>
 
-    <!-- USERS -->
     <section id="tab-users" class="tabPage hidden space-y-6">
       <div class="grid grid-cols-1 xl:grid-cols-[430px_1fr] gap-6">
-        <div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white mb-1">Yeni Kullanıcı</h2><p class="text-sm text-slate-400 mb-6">Yönetici, başhakem, hakem veya görevli ekle.</p><form onsubmit="addUser(event)" class="space-y-4"><input id="newFullName" class="input w-full" placeholder="Ad Soyad" required><input id="newUsername" class="input w-full" placeholder="Kullanıcı adı" required><input id="newPassword" class="input w-full" placeholder="Şifre" required><select id="newRole" onchange="syncRoleDefaults()" class="input w-full"><option value="judge">Hakem</option><option value="headjudge">Başhakem</option><option value="officer">Görevli</option><option value="admin">Yönetici</option></select><div class="soft rounded-2xl p-4 space-y-3"><h4 class="text-xs text-slate-400 font-black uppercase">İşlem Yetkileri</h4><label class="flex items-center gap-2 text-sm font-bold"><input id="permCheckin" type="checkbox" class="accent-blue"> Check-in yapabilir</label><label class="flex items-center gap-2 text-sm font-bold"><input id="permResultEntry" type="checkbox" class="accent-blue" checked> Sonuç girebilir</label><label class="flex items-center gap-2 text-sm font-bold"><input id="permResultEdit" type="checkbox" class="accent-blue"> Sonuç düzeltebilir</label></div><div class="soft rounded-2xl p-4 space-y-3"><h4 class="text-xs text-slate-400 font-black uppercase">Kategori Yetkileri</h4><div id="newCategoryChecks" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div></div><button class="w-full rounded-2xl bg-blue hover:bg-blue/90 py-3.5 text-sm font-black text-white uppercase">Kullanıcı Ekle</button></form></div>
-        <div class="panel rounded-3xl overflow-hidden"><div class="p-6 border-b border-line flex items-center justify-between"><div><h2 class="text-xl font-black text-white">Kullanıcı Listesi</h2><p class="text-sm text-slate-400 mt-1">Sadece sisteme eklenen kullanıcılar görünür.</p></div><span class="badge bg-purple/10 text-purple border border-purple/25">Admin Alanı</span></div><div class="overflow-x-auto"><table class="w-full min-w-[900px] text-left"><thead class="bg-[#0a1020]"><tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Kullanıcı</th><th class="p-5">Rol</th><th class="p-5">Yetkiler</th><th class="p-5">Kategoriler</th><th class="p-5 text-center">Durum</th></tr></thead><tbody id="usersBody" class="divide-y divide-line/60"></tbody></table></div></div>
+        <div class="panel rounded-3xl p-6">
+          <h2 id="userFormTitle" class="text-xl font-black text-white mb-1">Yeni Kullanıcı</h2>
+          <p class="text-sm text-slate-400 mb-6">Yönetici, başhakem, hakem veya görevli ekle / düzenle.</p>
+          <form onsubmit="addUser(event)" class="space-y-4">
+            <input id="editingUsername" type="hidden">
+            <input id="newFullName" class="input w-full" placeholder="Ad Soyad" required>
+            <input id="newUsername" class="input w-full" placeholder="Kullanıcı adı" required>
+            <input id="newPassword" class="input w-full" placeholder="Şifre" required>
+            <select id="newRole" onchange="syncRoleDefaults()" class="input w-full">
+              <option value="judge">Hakem</option>
+              <option value="headjudge">Başhakem</option>
+              <option value="officer">Görevli</option>
+              <option value="admin">Yönetici</option>
+            </select>
+
+            <div class="soft rounded-2xl p-4 space-y-3">
+              <h4 class="text-xs text-slate-400 font-black uppercase">İşlem Yetkileri</h4>
+              <label class="flex items-center gap-2 text-sm font-bold"><input id="permCheckin" type="checkbox" class="accent-blue"> Check-in yapabilir</label>
+              <label class="flex items-center gap-2 text-sm font-bold"><input id="permResultEntry" type="checkbox" class="accent-blue" checked> Sonuç girebilir</label>
+              <label class="flex items-center gap-2 text-sm font-bold"><input id="permResultEdit" type="checkbox" class="accent-blue"> Sonuç düzeltebilir</label>
+            </div>
+
+            <div class="soft rounded-2xl p-4 space-y-3">
+              <h4 class="text-xs text-slate-400 font-black uppercase">Kategori Yetkileri</h4>
+              <div id="newCategoryChecks" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button id="userSubmitBtn" class="rounded-2xl bg-blue hover:bg-blue/90 py-3.5 text-sm font-black text-white uppercase">Kullanıcı Ekle</button>
+              <button id="cancelEditBtn" type="button" onclick="cancelUserEdit()" class="hidden rounded-2xl border border-slate-600 bg-slate-800 hover:bg-slate-700 py-3.5 text-sm font-black text-white uppercase">Vazgeç</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel rounded-3xl overflow-hidden">
+          <div class="p-6 border-b border-line flex items-center justify-between">
+            <div>
+              <h2 class="text-xl font-black text-white">Kullanıcı Listesi</h2>
+              <p class="text-sm text-slate-400 mt-1">Eklenen kullanıcılar tarayıcıda kayıtlı kalır; sayfa yenilenince silinmez.</p>
+            </div>
+            <span class="badge bg-purple/10 text-purple border border-purple/25">Admin Alanı</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[1050px] text-left">
+              <thead class="bg-[#0a1020]">
+                <tr class="border-b border-line text-xs text-slate-400 uppercase font-black">
+                  <th class="p-5">Kullanıcı</th>
+                  <th class="p-5">Rol</th>
+                  <th class="p-5">Yetkiler</th>
+                  <th class="p-5">Kategoriler</th>
+                  <th class="p-5 text-center">Durum</th>
+                  <th class="p-5 text-right">İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="usersBody" class="divide-y divide-line/60"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- STATS -->
-    <section id="tab-stats" class="tabPage hidden space-y-6"><div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">İstatistikler</h2><p class="text-sm text-slate-400 mt-1">Kategori bazlı katılım ve sonuç durumu.</p></div><div id="statsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5"></div></section>
+    <section id="tab-stats" class="tabPage hidden space-y-6"><div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">İstatistikler</h2></div><div id="statsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5"></div></section>
   </div>
 </div>
 
@@ -218,14 +229,16 @@
 
 <script>
 const scriptURL='https://script.google.com/macros/s/AKfycbxRp5jIAhNPYm3uPwMwzQW7cx_ZVyvNWaF8TRJjrbXNegE-3m4M5wzFmuH5Uf3Cn5rV/exec';
-const categories=[{id:'Mini Sumo',key:'minisumo',icon:'fa-people-arrows'},{id:'Çizgi İzleyen',key:'cizgiizleyen',icon:'fa-link'},{id:'Balonlu Araba',key:'balonluaraba',icon:'fa-balloon'},{id:'Kağıt Kule',key:'kagitkule',icon:'fa-chess-rook'},{id:'Kağıt Roket',key:'kagitroket',icon:'fa-rocket'}];
-let users=[
+const categories=[{id:'Mini Sumo',key:'minisumo',icon:'fa-people-arrows'},{id:'Çizgi İzleyen',key:'cizgiizleyen',icon:'fa-link'},{id:'Balonlu Araba',key:'balonluaraba',icon:'fa-car-side'},{id:'Kağıt Kule',key:'kagitkule',icon:'fa-chess-rook'},{id:'Kağıt Roket',key:'kagitroket',icon:'fa-rocket'}];
+const defaultUsers=[
  {username:'serkantutuncu',password:'G.st2807',fullName:'SERKAN TÜTÜNCÜ',role:'admin',active:true,canCheckin:true,canCancelCheckin:true,canResultEntry:true,canResultEdit:true,canManageUsers:true,canManageBracket:true,categories:['all']},
  {username:'eyupkose',password:'gs1905',fullName:'EYÜP KÖSE',role:'admin',active:true,canCheckin:true,canCancelCheckin:true,canResultEntry:true,canResultEdit:true,canManageUsers:true,canManageBracket:true,categories:['all']},
  {username:'mehmetbulum',password:'gs1905',fullName:'MEHMET BULUM',role:'admin',active:true,canCheckin:true,canCancelCheckin:true,canResultEntry:true,canResultEdit:true,canManageUsers:true,canManageBracket:true,categories:['all']}
 ];
+let users=loadSavedUsers();
 let currentUser=null,activeTab='home',activeResultCategory='Mini Sumo';
 let teams=[];
+let fallbackTeams=[];
 let competitions=[
  {name:'Mini Sumo',key:'minisumo',status:'active',bracketStatus:'empty',finished:false,champion:'',ranking:[],matches:[]},
  {name:'Çizgi İzleyen',key:'cizgiizleyen',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]},
@@ -233,535 +246,67 @@ let competitions=[
  {name:'Kağıt Kule',key:'kagitkule',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]},
  {name:'Kağıt Roket',key:'kagitroket',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]}
 ];
-const fallbackTeams=[];
 function ncat(v){return(v||'').toString().toLowerCase().replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u').replace(/[^a-z0-9]/g,'')}
 function roleName(r){return{admin:'Yönetici',headjudge:'Başhakem',judge:'Hakem',officer:'Görevli'}[r]||'Kullanıcı'}
-function canSeeCategory(c){return currentUser&&(currentUser.categories.includes('all')||currentUser.categories.includes(c))}
 function isAdmin(){return currentUser&&currentUser.role==='admin'}
-function handleLogin(e){e.preventDefault();const u=document.getElementById('loginUsername').value.trim().toLowerCase(),p=document.getElementById('loginPassword').value;const found=users.find(x=>x.username.toLowerCase()===u&&x.password===p&&x.active);if(!found){document.getElementById('loginError').classList.remove('hidden');return}currentUser=found;document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').classList.remove('hidden');bootstrap();showToast('Sisteme başarıyla giriş yapıldı.','success')}
-function handleLogout(){currentUser=null;document.getElementById('app').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('loginPassword').value=''}
-async function bootstrap(){
-  teams=[...fallbackTeams];
-  renderIdentity();
-  renderNav();
-  renderNewCategoryChecks();
-  await loadTeams();
-  await loadMiniSumoMatches();
-  renderAll();
-  switchTab('home');
-}
-
+function canSeeCategory(c){return currentUser&&(currentUser.categories.includes('all')||currentUser.categories.includes(c))}
 async function apiGet(params={}){
   const qs=new URLSearchParams({...params,t:Date.now()}).toString();
   const res=await fetch(`${scriptURL}?${qs}`);
   const text=await res.text();
-  try{
-    return JSON.parse(text);
-  }catch(err){
-    console.error('Apps Script JSON olmayan GET cevabı:', text);
-    return {success:false,error:'Apps Script JSON döndürmedi. Web App URL/dağıtım kontrol edilmeli.'};
-  }
+  try{return JSON.parse(text)}catch(err){console.error('Apps Script JSON olmayan GET cevabı:',text);return{success:false,error:'Apps Script JSON döndürmedi. Web App URL/dağıtım kontrol edilmeli.'}}
 }
-
 async function apiPost(params={}){
   const body=new URLSearchParams(params).toString();
-  const res=await fetch(`${scriptURL}?t=${Date.now()}`,{
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body
-  });
+  const res=await fetch(`${scriptURL}?t=${Date.now()}`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
   const text=await res.text();
-  try{
-    return JSON.parse(text);
-  }catch(err){
-    console.error('Apps Script JSON olmayan cevap:', text);
-    return {success:false,error:'Apps Script JSON döndürmedi. Web App URL/dağıtım kontrol edilmeli.'};
-  }
+  try{return JSON.parse(text)}catch(err){console.error('Apps Script JSON olmayan cevap:',text);return{success:false,error:'Apps Script JSON döndürmedi. Web App URL/dağıtım kontrol edilmeli.'}}
 }
-
-async function loadTeams(){
-  try{
-    const json=await apiGet();
-    if(!json.success){
-      teams=[...fallbackTeams];
-      showToast(json.error||'Başvurular okunamadı.','error');
-      return;
-    }
-
-    const raw=Array.isArray(json)?json:(json.data||[]);
-    teams=raw.map(t=>({
-      id:String(t.id||t.takimNo||t.takimid||'').trim(),
-      takimAdi:String(t.takimAdi||t.takim_adi||'').trim(),
-      okul:String(t.kurum||t.okul||'').trim(),
-      mentor:String(t.mentor||t.mentor_adi||'').trim(),
-      kategori:String(t.kategori||'').trim(),
-      durum:String(t.durum||'Bekliyor').trim(),
-      resultsSaved:false
-    })).filter(t=>t.id||t.takimAdi);
-  }catch(e){
-    console.error(e);
-    teams=[...fallbackTeams];
-    showToast('E-Tablo okunamadı. Liste boş gösteriliyor.','warning');
-  }
-}
-
-async function loadMiniSumoMatches(){
-  const comp=competitions.find(c=>c.key==='minisumo');
-  if(!comp) return;
-
-  try{
-    const json=await apiGet({kategori:'minisumo'});
-    if(!json.success){
-      comp.matches=[];
-      comp.bracketStatus='empty';
-      return;
-    }
-
-    const raw=json.data||[];
-    comp.matches=raw
-      .filter(r=>String(r.sira||'').trim().includes('_'))
-      .map(r=>parseMiniSumoRow(r));
-
-    comp.bracketStatus=comp.matches.length?'active':'empty';
-  }catch(e){
-    console.error(e);
-    comp.matches=[];
-    comp.bracketStatus='empty';
-  }
-}
-
-function parseMiniSumoRow(r){
-  const matchId=String(r.sira||'').trim();
-  const stage=(matchId.split('_')[0]||'').toLowerCase();
-  const stageMap={r64:'R64',r32:'R32',r16:'R16',qf:'QF',sf:'SF',f:'F'};
-  const round=stageMap[stage]||stage.toUpperCase();
-  return{
-    matchId,
-    code:matchId,
-    round,
-    robot1:String(r.id||'').trim(),
-    robot2:String(r.takimAdi||'').trim(),
-    score1:String(r.kolon4||'0').trim(),
-    score2:String(r.kolon5||'0').trim(),
-    winner:String(r.kolon6||'').trim(),
-    saved:!!String(r.kolon6||'').trim()
-  };
-}
-
+function loadSavedUsers(){try{const saved=localStorage.getItem('turkiyeStemUsers');if(saved){const parsed=JSON.parse(saved);if(Array.isArray(parsed)&&parsed.length)return parsed}}catch(err){console.warn('Kayıtlı kullanıcılar okunamadı:',err)}return JSON.parse(JSON.stringify(defaultUsers))}
+function saveUsers(){localStorage.setItem('turkiyeStemUsers',JSON.stringify(users))}
+function findUserByUsername(username){const u=String(username||'').trim().toLowerCase();return users.find(x=>String(x.username||'').trim().toLowerCase()===u)}
+function restoreSession(){const savedUsername=localStorage.getItem('turkiyeStemActiveUser');if(!savedUsername)return false;const found=findUserByUsername(savedUsername);if(!found||!found.active)return false;currentUser=found;document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').classList.remove('hidden');bootstrap();return true}
+function handleLogin(e){e.preventDefault();const u=document.getElementById('loginUsername').value.trim().toLowerCase();const p=document.getElementById('loginPassword').value;const found=users.find(x=>String(x.username||'').toLowerCase()===u&&x.password===p&&x.active);if(!found){document.getElementById('loginError').classList.remove('hidden');return}currentUser=found;localStorage.setItem('turkiyeStemActiveUser',found.username);document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').classList.remove('hidden');bootstrap();showToast('Sisteme başarıyla giriş yapıldı.','success')}
+function handleLogout(){currentUser=null;localStorage.removeItem('turkiyeStemActiveUser');document.getElementById('app').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('loginPassword').value=''}
+async function bootstrap(){teams=[...fallbackTeams];renderIdentity();renderNav();renderNewCategoryChecks();await loadTeams();await loadMiniSumoMatches();renderAll();switchTab('home')}
+async function loadTeams(){try{const json=await apiGet();if(!json.success){teams=[...fallbackTeams];showToast(json.error||'Başvurular okunamadı.','error');return}const raw=Array.isArray(json)?json:(json.data||[]);teams=raw.map(t=>({id:String(t.id||t.takimNo||t.takimid||'').trim(),takimAdi:String(t.takimAdi||t.takim_adi||'').trim(),okul:String(t.kurum||t.okul||'').trim(),mentor:String(t.mentor||t.mentor_adi||'').trim(),kategori:String(t.kategori||'').trim(),durum:String(t.durum||'Bekliyor').trim(),resultsSaved:false})).filter(t=>t.id||t.takimAdi)}catch(e){console.error(e);teams=[...fallbackTeams];showToast('E-Tablo okunamadı. Liste boş gösteriliyor.','warning')}}
+async function loadMiniSumoMatches(){const comp=competitions.find(c=>c.key==='minisumo');if(!comp)return;try{const json=await apiGet({kategori:'minisumo'});if(!json.success){comp.matches=[];comp.bracketStatus='empty';return}const raw=json.data||[];comp.matches=raw.filter(r=>String(r.sira||'').trim().includes('_')).map(r=>parseMiniSumoRow(r));comp.bracketStatus=comp.matches.length?'active':'empty'}catch(e){console.error(e);comp.matches=[];comp.bracketStatus='empty'}}
+function parseMiniSumoRow(r){const matchId=String(r.sira||'').trim();const stage=(matchId.split('_')[0]||'').toLowerCase();const stageMap={r64:'R64',r32:'R32',r16:'R16',qf:'QF',sf:'SF',f:'F'};const round=stageMap[stage]||stage.toUpperCase();return{matchId,code:matchId,round,robot1:String(r.id||'').trim(),robot2:String(r.takimAdi||'').trim(),score1:String(r.kolon4||'0').trim(),score2:String(r.kolon5||'0').trim(),winner:String(r.kolon6||'').trim(),saved:!!String(r.kolon6||'').trim()}}
 function renderIdentity(){document.getElementById('activeUserName').innerText=currentUser.fullName;document.getElementById('roleName').innerText=roleName(currentUser.role)}
 function renderNav(){const tabs=[{id:'home',label:'Ana Sayfa',icon:'fa-house',show:true},{id:'checkin',label:'Check-in',icon:'fa-id-card',show:currentUser.canCheckin||currentUser.canCancelCheckin||isAdmin()},{id:'category',label:'Kategoriler',icon:'fa-sitemap',show:true},{id:'results',label:'Sonuçlar',icon:'fa-square-poll-vertical',show:currentUser.canResultEntry||currentUser.canResultEdit||isAdmin()},{id:'competitions',label:'Yarışmalar',icon:'fa-trophy',show:true},{id:'users',label:'Yetkiler',icon:'fa-users-gear',show:currentUser.canManageUsers},{id:'stats',label:'İstatistik',icon:'fa-chart-simple',show:true}];const box=document.getElementById('navTabs');box.innerHTML='';tabs.filter(t=>t.show).forEach(t=>{const b=document.createElement('button');b.id='nav-'+t.id;b.onclick=()=>switchTab(t.id);b.className='navBtn';b.innerHTML=`<i class="fas ${t.icon}"></i>${t.label}`;box.appendChild(b)});document.getElementById('quickUsers').classList.toggle('hidden',!currentUser.canManageUsers);document.getElementById('quickCheckin').classList.toggle('hidden',!currentUser.canCheckin&&!currentUser.canCancelCheckin);document.getElementById('quickResults').classList.toggle('hidden',!currentUser.canResultEntry&&!currentUser.canResultEdit);document.getElementById('bulkCheckinActions')?.classList.toggle('hidden',!isAdmin())}
 function switchTab(t){activeTab=t;document.querySelectorAll('.tabPage').forEach(x=>x.classList.add('hidden'));document.getElementById('tab-'+t).classList.remove('hidden');document.querySelectorAll('[id^="nav-"]').forEach(x=>x.classList.remove('navActive'));document.getElementById('nav-'+t)?.classList.add('navActive');renderAll()}
-function renderAll(){renderStats();renderCompetitionMiniGrid();renderRecentCheckins();renderResultSummary();renderCheckinTable();renderCategoryGrid();renderResultCats();renderResultsTable();renderCompetitionCards();renderUsersTable();renderStatsGrid()}
-function renderStats(){const total=teams.length,p=teams.filter(t=>t.durum==='Check-in Yapıldı').length;document.getElementById('statTotal').innerText=total;document.getElementById('statPresent').innerText=p;document.getElementById('statUsers').innerText=users.filter(u=>u.active).length}
-function renderCompetitionMiniGrid(){const box=document.getElementById('competitionMiniGrid');box.innerHTML=competitions.map(c=>{const cat=categories.find(x=>x.key===c.key)||categories[0];return`<div class="soft rounded-3xl p-5 relative overflow-hidden"><span class="badge bg-green/10 text-green border border-green/25 absolute top-4 left-4">Aktif</span><div class="mt-8 flex items-center gap-5"><div class="w-16 h-16 rounded-full bg-green/10 border border-green/20 text-green flex items-center justify-center text-2xl"><i class="fas ${cat.icon}"></i></div><div><h3 class="text-lg font-black text-white">${c.name}</h3><p class="text-sm text-slate-400 mt-1">${c.key==='minisumo'?(c.bracketStatus==='active'?'Kura aktif':'Kura bekliyor'):'Skor tablosu aktif'}</p></div></div><button onclick="switchTab('competitions')" class="mt-5 w-full rounded-xl border border-line hover:border-blue/40 bg-bg2/60 px-4 py-3 text-sm font-black text-slate-200 flex items-center justify-between">Yönet <i class="fas fa-chevron-right"></i></button></div>`}).join('')}
-function renderRecentCheckins(){const list=teams.filter(t=>t.durum==='Check-in Yapıldı').slice(0,5);document.getElementById('recentCheckins').innerHTML=`<div class="grid grid-cols-5 gap-3 text-xs text-slate-400 font-bold border-b border-line pb-3"><span>Takım Adı</span><span>Kategori</span><span>İşlem</span><span>Saat</span><span>Kullanıcı</span></div>`+(list.map(t=>`<div class="grid grid-cols-5 gap-3 text-sm border-b border-line/60 py-4"><b class="text-white truncate">${t.takimAdi}</b><span>${t.kategori}</span><span><span class="badge bg-green/10 text-green border border-green/20">Giriş</span></span><span>${new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</span><span>${currentUser.fullName}</span></div>`).join('')||`<div class="py-8 text-center text-sm text-slate-500 font-bold">Henüz check-in kaydı yok.</div>`)}
-function renderResultSummary(){document.getElementById('resultSummary').innerHTML=`<div class="grid grid-cols-4 gap-3 text-xs text-slate-400 font-bold border-b border-line pb-3"><span>Kategori</span><span>Girilen</span><span>Bekleyen</span><span>Toplam</span></div>`+categories.map(c=>{const l=teams.filter(t=>ncat(t.kategori)===ncat(c.id)),s=l.filter(t=>t.resultsSaved).length;return`<div class="grid grid-cols-4 gap-3 text-sm border-b border-line/60 py-4"><b class="text-white">${c.id}</b><span class="text-green font-black">${s}</span><span class="text-amber font-black">${Math.max(l.length-s,0)}</span><span>${l.length}</span></div>`}).join('')}
-function renderCheckinTable(){const body=document.getElementById('checkinBody');const q=(document.getElementById('checkinSearch')?.value||'').toLowerCase();document.getElementById('checkinNote').innerText=currentUser.canCheckin?'Check-in yapabilirsiniz. İptal/düzeltme sadece yöneticidedir.':'Bu kullanıcı check-in işlemi yapamaz.';const filtered=teams.filter(t=>`${t.id} ${t.takimAdi} ${t.okul} ${t.mentor}`.toLowerCase().includes(q));body.innerHTML=filtered.map(t=>{const present=t.durum==='Check-in Yapıldı',canCheck=currentUser.canCheckin&&!present,canCancel=currentUser.canCancelCheckin&&present;return`<tr class="tableRow"><td class="p-5"><b class="text-white">#${t.id} ${t.takimAdi}</b></td><td class="p-5"><div>${t.okul}</div><small class="text-slate-500">Mentör: ${t.mentor}</small></td><td class="p-5"><span class="badge bg-blue/10 text-blue border border-blue/20">${t.kategori}</span></td><td class="p-5 text-center">${present?'<span class="badge bg-green/10 text-green border border-green/20">Alanda</span>':'<span class="badge bg-amber/10 text-amber border border-amber/20">Bekliyor</span>'}</td><td class="p-5 text-right"><button ${canCheck?'':'disabled'} onclick="setCheckin('${t.id}',true)" class="rounded-xl px-4 py-2 text-xs font-black ${canCheck?'bg-blue text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">Onayla</button> <button ${canCancel?'':'disabled'} onclick="setCheckin('${t.id}',false)" class="rounded-xl px-4 py-2 text-xs font-black ${canCancel?'bg-red text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">İptal</button></td></tr>`}).join('')||`<tr><td colspan="5" class="p-10 text-center text-slate-500 font-bold">Takım bulunamadı.</td></tr>`}
-async function setCheckin(id,val){
-  const t=teams.find(x=>x.id===id);
-  if(!t) return;
-
-  if(!val&&!currentUser.canCancelCheckin){
-    showToast('Check-in iptal yetkisi sadece yöneticidedir.','warning');
-    return;
-  }
-
-  if(val&&!currentUser.canCheckin){
-    showToast('Check-in yapma yetkiniz yok.','warning');
-    return;
-  }
-
-  const newStatus=val?'Check-in Yapıldı':'Bekliyor';
-  const oldStatus=t.durum;
-  t.durum=newStatus;
-  renderAll();
-  showToast('Check-in e-tabloya gönderiliyor...','info');
-
-  try{
-    const json=await apiPost({
-      action:'checkin',
-      id:id,
-      status:newStatus,
-      user:currentUser?currentUser.username:''
-    });
-
-    if(!json.success){
-      t.durum=oldStatus;
-      renderAll();
-      showToast(json.message||json.error||'Check-in e-tabloya kaydedilemedi.','error');
-      return;
-    }
-
-    await loadTeams();
-    await loadMiniSumoMatches();
-    renderAll();
-    showToast('Check-in e-tabloya kaydedildi.','success');
-  }catch(err){
-    t.durum=oldStatus;
-    renderAll();
-    console.error(err);
-    showToast('Check-in bağlantı hatası. E-tablo güncellenmedi.','error');
-  }
-}
-
-async function bulkCheckin(val){
-  if(!isAdmin()){
-    showToast('Toplu check-in işlemi sadece yöneticilere açıktır.','warning');
-    return;
-  }
-
-  const message=val
-    ? 'Tüm takımlar check-in yapılsın mı? Takımlar ait oldukları yarışma tablolarına eklenecek.'
-    : 'Tüm check-inler iptal edilsin mi? Takımlar diğer yarışma tablolarından kaldırılacak.';
-
-  if(!confirm(message)) return;
-
-  const status=val?'Check-in Yapıldı':'Bekliyor';
-  showToast(val?'Tüm takımlar check-in yapılıyor...':'Tüm check-inler iptal ediliyor...','info');
-
-  try{
-    const json=await apiPost({
-      action:'bulkCheckin',
-      status:status,
-      user:currentUser?currentUser.username:''
-    });
-
-    if(!json.success){
-      showToast(json.error||json.message||'Toplu işlem yapılamadı.','error');
-      return;
-    }
-
-    await loadTeams();
-    await loadMiniSumoMatches();
-    renderAll();
-    showToast(json.message||'Toplu check-in işlemi tamamlandı.','success');
-  }catch(err){
-    console.error(err);
-    showToast('Toplu check-in bağlantı hatası.','error');
-  }
-}
-
-async function deleteTeam(id,name){
-  if(!isAdmin()){
-    showToast('Takım silme işlemi sadece yöneticilere açıktır.','warning');
-    return;
-  }
-
-  if(!confirm(`#${id} ${name||''} takımı tamamen silinsin mi?
-
-Bu işlem basvurular tablosundan ve yarışma tablolarından kaldırır.`)) return;
-
-  showToast('Takım siliniyor...','info');
-
-  try{
-    const json=await apiPost({
-      action:'deleteTeam',
-      id:id,
-      user:currentUser?currentUser.username:''
-    });
-
-    if(!json.success){
-      showToast(json.error||json.message||'Takım silinemedi.','error');
-      return;
-    }
-
-    await loadTeams();
-    await loadMiniSumoMatches();
-    renderAll();
-    showToast(json.message||'Takım silindi.','success');
-  }catch(err){
-    console.error(err);
-    showToast('Takım silme bağlantı hatası.','error');
-  }
-}
-
+function renderAll(){renderStats();renderCompetitionMiniGrid();renderCheckinTable();renderCategoryGrid();renderResultCats();renderResultsTable();renderCompetitionCards();renderUsersTable();renderStatsGrid()}
+function renderStats(){document.getElementById('statTotal').innerText=teams.length;document.getElementById('statPresent').innerText=teams.filter(t=>t.durum==='Check-in Yapıldı').length;document.getElementById('statUsers').innerText=users.filter(u=>u.active).length}
+function renderCompetitionMiniGrid(){const box=document.getElementById('competitionMiniGrid');box.innerHTML=competitions.map(c=>{const cat=categories.find(x=>x.key===c.key)||categories[0];return`<div class="soft rounded-3xl p-5"><div class="flex items-center gap-5"><div class="w-16 h-16 rounded-full bg-green/10 border border-green/20 text-green flex items-center justify-center text-2xl"><i class="fas ${cat.icon}"></i></div><div><h3 class="text-lg font-black text-white">${c.name}</h3><p class="text-sm text-slate-400 mt-1">${c.key==='minisumo'?(c.bracketStatus==='active'?'Kura aktif':'Kura bekliyor'):'Skor tablosu aktif'}</p></div></div><button onclick="switchTab('competitions')" class="mt-5 w-full rounded-xl border border-line hover:border-blue/40 bg-bg2/60 px-4 py-3 text-sm font-black text-slate-200 flex items-center justify-between">Yönet <i class="fas fa-chevron-right"></i></button></div>`}).join('')}
+function renderCheckinTable(){const body=document.getElementById('checkinBody');const q=(document.getElementById('checkinSearch')?.value||'').toLowerCase();document.getElementById('checkinNote').innerText=isAdmin()?'Yöneticiler tek tek işlem, toplu check-in, toplu iptal ve takım silme yapabilir.':currentUser.canCheckin?'Check-in yapabilirsiniz. İptal/düzeltme sadece yöneticidedir.':'Bu kullanıcı check-in işlemi yapamaz.';document.getElementById('bulkCheckinActions')?.classList.toggle('hidden',!isAdmin());const filtered=teams.filter(t=>`${t.id} ${t.takimAdi} ${t.okul} ${t.mentor}`.toLowerCase().includes(q));body.innerHTML=filtered.map(t=>{const present=t.durum==='Check-in Yapıldı';const canCheck=currentUser.canCheckin&&!present;const canCancel=currentUser.canCancelCheckin&&present;const deleteButton=isAdmin()?`<button onclick="deleteTeam('${t.id}','${String(t.takimAdi||'').replace(/'/g,"\\'")}')" class="rounded-xl px-4 py-2 text-xs font-black bg-red/15 border border-red/40 text-red hover:bg-red hover:text-white transition"><i class="fas fa-trash mr-1"></i>Sil</button>`:'';return`<tr class="tableRow"><td class="p-5"><b class="text-white">#${t.id} ${t.takimAdi}</b></td><td class="p-5"><div>${t.okul}</div><small class="text-slate-500">Mentör: ${t.mentor}</small></td><td class="p-5"><span class="badge bg-blue/10 text-blue border border-blue/20">${t.kategori}</span></td><td class="p-5 text-center">${present?'<span class="badge bg-green/10 text-green border border-green/20">Alanda</span>':'<span class="badge bg-amber/10 text-amber border border-amber/20">Bekliyor</span>'}</td><td class="p-5 text-right"><div class="flex justify-end gap-2 flex-wrap"><button ${canCheck?'':'disabled'} onclick="setCheckin('${t.id}',true)" class="rounded-xl px-4 py-2 text-xs font-black ${canCheck?'bg-blue text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">Onayla</button><button ${canCancel?'':'disabled'} onclick="setCheckin('${t.id}',false)" class="rounded-xl px-4 py-2 text-xs font-black ${canCancel?'bg-red text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">İptal</button>${deleteButton}</div></td></tr>`}).join('')||`<tr><td colspan="5" class="p-10 text-center text-slate-500 font-bold">Takım bulunamadı.</td></tr>`}
+async function setCheckin(id,val){const t=teams.find(x=>x.id===id);if(!t)return;if(!val&&!currentUser.canCancelCheckin){showToast('Check-in iptal yetkisi sadece yöneticidedir.','warning');return}if(val&&!currentUser.canCheckin){showToast('Check-in yapma yetkiniz yok.','warning');return}const newStatus=val?'Check-in Yapıldı':'Bekliyor';const oldStatus=t.durum;t.durum=newStatus;renderAll();showToast('Check-in e-tabloya gönderiliyor...','info');try{const json=await apiPost({action:'checkin',id:id,status:newStatus,user:currentUser?currentUser.username:''});if(!json.success){t.durum=oldStatus;renderAll();showToast(json.message||json.error||'Check-in e-tabloya kaydedilemedi.','error');return}await loadTeams();await loadMiniSumoMatches();renderAll();showToast('Check-in e-tabloya kaydedildi.','success')}catch(err){t.durum=oldStatus;renderAll();console.error(err);showToast('Check-in bağlantı hatası. E-tablo güncellenmedi.','error')}}
+async function bulkCheckin(val){if(!isAdmin()){showToast('Toplu check-in işlemi sadece yöneticilere açıktır.','warning');return}const message=val?'Tüm takımlar check-in yapılsın mı? Takımlar ait oldukları yarışma tablolarına eklenecek.':'Tüm check-inler iptal edilsin mi? Takımlar diğer yarışma tablolarından kaldırılacak.';if(!confirm(message))return;const status=val?'Check-in Yapıldı':'Bekliyor';showToast(val?'Tüm takımlar check-in yapılıyor...':'Tüm check-inler iptal ediliyor...','info');try{const json=await apiPost({action:'bulkCheckin',status:status,user:currentUser?currentUser.username:''});if(!json.success){showToast(json.error||json.message||'Toplu işlem yapılamadı.','error');return}await loadTeams();await loadMiniSumoMatches();renderAll();showToast(json.message||'Toplu check-in işlemi tamamlandı.','success')}catch(err){console.error(err);showToast('Toplu check-in bağlantı hatası.','error')}}
+async function deleteTeam(id,name){if(!isAdmin()){showToast('Takım silme işlemi sadece yöneticilere açıktır.','warning');return}if(!confirm(`#${id} ${name||''} takımı tamamen silinsin mi?\n\nBu işlem basvurular tablosundan ve yarışma tablolarından kaldırır.`))return;showToast('Takım siliniyor...','info');try{const json=await apiPost({action:'deleteTeam',id:id,user:currentUser?currentUser.username:''});if(!json.success){showToast(json.error||json.message||'Takım silinemedi.','error');return}await loadTeams();await loadMiniSumoMatches();renderAll();showToast(json.message||'Takım silindi.','success')}catch(err){console.error(err);showToast('Takım silme bağlantı hatası.','error')}}
 function renderCategoryGrid(){document.getElementById('categoryGrid').innerHTML=categories.map(c=>{const list=teams.filter(t=>t.durum==='Check-in Yapıldı'&&ncat(t.kategori)===ncat(c.id));return`<div class="panel rounded-3xl overflow-hidden"><div class="p-5 border-b border-line flex items-center justify-between"><h3 class="font-black text-white"><i class="fas ${c.icon} text-blue mr-2"></i>${c.id}</h3><span class="badge bg-green/10 text-green border border-green/20">${list.length}</span></div><div class="p-4 space-y-3 min-h-[180px]">${list.map(t=>`<div class="soft rounded-2xl p-3"><b class="text-sm text-white">#${t.id} ${t.takimAdi}</b><div class="text-xs text-slate-500 mt-1">${t.okul}</div></div>`).join('')||'<div class="text-center py-10 text-sm text-slate-500 font-bold">Takım yok.</div>'}</div></div>`}).join('')}
 function renderResultCats(){const allowed=categories.filter(c=>canSeeCategory(c.id));const box=document.getElementById('resultCats');if(!allowed.length){box.innerHTML='<span class="text-red font-bold text-sm">Kategori yetkisi yok.</span>';return}if(!allowed.some(c=>c.id===activeResultCategory))activeResultCategory=allowed[0].id;box.innerHTML=allowed.map(c=>`<button onclick="activeResultCategory='${c.id}';renderAll();" class="rounded-2xl px-4 py-3 text-xs font-black ${activeResultCategory===c.id?'bg-blue text-white':'soft text-slate-300 hover:text-white'}"><i class="fas ${c.icon} mr-1"></i>${c.id}</button>`).join('');document.getElementById('resultNote').innerText=currentUser.canResultEdit?'Sonuç girebilir ve düzeltebilirsiniz.':'Sadece yetkili olduğunuz kategorilerde sonuç girebilirsiniz.'}
-function renderResultsTable(){
-  const head=document.getElementById('resultsHead');
-  const body=document.getElementById('resultsBody');
-  document.getElementById('activeResultTitle').innerText=activeResultCategory+' Sonuç Girişi';
-
-  if(ncat(activeResultCategory)==='minisumo'){
-    head.innerHTML=`<tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Maç</th><th class="p-5">Robot 1</th><th class="p-5 text-center">Skor</th><th class="p-5">Robot 2</th><th class="p-5 text-center">Kazanan</th><th class="p-5 text-right">İşlem</th></tr>`;
-    renderMiniSumoMatchRows();
-    return;
-  }
-
-  head.innerHTML=`<tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Takım</th><th class="p-5">Okul</th><th class="p-5">Veri Girişi</th><th class="p-5">Durum</th><th class="p-5 text-right">İşlem</th></tr>`;
-  const list=teams.filter(t=>ncat(t.kategori)===ncat(activeResultCategory)&&t.durum==='Check-in Yapıldı');
-  body.innerHTML=list.map(t=>{const canEdit=!t.resultsSaved||currentUser.canResultEdit;return`<tr class="tableRow"><td class="p-5"><b class="text-white">#${t.id} ${t.takimAdi}</b></td><td class="p-5">${t.okul}</td><td class="p-5">${standardScoreInput(activeResultCategory,t.id,canEdit)}</td><td class="p-5">${t.resultsSaved?'<span class="badge bg-green/10 text-green border border-green/20">Kaydedildi</span>':'<span class="badge bg-amber/10 text-amber border border-amber/20">Eksik</span>'}</td><td class="p-5 text-right"><button ${canEdit?'':'disabled'} onclick="saveStandardResult('${t.id}')" class="rounded-xl px-4 py-2 text-xs font-black ${canEdit?'bg-blue text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">${t.resultsSaved?'Düzelt':'Gönder'}</button></td></tr>`}).join('')||`<tr><td colspan="5" class="p-10 text-center text-slate-500 font-bold">Bu kategoride alanda takım yok.</td></tr>`
-}
-
-function standardScoreInput(category,id,canEdit){
-  const disabled=canEdit?'':'disabled';
-  const base='input disabled:opacity-40';
-  const k=ncat(category);
-
-  if(k==='cizgiizleyen'){
-    return `<div class="flex gap-2">
-      <input ${disabled} id="sure_${id}" class="${base} w-28" placeholder="Süre">
-      <input ${disabled} id="ceza_${id}" class="${base} w-28" placeholder="Ceza">
-    </div>`;
-  }
-
-  if(k==='kagitkule'){
-    return `<div class="flex flex-wrap gap-2">
-      <select ${disabled} id="durum_${id}" class="${base} w-32"><option>Ayakta</option><option>Yıkıldı</option></select>
-      <input ${disabled} id="yukseklik_${id}" class="${base} w-32" placeholder="Yükseklik">
-      <input ${disabled} id="sure_${id}" class="${base} w-28" placeholder="Süre sn">
-    </div>`;
-  }
-
-  if(k==='balonluaraba'||k==='kagitroket'){
-    return `<div class="flex gap-2">
-      <input ${disabled} id="d1_${id}" class="${base} w-32" placeholder="1. deneme">
-      <input ${disabled} id="d2_${id}" class="${base} w-32" placeholder="2. deneme">
-    </div>`;
-  }
-
-  return `<input ${disabled} id="skor_${id}" class="${base} w-64" placeholder="Skor / süre / değer">`;
-}
-
-function renderMiniSumoMatchRows(){
-  const body=document.getElementById('resultsBody');
-  const comp=competitions.find(c=>c.key==='minisumo');
-  if(!comp||comp.bracketStatus!=='active'||!Array.isArray(comp.matches)||comp.matches.length===0){
-    body.innerHTML=`<tr><td colspan="6" class="p-10 text-center text-slate-500 font-bold">Mini Sumo için henüz kura çekilmemiş. Maç sonucu girişi için önce yönetici kura oluşturmalı.</td></tr>`;
-    return;
-  }
-
-  body.innerHTML=comp.matches.map((m,i)=>{
-    const waiting=!m.robot1||!m.robot2;
-    const isBay=m.robot1==='BAY'||m.robot2==='BAY';
-    const locked=(m.saved&&!currentUser.canResultEdit)||waiting;
-    const r1=m.robot1||'Rakip bekleniyor';
-    const r2=m.robot2||'Rakip bekleniyor';
-    const winnerOptions=waiting
-      ? `<option value="">Rakip bekleniyor</option>`
-      : isBay
-        ? `<option value="${m.robot1==='BAY'?m.robot2:m.robot1}" selected>${m.robot1==='BAY'?m.robot2:m.robot1}</option>`
-        : `<option value="">Seçiniz</option><option value="${m.robot1}" ${m.winner===m.robot1?'selected':''}>${m.robot1}</option><option value="${m.robot2}" ${m.winner===m.robot2?'selected':''}>${m.robot2}</option>`;
-    const roundLabel=roundDisplayName(m.round);
-    const rowMuted=waiting?'opacity-55':'';
-    return `<tr class="tableRow ${rowMuted}"><td class="p-5"><div class="font-black text-blue">${m.code}</div><div class="text-xs text-slate-500 mt-1">${roundLabel}</div></td><td class="p-5"><b class="${m.robot1?'text-white':'text-slate-500'}">${r1}</b></td><td class="p-5"><div class="flex items-center justify-center gap-2"><input ${isBay||locked?'disabled':''} id="sumo_s1_${i}" type="number" min="0" max="3" value="${m.score1||0}" class="input w-20 text-center disabled:opacity-40"><span class="font-black text-slate-500">-</span><input ${isBay||locked?'disabled':''} id="sumo_s2_${i}" type="number" min="0" max="3" value="${m.score2||0}" class="input w-20 text-center disabled:opacity-40"></div></td><td class="p-5"><b class="${m.robot2==='BAY'?'text-amber':m.robot2?'text-white':'text-slate-500'}">${r2}</b>${isBay?'<div class="text-xs text-slate-500 mt-1">Bay geçti</div>':''}</td><td class="p-5 text-center"><select ${locked?'disabled':''} id="sumo_winner_${i}" class="input w-56 text-center disabled:opacity-40">${winnerOptions}</select></td><td class="p-5 text-right"><button ${locked?'disabled':''} onclick="saveSumoMatch(${i})" class="rounded-xl px-4 py-2 text-xs font-black ${locked?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber text-black'}">${waiting?'Bekliyor':m.saved?'Düzelt':'Kaydet'}</button></td></tr>`;
-  }).join('');
-}
-
-function roundDisplayName(round){
-  const map={R64:'Son 64',R32:'Son 32',R16:'Son 16',QF:'Çeyrek Final',SF:'Yarı Final',F:'Final'};
-  return map[round]||round||'Maç';
-}
-
-function getNextRound(round){
-  const order=['R64','R32','R16','QF','SF','F'];
-  const idx=order.indexOf(round);
-  return idx>=0&&idx<order.length-1?order[idx+1]:null;
-}
-
-function createEmptyNextRoundIfNeeded(comp,round){
-  const next=getNextRound(round);
-  if(!next) return;
-  const current=comp.matches.filter(m=>m.round===round);
-  if(comp.matches.some(m=>m.round===next)) return;
-  const nextCount=Math.ceil(current.length/2);
-  for(let i=0;i<nextCount;i++){
-    comp.matches.push({code:`${next}-${i+1}`,round:next,robot1:'',robot2:'',score1:0,score2:0,winner:'',saved:false,source1:null,source2:null});
-  }
-}
-
-function advanceMiniSumoWinner(comp,matchIndex,winner){
-  const match=comp.matches[matchIndex];
-  const nextRound=getNextRound(match.round);
-  if(!nextRound){
-    comp.champion=winner;
-    comp.finished=true;
-    comp.status='finished';
-    if(!comp.ranking.includes(winner)) comp.ranking.unshift(winner);
-    return;
-  }
-  createEmptyNextRoundIfNeeded(comp,match.round);
-  const sameRound=comp.matches.filter(m=>m.round===match.round);
-  const roundIndex=sameRound.findIndex(m=>m.code===match.code);
-  const nextSlotIndex=Math.floor(roundIndex/2);
-  const nextMatches=comp.matches.filter(m=>m.round===nextRound);
-  const target=nextMatches[nextSlotIndex];
-  if(!target) return;
-  if(roundIndex%2===0) target.robot1=winner; else target.robot2=winner;
-  target.saved=false;
-  target.winner='';
-  target.score1=0;
-  target.score2=0;
-  if(target.robot1&&target.robot2&&target.robot2!=='BAY'&&target.robot1!=='BAY'){
-    showToast(`${winner} üst tura taşındı. ${roundDisplayName(nextRound)} maçı hazır.`, 'success');
-  } else {
-    showToast(`${winner} üst tura taşındı. Rakip bekleniyor.`, 'success');
-  }
-}
-
-async function saveSumoMatch(index){
-  const comp=competitions.find(c=>c.key==='minisumo');
-  if(!comp||!comp.matches[index]) return;
-
-  const m=comp.matches[index];
-
-  if(!m.robot1||!m.robot2){
-    showToast('Bu maç için rakipler henüz tamamlanmadı.','warning');
-    return;
-  }
-
-  let s1=document.getElementById('sumo_s1_'+index)?.value||'0';
-  let s2=document.getElementById('sumo_s2_'+index)?.value||'0';
-  let winner=document.getElementById('sumo_winner_'+index)?.value||'';
-
-  if(m.robot1==='BAY'||m.robot2==='BAY'){
-    winner=m.robot1==='BAY'?m.robot2:m.robot1;
-    s1=m.robot1==='BAY'?'0':'3';
-    s2=m.robot2==='BAY'?'0':'3';
-  }
-
-  if(!winner){
-    showToast('Lütfen maç kazananını seçin.','warning');
-    return;
-  }
-
-  if(String(s1)===String(s2)&&m.robot1!=='BAY'&&m.robot2!=='BAY'){
-    showToast('Mini Sumo maçında skor eşit olmamalı.','warning');
-    return;
-  }
-
-  showToast('Mini Sumo sonucu e-tabloya gönderiliyor...','info');
-
-  try{
-    const json=await apiPost({
-      action:'saveResult',
-      kategori:'Mini Sumo',
-      takimid:m.matchId||m.code,
-      kolon4:s1,
-      kolon5:s2,
-      kolon6:winner
-    });
-
-    if(!json.success){
-      showToast(json.error||json.message||'Mini Sumo sonucu e-tabloya kaydedilemedi.','error');
-      return;
-    }
-
-    await loadMiniSumoMatches();
-    renderAll();
-    showToast('Mini Sumo maç sonucu e-tabloya kaydedildi.','success');
-  }catch(err){
-    console.error(err);
-    showToast('Mini Sumo sonucu bağlantı hatası nedeniyle kaydedilemedi.','error');
-  }
-}
-
-async function saveStandardResult(id){
-  const t=teams.find(x=>x.id===id);
-  if(!t) return;
-
-  const k=ncat(activeResultCategory);
-  const params={
-    action:'saveResult',
-    kategori:activeResultCategory,
-    takimid:id
-  };
-
-  if(k==='cizgiizleyen'){
-    params.sure=document.getElementById('sure_'+id)?.value||0;
-    params.ceza=document.getElementById('ceza_'+id)?.value||0;
-  } else if(k==='kagitkule'){
-    params.durum=document.getElementById('durum_'+id)?.value||'Ayakta';
-    params.yukseklik=document.getElementById('yukseklik_'+id)?.value||0;
-    params.sure=document.getElementById('sure_'+id)?.value||0;
-  } else {
-    params.deneme1=document.getElementById('d1_'+id)?.value||0;
-    params.deneme2=document.getElementById('d2_'+id)?.value||0;
-  }
-
-  showToast('Sonuç e-tabloya gönderiliyor...','info');
-
-  try{
-    const json=await apiPost(params);
-
-    if(!json.success){
-      showToast(json.error||json.message||'Sonuç e-tabloya kaydedilemedi.','error');
-      return;
-    }
-
-    t.resultsSaved=true;
-    renderAll();
-    showToast('Sonuç e-tabloya kaydedildi.','success');
-  }catch(err){
-    console.error(err);
-    showToast('Sonuç bağlantı hatası. E-tablo güncellenmedi.','error');
-  }
-}
-function renderCompetitionCards(){document.getElementById('competitionCards').innerHTML=competitions.map(c=>{const isMini=c.key==='minisumo',cat=categories.find(x=>x.key===c.key)||categories[0];const can=currentUser.canManageBracket;const drawDisabled=!can||c.bracketStatus==='active',deleteDisabled=!can||c.bracketStatus!=='active',finishDisabled=!can||c.finished;return`<div class="panel rounded-3xl p-6 space-y-5"><div class="flex items-center justify-between"><div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-green/10 border border-green/20 text-green flex items-center justify-center text-xl"><i class="fas ${cat.icon}"></i></div><div><h3 class="text-xl font-black text-white">${c.name}</h3><p class="text-sm text-slate-400">${c.finished?'Yarışma bitirildi':'Yarışma aktif'}</p></div></div>${c.finished?'<span class="badge bg-amber/10 text-amber border border-amber/20">Bitti</span>':'<span class="badge bg-green/10 text-green border border-green/20">Aktif</span>'}</div><div class="soft rounded-2xl p-4 text-center"><b class="${isMini?(c.bracketStatus==='active'?'text-green':'text-amber'):'text-blue'}">${isMini?(c.bracketStatus==='active'?'Kura Aktif':'Kura Bekliyor'):'Skor Tablosu'}</b><p class="text-xs text-slate-400 mt-2">${isMini?'Yeni kura için önce mevcut kurayı silmelisiniz.':'Bu yarışma sonuç tablosundan sıralanır.'}</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${isMini?`<button ${drawDisabled?'disabled':''} onclick="drawBracket('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${drawDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber text-black'}"><i class="fas fa-random mr-1"></i>Kura Çek</button><button ${deleteDisabled?'disabled':''} onclick="deleteBracket('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${deleteDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-red text-white'}"><i class="fas fa-trash mr-1"></i>Kurayı Sil</button>`:`<button disabled class="rounded-2xl py-3 text-xs font-black bg-slate-800 text-slate-500 cursor-not-allowed sm:col-span-2">Kura Yok</button>`}<button ${finishDisabled?'disabled':''} onclick="finishCompetition('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${finishDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-purple text-white'}"><i class="fas fa-flag-checkered mr-1"></i>Yarışmayı Bitir</button></div><div class="soft rounded-2xl p-4"><div class="text-xs text-slate-500 font-black uppercase">Public Sayfa Tetikleyicisi</div><code class="block mt-2 text-xs text-blue break-all">competitionStatus: ${c.finished?'finished':'active'} | championTeam: ${c.champion||'-'}</code></div></div>`}).join('')}
-async function drawBracket(key){
-  if(key!=='minisumo') return;
-  if(!confirm('Mini Sumo kurası minisumo H sütunundaki takımlardan çekilsin mi?')) return;
-
-  showToast('Mini Sumo kurası e-tabloya gönderiliyor...','info');
-
-  try{
-    const json=await apiPost({action:'generateBracket'});
-
-    if(!json.success){
-      showToast(json.error||json.message||'Kura oluşturulamadı.','error');
-      return;
-    }
-
-    await loadTeams();
-    await loadMiniSumoMatches();
-    renderAll();
-    showToast(`Mini Sumo kura oluşturuldu: ${json.count||''} takım, ${json.matchCount||''} maç`, 'success');
-  }catch(err){
-    console.error(err);
-    showToast('Kura bağlantı hatası nedeniyle oluşturulamadı.','error');
-  }
-}
-
-function getFirstRoundName(size){
-  if(size>=64) return 'R64';
-  if(size>=32) return 'R32';
-  if(size>=16) return 'R16';
-  if(size>=8) return 'QF';
-  if(size>=4) return 'SF';
-  return 'F';
-}
-
-async function deleteBracket(key){
-  if(key!=='minisumo') return;
-  if(!confirm('Mevcut Mini Sumo kurasını silmek istediğinize emin misiniz? H sütunu korunacak.')) return;
-
-  showToast('Mini Sumo kurası e-tablodan siliniyor...','info');
-
-  try{
-    const json=await apiPost({action:'deleteBracket'});
-
-    if(!json.success){
-      showToast(json.error||json.message||'Kura silinemedi.','error');
-      return;
-    }
-
-    await loadMiniSumoMatches();
-    renderAll();
-    showToast('Mini Sumo kurası e-tablodan silindi. H sütunu korundu.','success');
-  }catch(err){
-    console.error(err);
-    showToast('Kura silme bağlantı hatası.','error');
-  }
-}
+function renderResultsTable(){const head=document.getElementById('resultsHead'),body=document.getElementById('resultsBody');document.getElementById('activeResultTitle').innerText=activeResultCategory+' Sonuç Girişi';if(ncat(activeResultCategory)==='minisumo'){head.innerHTML=`<tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Maç</th><th class="p-5">Robot 1</th><th class="p-5 text-center">Skor</th><th class="p-5">Robot 2</th><th class="p-5 text-center">Kazanan</th><th class="p-5 text-right">İşlem</th></tr>`;renderMiniSumoMatchRows();return}head.innerHTML=`<tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Takım</th><th class="p-5">Okul</th><th class="p-5">Veri Girişi</th><th class="p-5">Durum</th><th class="p-5 text-right">İşlem</th></tr>`;const list=teams.filter(t=>ncat(t.kategori)===ncat(activeResultCategory)&&t.durum==='Check-in Yapıldı');body.innerHTML=list.map(t=>{const locked=t.resultsSaved&&!currentUser.canResultEdit;return`<tr class="tableRow"><td class="p-5"><b class="text-white">#${t.id} ${t.takimAdi}</b></td><td class="p-5">${t.okul}</td><td class="p-5">${standardScoreInput(activeResultCategory,t.id,!locked)}</td><td class="p-5">${t.resultsSaved?'<span class="badge bg-green/10 text-green border border-green/20">Kaydedildi</span>':'<span class="badge bg-amber/10 text-amber border border-amber/20">Bekliyor</span>'}</td><td class="p-5 text-right"><button ${locked?'disabled':''} onclick="saveStandardResult('${t.id}')" class="rounded-xl px-4 py-2 text-xs font-black ${locked?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-blue text-white'}">${t.resultsSaved?'Düzelt':'Kaydet'}</button></td></tr>`}).join('')||`<tr><td colspan="5" class="p-10 text-center text-slate-500 font-bold">Bu kategoride alanda takım yok.</td></tr>`}
+function standardScoreInput(category,id,canEdit){const disabled=canEdit?'':'disabled';const base='input disabled:opacity-40';const k=ncat(category);if(k==='cizgiizleyen'){return`<div class="flex gap-2"><input ${disabled} id="sure_${id}" class="${base} w-28" placeholder="Süre"><input ${disabled} id="ceza_${id}" class="${base} w-28" placeholder="Ceza"></div>`}if(k==='kagitkule'){return`<div class="flex flex-wrap gap-2"><select ${disabled} id="durum_${id}" class="${base} w-32"><option>Ayakta</option><option>Yıkıldı</option></select><input ${disabled} id="yukseklik_${id}" class="${base} w-32" placeholder="Yükseklik"><input ${disabled} id="sure_${id}" class="${base} w-28" placeholder="Süre sn"></div>`}if(k==='balonluaraba'||k==='kagitroket'){return`<div class="flex gap-2"><input ${disabled} id="d1_${id}" class="${base} w-32" placeholder="1. deneme"><input ${disabled} id="d2_${id}" class="${base} w-32" placeholder="2. deneme"></div>`}return`<input ${disabled} id="skor_${id}" class="${base} w-64" placeholder="Skor / süre / değer">`}
+function renderMiniSumoMatchRows(){const body=document.getElementById('resultsBody');const comp=competitions.find(c=>c.key==='minisumo');if(!comp||comp.bracketStatus!=='active'||!Array.isArray(comp.matches)||comp.matches.length===0){body.innerHTML=`<tr><td colspan="6" class="p-10 text-center text-slate-500 font-bold">Mini Sumo için henüz kura çekilmemiş. Maç sonucu girişi için önce yönetici kura oluşturmalı.</td></tr>`;return}body.innerHTML=comp.matches.map((m,i)=>{const waiting=!m.robot1||!m.robot2;const isBay=m.robot1==='BAY'||m.robot2==='BAY';const locked=(m.saved&&!currentUser.canResultEdit)||waiting;const r1=m.robot1||'Rakip bekleniyor';const r2=m.robot2||'Rakip bekleniyor';const winnerOptions=waiting?`<option value="">Rakip bekleniyor</option>`:isBay?`<option value="${m.robot1==='BAY'?m.robot2:m.robot1}" selected>${m.robot1==='BAY'?m.robot2:m.robot1}</option>`:`<option value="">Seçiniz</option><option value="${m.robot1}" ${m.winner===m.robot1?'selected':''}>${m.robot1}</option><option value="${m.robot2}" ${m.winner===m.robot2?'selected':''}>${m.robot2}</option>`;const roundLabel=roundDisplayName(m.round);const rowMuted=waiting?'opacity-55':'';return`<tr class="tableRow ${rowMuted}"><td class="p-5"><div class="font-black text-blue">${m.code}</div><div class="text-xs text-slate-500 mt-1">${roundLabel}</div></td><td class="p-5"><b class="${m.robot1?'text-white':'text-slate-500'}">${r1}</b></td><td class="p-5"><div class="flex items-center justify-center gap-2"><input ${isBay||locked?'disabled':''} id="sumo_s1_${i}" type="number" min="0" max="3" value="${m.score1||0}" class="input w-20 text-center disabled:opacity-40"><span class="font-black text-slate-500">-</span><input ${isBay||locked?'disabled':''} id="sumo_s2_${i}" type="number" min="0" max="3" value="${m.score2||0}" class="input w-20 text-center disabled:opacity-40"></div></td><td class="p-5"><b class="${m.robot2==='BAY'?'text-amber':m.robot2?'text-white':'text-slate-500'}">${r2}</b>${isBay?'<div class="text-xs text-slate-500 mt-1">Bay geçti</div>':''}</td><td class="p-5 text-center"><select ${locked?'disabled':''} id="sumo_winner_${i}" class="input w-56 text-center disabled:opacity-40">${winnerOptions}</select></td><td class="p-5 text-right"><button ${locked?'disabled':''} onclick="saveSumoMatch(${i})" class="rounded-xl px-4 py-2 text-xs font-black ${locked?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber text-black'}">${waiting?'Bekliyor':m.saved?'Düzelt':'Kaydet'}</button></td></tr>`}).join('')}
+function roundDisplayName(r){return{R64:'Son 64',R32:'Son 32',R16:'Son 16',QF:'Çeyrek Final',SF:'Yarı Final',F:'Final'}[r]||r}
+async function saveSumoMatch(index){const comp=competitions.find(c=>c.key==='minisumo');if(!comp||!comp.matches[index])return;const m=comp.matches[index];if(!m.robot1||!m.robot2){showToast('Bu maç için rakipler henüz tamamlanmadı.','warning');return}let s1=document.getElementById('sumo_s1_'+index)?.value||'0';let s2=document.getElementById('sumo_s2_'+index)?.value||'0';let winner=document.getElementById('sumo_winner_'+index)?.value||'';if(m.robot1==='BAY'||m.robot2==='BAY'){winner=m.robot1==='BAY'?m.robot2:m.robot1;s1=m.robot1==='BAY'?'0':'3';s2=m.robot2==='BAY'?'0':'3'}if(!winner){showToast('Lütfen maç kazananını seçin.','warning');return}if(String(s1)===String(s2)&&m.robot1!=='BAY'&&m.robot2!=='BAY'){showToast('Mini Sumo maçında skor eşit olmamalı.','warning');return}showToast('Mini Sumo sonucu e-tabloya gönderiliyor...','info');try{const json=await apiPost({action:'saveResult',kategori:'Mini Sumo',takimid:m.matchId||m.code,kolon4:s1,kolon5:s2,kolon6:winner});if(!json.success){showToast(json.error||json.message||'Mini Sumo sonucu e-tabloya kaydedilemedi.','error');return}await loadMiniSumoMatches();renderAll();showToast('Mini Sumo maç sonucu e-tabloya kaydedildi.','success')}catch(err){console.error(err);showToast('Mini Sumo sonucu bağlantı hatası nedeniyle kaydedilemedi.','error')}}
+async function saveStandardResult(id){const t=teams.find(x=>x.id===id);if(!t)return;const k=ncat(activeResultCategory);const params={action:'saveResult',kategori:activeResultCategory,takimid:id};if(k==='cizgiizleyen'){params.sure=document.getElementById('sure_'+id)?.value||0;params.ceza=document.getElementById('ceza_'+id)?.value||0}else if(k==='kagitkule'){params.durum=document.getElementById('durum_'+id)?.value||'Ayakta';params.yukseklik=document.getElementById('yukseklik_'+id)?.value||0;params.sure=document.getElementById('sure_'+id)?.value||0}else{params.deneme1=document.getElementById('d1_'+id)?.value||0;params.deneme2=document.getElementById('d2_'+id)?.value||0}showToast('Sonuç e-tabloya gönderiliyor...','info');try{const json=await apiPost(params);if(!json.success){showToast(json.error||json.message||'Sonuç e-tabloya kaydedilemedi.','error');return}t.resultsSaved=true;renderAll();showToast('Sonuç e-tabloya kaydedildi.','success')}catch(err){console.error(err);showToast('Sonuç bağlantı hatası. E-tablo güncellenmedi.','error')}}
+function renderCompetitionCards(){document.getElementById('competitionCards').innerHTML=competitions.map(c=>{const isMini=c.key==='minisumo',cat=categories.find(x=>x.key===c.key)||categories[0];const can=currentUser.canManageBracket;const drawDisabled=!can||(isMini&&c.bracketStatus==='active'),deleteDisabled=!can||(isMini&&c.bracketStatus!=='active'),finishDisabled=!can||c.finished;return`<div class="panel rounded-3xl p-6 space-y-5"><div class="flex items-center justify-between"><div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-green/10 border border-green/20 text-green flex items-center justify-center text-xl"><i class="fas ${cat.icon}"></i></div><div><h3 class="text-xl font-black text-white">${c.name}</h3><p class="text-sm text-slate-400">${c.finished?'Yarışma bitirildi':'Yarışma aktif'}</p></div></div>${c.finished?'<span class="badge bg-amber/10 text-amber border border-amber/20">Bitti</span>':'<span class="badge bg-green/10 text-green border border-green/20">Aktif</span>'}</div><div class="soft rounded-2xl p-4 text-center"><b class="${isMini?(c.bracketStatus==='active'?'text-green':'text-amber'):'text-blue'}">${isMini?(c.bracketStatus==='active'?'Kura Aktif':'Kura Bekliyor'):'Skor Tablosu'}</b><p class="text-xs text-slate-400 mt-2">${isMini?'Eşleşmeler e-tablo A:F alanına yazılır.':'Bu yarışma sonuç tablosundan sıralanır.'}</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${isMini?`<button ${drawDisabled?'disabled':''} onclick="drawBracket('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${drawDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber text-black'}"><i class="fas fa-random mr-1"></i>Kura Çek</button><button ${deleteDisabled?'disabled':''} onclick="deleteBracket('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${deleteDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-red text-white'}"><i class="fas fa-trash mr-1"></i>Kurayı Sil</button>`:`<button disabled class="rounded-2xl py-3 text-xs font-black bg-slate-800 text-slate-500 cursor-not-allowed sm:col-span-2">Kura Yok</button>`}<button ${finishDisabled?'disabled':''} onclick="finishCompetition('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${finishDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-purple text-white'}"><i class="fas fa-flag-checkered mr-1"></i>Yarışmayı Bitir</button></div></div>`}).join('')}
+async function drawBracket(key){if(key!=='minisumo')return;if(!confirm('Mini Sumo kurası minisumo H sütunundaki takımlardan çekilsin mi?'))return;showToast('Mini Sumo kurası e-tabloya gönderiliyor...','info');try{const json=await apiPost({action:'generateBracket'});if(!json.success){showToast(json.error||json.message||'Kura oluşturulamadı.','error');return}await loadTeams();await loadMiniSumoMatches();renderAll();showToast(`Mini Sumo kura oluşturuldu: ${json.count||''} takım, ${json.matchCount||''} maç`,'success')}catch(err){console.error(err);showToast('Kura bağlantı hatası nedeniyle oluşturulamadı.','error')}}
+function getFirstRoundName(size){if(size>=64)return'R64';if(size>=32)return'R32';if(size>=16)return'R16';if(size>=8)return'QF';if(size>=4)return'SF';return'F'}
+async function deleteBracket(key){if(key!=='minisumo')return;if(!confirm('Mevcut Mini Sumo kurasını silmek istediğinize emin misiniz? H sütunu korunacak.'))return;showToast('Mini Sumo kurası e-tablodan siliniyor...','info');try{const json=await apiPost({action:'deleteBracket'});if(!json.success){showToast(json.error||json.message||'Kura silinemedi.','error');return}await loadMiniSumoMatches();renderAll();showToast('Mini Sumo kurası e-tablodan silindi. H sütunu korundu.','success')}catch(err){console.error(err);showToast('Kura silme bağlantı hatası.','error')}}
 function finishCompetition(key){const c=competitions.find(x=>x.key===key);if(!c)return;if(!confirm(`${c.name} yarışmasını bitirmek istiyor musunuz? Public sonuç sayfası şampiyon görünümüne geçer.`))return;const first=teams.find(t=>ncat(t.kategori)===ncat(c.name));c.finished=true;c.status='finished';c.champion=first?.takimAdi||'Şampiyon Takım';c.ranking=teams.filter(t=>ncat(t.kategori)===ncat(c.name)).map(t=>t.takimAdi);renderAll();showToast('Yarışmayı bitir tetikleyicisi kaydedildi.','success')}
-function renderUsersTable(){document.getElementById('usersBody').innerHTML=users.map(u=>{const ops=[u.canCheckin?'Check-in':'',u.canCancelCheckin?'Check-in düzeltme':'',u.canResultEntry?'Sonuç girişi':'',u.canResultEdit?'Sonuç düzeltme':'',u.canManageBracket?'Kura yönetimi':''].filter(Boolean).join(' • ')||'Yetki yok';const cats=u.categories.includes('all')?'Tüm kategoriler':(u.categories.join(', ')||'Kategori yok');return`<tr class="tableRow"><td class="p-5"><b class="text-white">${u.fullName}</b><div class="text-xs text-slate-500 mt-1">${u.username}</div></td><td class="p-5"><span class="badge bg-blue/10 text-blue border border-blue/20">${roleName(u.role)}</span></td><td class="p-5 text-sm text-slate-300">${ops}</td><td class="p-5 text-sm text-slate-400">${cats}</td><td class="p-5 text-center"><span class="badge bg-green/10 text-green border border-green/20">Aktif</span></td></tr>`}).join('')}
+function renderUsersTable(){document.getElementById('usersBody').innerHTML=users.map(u=>{const ops=[u.canCheckin?'Check-in':'',u.canCancelCheckin?'Check-in düzeltme':'',u.canResultEntry?'Sonuç girişi':'',u.canResultEdit?'Sonuç düzeltme':'',u.canManageBracket?'Kura yönetimi':'',u.canManageUsers?'Kullanıcı yönetimi':''].filter(Boolean).join(' • ')||'Yetki yok';const cats=(u.categories||[]).includes('all')?'Tüm kategoriler':((u.categories||[]).join(', ')||'Kategori yok');const isSelf=currentUser&&String(currentUser.username).toLowerCase()===String(u.username).toLowerCase();return`<tr class="tableRow"><td class="p-5"><b class="text-white">${u.fullName}</b><div class="text-xs text-slate-500 mt-1">${u.username}</div></td><td class="p-5"><span class="badge bg-blue/10 text-blue border border-blue/20">${roleName(u.role)}</span></td><td class="p-5 text-sm text-slate-300">${ops}</td><td class="p-5 text-sm text-slate-400">${cats}</td><td class="p-5 text-center">${u.active?'<span class="badge bg-green/10 text-green border border-green/20">Aktif</span>':'<span class="badge bg-red/10 text-red border border-red/20">Pasif</span>'}</td><td class="p-5 text-right"><div class="flex justify-end gap-2 flex-wrap"><button onclick="editUser('${u.username}')" class="rounded-xl px-4 py-2 text-xs font-black bg-blue/10 border border-blue/30 text-blue hover:bg-blue hover:text-white transition"><i class="fas fa-pen mr-1"></i>Düzenle</button><button ${isSelf?'disabled':''} onclick="toggleUserActive('${u.username}')" class="rounded-xl px-4 py-2 text-xs font-black ${isSelf?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber/10 border border-amber/30 text-amber hover:bg-amber hover:text-black transition'}">${u.active?'Pasifleştir':'Aktifleştir'}</button><button ${isSelf?'disabled':''} onclick="removeUser('${u.username}')" class="rounded-xl px-4 py-2 text-xs font-black ${isSelf?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-red/10 border border-red/30 text-red hover:bg-red hover:text-white transition'}"><i class="fas fa-trash mr-1"></i>Sil</button></div></td></tr>`}).join('')}
 function renderNewCategoryChecks(){document.getElementById('newCategoryChecks').innerHTML=categories.map(c=>`<label class="flex items-center gap-2 text-sm font-bold"><input type="checkbox" value="${c.id}" class="newCat accent-blue"> ${c.id}</label>`).join('')}
 function syncRoleDefaults(){const r=document.getElementById('newRole')?.value||'judge';document.getElementById('permCheckin').checked=r==='admin'||r==='officer';document.getElementById('permResultEntry').checked=r==='admin'||r==='headjudge'||r==='judge';document.getElementById('permResultEdit').checked=r==='admin'||r==='headjudge'}
-function addUser(e){e.preventDefault();const r=document.getElementById('newRole').value;const cats=r==='admin'?['all']:Array.from(document.querySelectorAll('.newCat:checked')).map(x=>x.value);users.push({username:document.getElementById('newUsername').value.trim(),password:document.getElementById('newPassword').value,fullName:document.getElementById('newFullName').value.trim().toUpperCase(),role:r,active:true,canCheckin:r==='admin'?true:document.getElementById('permCheckin').checked,canCancelCheckin:r==='admin',canResultEntry:r==='admin'?true:document.getElementById('permResultEntry').checked,canResultEdit:r==='admin'||r==='headjudge'?true:document.getElementById('permResultEdit').checked,canManageUsers:r==='admin',canManageBracket:r==='admin',categories:cats});e.target.reset();syncRoleDefaults();renderAll();showToast('Kullanıcı eklendi.','success')}
+function collectUserFormData(){const r=document.getElementById('newRole').value;const cats=r==='admin'?['all']:Array.from(document.querySelectorAll('.newCat:checked')).map(x=>x.value);return{username:document.getElementById('newUsername').value.trim(),password:document.getElementById('newPassword').value,fullName:document.getElementById('newFullName').value.trim().toUpperCase(),role:r,active:true,canCheckin:r==='admin'?true:document.getElementById('permCheckin').checked,canCancelCheckin:r==='admin',canResultEntry:r==='admin'?true:document.getElementById('permResultEntry').checked,canResultEdit:r==='admin'||r==='headjudge'?true:document.getElementById('permResultEdit').checked,canManageUsers:r==='admin',canManageBracket:r==='admin',categories:cats}}
+function addUser(e){e.preventDefault();const editing=document.getElementById('editingUsername').value.trim();const userData=collectUserFormData();if(!userData.username||!userData.password||!userData.fullName){showToast('Ad, kullanıcı adı ve şifre zorunludur.','warning');return}const duplicate=users.find(u=>String(u.username).toLowerCase()===userData.username.toLowerCase()&&String(u.username).toLowerCase()!==editing.toLowerCase());if(duplicate){showToast('Bu kullanıcı adı zaten var.','warning');return}if(editing){const idx=users.findIndex(u=>String(u.username).toLowerCase()===editing.toLowerCase());if(idx!==-1){const wasActive=users[idx].active!==false;users[idx]={...userData,active:wasActive};if(currentUser&&String(currentUser.username).toLowerCase()===editing.toLowerCase()){currentUser=users[idx];localStorage.setItem('turkiyeStemActiveUser',currentUser.username)}saveUsers();cancelUserEdit();renderIdentity();renderNav();renderAll();showToast('Kullanıcı güncellendi.','success');return}}users.push(userData);saveUsers();e.target.reset();syncRoleDefaults();renderAll();showToast('Kullanıcı eklendi ve kaydedildi.','success')}
+function editUser(username){const u=findUserByUsername(username);if(!u){showToast('Kullanıcı bulunamadı.','error');return}document.getElementById('editingUsername').value=u.username;document.getElementById('newFullName').value=u.fullName||'';document.getElementById('newUsername').value=u.username||'';document.getElementById('newPassword').value=u.password||'';document.getElementById('newRole').value=u.role||'judge';renderNewCategoryChecks();document.getElementById('permCheckin').checked=!!u.canCheckin;document.getElementById('permResultEntry').checked=!!u.canResultEntry;document.getElementById('permResultEdit').checked=!!u.canResultEdit;document.querySelectorAll('.newCat').forEach(ch=>{ch.checked=(u.categories||[]).includes('all')||(u.categories||[]).includes(ch.value)});document.getElementById('userFormTitle').innerText='Kullanıcı Düzenle';document.getElementById('userSubmitBtn').innerText='Güncelle';document.getElementById('cancelEditBtn').classList.remove('hidden');switchTab('users')}
+function cancelUserEdit(){document.getElementById('editingUsername').value='';document.getElementById('newFullName').value='';document.getElementById('newUsername').value='';document.getElementById('newPassword').value='';document.getElementById('newRole').value='judge';renderNewCategoryChecks();syncRoleDefaults();document.getElementById('userFormTitle').innerText='Yeni Kullanıcı';document.getElementById('userSubmitBtn').innerText='Kullanıcı Ekle';document.getElementById('cancelEditBtn').classList.add('hidden')}
+function toggleUserActive(username){const u=findUserByUsername(username);if(!u)return;if(currentUser&&String(currentUser.username).toLowerCase()===String(username).toLowerCase()){showToast('Kendi kullanıcınızı pasifleştiremezsiniz.','warning');return}u.active=!u.active;saveUsers();renderAll();showToast(u.active?'Kullanıcı aktifleştirildi.':'Kullanıcı pasifleştirildi.','success')}
+function removeUser(username){if(currentUser&&String(currentUser.username).toLowerCase()===String(username).toLowerCase()){showToast('Kendi kullanıcınızı silemezsiniz.','warning');return}const u=findUserByUsername(username);if(!u)return;if(!confirm(`${u.fullName} kullanıcısı silinsin mi?`))return;users=users.filter(x=>String(x.username).toLowerCase()!==String(username).toLowerCase());saveUsers();renderAll();showToast('Kullanıcı silindi.','success')}
 function renderStatsGrid(){document.getElementById('statsGrid').innerHTML=categories.map(c=>{const l=teams.filter(t=>ncat(t.kategori)===ncat(c.id)),p=l.filter(t=>t.durum==='Check-in Yapıldı').length;return`<div class="panel rounded-3xl p-6"><div class="w-14 h-14 rounded-2xl bg-blue/10 border border-blue/20 text-blue flex items-center justify-center text-xl mb-4"><i class="fas ${c.icon}"></i></div><h3 class="text-lg font-black text-white">${c.id}</h3><div class="mt-4 text-3xl font-black text-white">${p}<span class="text-base text-slate-500">/${l.length}</span></div><div class="mt-4 h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-blue rounded-full" style="width:${l.length?(p/l.length)*100:0}%"></div></div></div>`}).join('')}
 function showToast(msg,type='info'){const color=type==='success'?'green':type==='warning'?'amber':type==='error'?'red':'blue';const el=document.createElement('div');el.className=`pointer-events-auto rounded-2xl border border-${color}/25 bg-card px-4 py-3 shadow-2xl text-sm font-bold text-white`;el.innerHTML=`<i class="fas fa-circle-info text-${color} mr-2"></i>${msg}`;document.getElementById('toastContainer').appendChild(el);setTimeout(()=>el.remove(),3200)}
-function updateClock(){const d=new Date();document.getElementById('todayText').innerText=d.toLocaleDateString('tr-TR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});document.getElementById('clockText').innerText=d.toLocaleTimeString('tr-TR')}
-setInterval(updateClock,1000);updateClock();
+document.addEventListener('DOMContentLoaded',function(){restoreSession()});
 </script>
 </body>
 </html>
