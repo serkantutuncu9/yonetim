@@ -1,1465 +1,422 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEM Yarışma Yönetim Paneli</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                    },
-                    colors: {
-                        darkBg: '#0a0e17',
-                        cardBg: '#111625',
-                        borderClr: '#1f293d',
-                        checkInBtn: '#5c59f2',
-                        checkOutBtn: '#2a1520',
-                        checkOutText: '#ff5a79',
-                    }
-                }
-            }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Türkiye STEM Yarışması | Yönetim Paneli</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+          colors: {
+            bg: '#070b14',
+            bg2: '#0a1020',
+            card: '#0f1728',
+            card2: '#111b30',
+            line: '#20304c',
+            blue: '#3478ff',
+            cyan: '#20d4ff',
+            green: '#00e08a',
+            amber: '#ffbd2e',
+            purple: '#8b5cf6',
+            red: '#ff3f55'
+          }
         }
-    </script>
-    <style>
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0e17;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f293d;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2d3d5a;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    *{box-sizing:border-box} html,body{min-height:100%}
+    body{background:radial-gradient(circle at 10% 0%,rgba(52,120,255,.18),transparent 30%),radial-gradient(circle at 90% 0%,rgba(139,92,246,.16),transparent 32%),#070b14;color:#d9e4f5}
+    ::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:#070b14}::-webkit-scrollbar-thumb{background:#263957;border-radius:99px}
+    .panel{background:linear-gradient(180deg,rgba(15,23,40,.94),rgba(8,13,24,.96));border:1px solid rgba(148,163,184,.13);box-shadow:0 18px 55px rgba(0,0,0,.26)}
+    .soft{background:rgba(11,17,32,.72);border:1px solid rgba(148,163,184,.12)}
+    .navBtn{height:64px;border:1px solid rgba(148,163,184,.12);background:rgba(10,16,32,.66);color:#b9c7dc;border-radius:18px;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px;transition:.18s;padding:0 18px;white-space:nowrap}
+    .navBtn:hover{background:rgba(52,120,255,.12);border-color:rgba(52,120,255,.32);color:white}.navActive{background:linear-gradient(135deg,#4458ff,#1f74ff)!important;color:white!important;border-color:rgba(255,255,255,.16)!important;box-shadow:0 12px 30px rgba(52,120,255,.25)}
+    .statIcon{width:72px;height:72px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:28px}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:900;text-transform:uppercase}.input{background:#070b14;border:1px solid #20304c;color:white;border-radius:16px;padding:12px 14px;font-weight:800;font-size:13px}.input:focus{outline:none;border-color:#3478ff;box-shadow:0 0 0 3px rgba(52,120,255,.16)}
+    .tableRow:hover{background:rgba(52,120,255,.045)}
+    @media(max-width:900px){.navBtn{height:48px;font-size:11px;padding:0 12px}.statIcon{width:56px;height:56px;font-size:21px}}
+  </style>
 </head>
-<body class="bg-darkBg min-h-screen font-sans text-slate-200 selection:bg-indigo-500 selection:text-white">
+<body class="font-sans selection:bg-blue selection:text-white">
 
-    <!-- 1. GİRİŞ PANELİ (AUTH SCREEN) -->
-    <div id="loginScreen" class="fixed inset-0 bg-[#060911] flex items-center justify-center p-4 z-50">
-        <div class="bg-cardBg rounded-2xl shadow-2xl p-8 max-w-md w-full border border-borderClr text-center relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-            <div class="w-20 h-20 bg-[#1a1f33] rounded-full flex items-center justify-center mx-auto mb-6 border border-indigo-500/20">
-                <i class="fas fa-user-shield text-3xl text-indigo-400"></i>
-            </div>
-            <h2 class="text-2xl font-black text-white tracking-tight uppercase mb-2">Yönetici Girişi</h2>
-            <p class="text-xs text-slate-400 mb-6">Sisteme erişmek için yetkili kullanıcı bilgilerinizi giriniz.</p>
-            
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="mb-4 text-left">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1.5 ml-1 tracking-wider">Kullanıcı Adı</label>
-                    <input type="text" id="adminUsername" required value="serkantutuncu"
-                           class="w-full px-4 py-3 bg-[#171e30] border border-borderClr rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white font-semibold text-sm" 
-                           placeholder="Kullanıcı adınızı yazın">
-                </div>
-                <div class="mb-4 text-left">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1.5 ml-1 tracking-wider">Şifre</label>
-                    <input type="password" id="adminPassword" required value="G.st2807"
-                           class="w-full px-4 py-3 bg-[#171e30] border border-borderClr rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white font-semibold text-sm" 
-                           placeholder="••••••••">
-                </div>
-                <div id="loginError" class="text-red-400 text-xs font-semibold mb-4 hidden">
-                    <i class="fas fa-exclamation-circle mr-1"></i> Kullanıcı adı veya şifre hatalı!
-                </div>
-                <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg transition duration-200 text-sm tracking-wide uppercase">
-                    SİSTEME GİRİŞ YAP
-                </button>
-            </form>
+<!-- LOGIN -->
+<div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#050914] p-4">
+  <div class="panel w-full max-w-md rounded-[28px] p-8 relative overflow-hidden">
+    <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue via-purple to-green"></div>
+    <div class="text-center">
+      <div class="mx-auto w-20 h-20 rounded-3xl bg-white border border-blue/25 flex items-center justify-center mb-5 overflow-hidden p-2 shadow-lg shadow-blue/20 ring-4 ring-white/10">
+        <img src="https://raw.githubusercontent.com/serkantutuncu9/index/refs/heads/main/logo_yazisiz.png" alt="Türkiye STEM Logosu" class="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]">
+      </div>
+      <h1 class="text-2xl font-black text-white">TÜRKİYE STEM YARIŞMASI</h1>
+      <p class="mt-2 text-xs text-slate-400 font-bold">Yönetim Paneli</p>
+    </div>
+    <form onsubmit="handleLogin(event)" class="mt-7 space-y-4">
+      <input id="loginUsername" class="input w-full" placeholder="Kullanıcı adı" autocomplete="username" required>
+      <input id="loginPassword" type="password" class="input w-full" placeholder="Şifre" autocomplete="current-password" required>
+      <div id="loginError" class="hidden text-xs text-red font-bold"><i class="fas fa-circle-exclamation mr-1"></i>Kullanıcı adı veya şifre hatalı.</div>
+      <button class="w-full rounded-2xl bg-blue hover:bg-blue/90 py-3.5 text-sm font-black text-white uppercase tracking-wider transition">Giriş Yap</button>
+    </form>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden min-h-screen">
+  <div class="mx-auto max-w-[1800px] px-5 lg:px-8 py-7">
+    <!-- TOP BAR -->
+    <header class="mb-7">
+      <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-5">
+        <div class="flex items-center gap-5 min-w-0">
+          <div class="w-16 h-16 rounded-3xl bg-white border border-blue/20 flex items-center justify-center shadow-xl shadow-blue/20 shrink-0 overflow-hidden p-1.5 ring-4 ring-white/10">
+            <img src="https://raw.githubusercontent.com/serkantutuncu9/index/refs/heads/main/logo_yazisiz.png" alt="Türkiye STEM Logosu" class="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]">
+          </div>
+          <div class="min-w-0">
+            <h1 class="text-2xl lg:text-3xl font-black text-white tracking-tight uppercase leading-tight">TÜRKİYE STEM YARIŞMASI</h1>
+            <p class="mt-1 text-base text-slate-400 font-semibold">Yönetim Paneli</p>
+          </div>
         </div>
-    </div>
 
-    <!-- 2. ANA DASHBOARD -->
-    <div id="dashboard" class="hidden min-h-screen flex flex-col md:flex-row">
-        
-        <!-- Sol Menü (Sidebar) -->
-        <aside class="w-full md:w-64 bg-cardBg border-r border-borderClr flex flex-col justify-between">
-            <div class="flex flex-col">
-                <div class="p-6 border-b border-[#1f293d]/50 flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400">
-                        <i class="fas fa-atom text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-black text-sm tracking-wider text-white uppercase">STEM ADMIN</h1>
-                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Kabul Masası</p>
-                    </div>
-                </div>
-                
-                <!-- Menü Butonları -->
-                <nav class="p-4 space-y-1.5">
-                    <button onclick="switchTab('checkin')" id="tabBtn-checkin" class="w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left bg-indigo-600 text-white shadow-lg shadow-indigo-600/10">
-                        <i class="fas fa-id-card text-base"></i>
-                        <span>1. Adım: Takım Check-In</span>
-                    </button>
-                    <button onclick="switchTab('categoryDistribution')" id="tabBtn-categoryDistribution" class="w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left text-slate-400 hover:bg-slate-800/40 hover:text-white">
-                        <i class="fas fa-sitemap text-base"></i>
-                        <span>2. Adım: Kategori Dağılımı</span>
-                    </button>
-                    <button onclick="switchTab('results')" id="tabBtn-results" class="w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left text-slate-400 hover:bg-slate-800/40 hover:text-white">
-                        <i class="fas fa-poll text-base"></i>
-                        <span>3. Adım: Hakem Sonuç Girişi</span>
-                    </button>
-                    <button onclick="switchTab('stats')" id="tabBtn-stats" class="w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left text-slate-400 hover:bg-slate-800/40 hover:text-white">
-                        <i class="fas fa-chart-pie text-base"></i>
-                        <span>4. Adım: İstatistikler</span>
-                    </button>
-                </nav>
+        <div class="flex flex-wrap items-center gap-4 xl:justify-end"> 
+          <div class="hidden lg:flex items-center gap-3 soft rounded-2xl px-4 py-3 border border-green/15">
+            <div class="relative flex items-center justify-center w-4 h-4">
+              <span class="absolute inline-flex h-4 w-4 rounded-full bg-green opacity-40 animate-ping"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green shadow-[0_0_14px_rgba(0,224,138,0.9)]"></span>
             </div>
-
-            <!-- Alt Alan: E-Tablo Bağlantı Kartı & Çıkış Yap Butonu -->
-            <div class="p-4 border-t border-[#1f293d]/50 space-y-3 bg-[#0a0e17]/40">
-                <div class="bg-[#111625] border border-[#1f293d] p-4 rounded-2xl space-y-3">
-                    <div id="connectionStatusWrapper" class="flex items-start space-x-2.5">
-                        <span id="connectionDot" class="w-2.5 h-2.5 rounded-full mt-1.5 bg-emerald-500 animate-pulse"></span>
-                        <div class="flex-1 min-w-0">
-                            <h4 id="connectionTitle" class="text-xs font-bold text-white">Bağlantı Aktif</h4>
-                            <p id="connectionDesc" class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">E-Tablonuzdaki gerçek başvurular çekiliyor.</p>
-                        </div>
-                    </div>
-                    <button onclick="verileriYukle()" class="w-full py-2.5 bg-[#4c1d95]/40 hover:bg-[#4c1d95]/60 border border-indigo-500/20 text-indigo-300 text-xs font-extrabold rounded-xl transition duration-150 flex items-center justify-center space-x-2">
-                        <i class="fas fa-sync-alt text-[10px]"></i>
-                        <span>Şimdi Yenile</span>
-                    </button>
-                </div>
-
-                <div class="flex items-center justify-between pt-1">
-                    <div class="flex items-center space-x-1.5 text-slate-400">
-                        <i class="fas fa-user text-[11px] text-indigo-400"></i>
-                        <span id="activeUserSpan" class="text-[10px] font-bold truncate max-w-[100px]">---</span>
-                    </div>
-                    <button onclick="handleLogout()" class="text-rose-400 hover:text-rose-300 text-[10px] font-black uppercase tracking-wider flex items-center space-x-1">
-                        <span>ÇIKIŞ</span>
-                        <i class="fas fa-power-off text-[10px]"></i>
-                    </button>
-                </div>
+            <div class="leading-tight">
+              <div class="text-[11px] text-slate-500 font-black uppercase tracking-wider">Sistem Durumu</div>
+              <div class="text-sm font-black text-green uppercase">Sistem Aktif</div>
             </div>
-        </aside>
-
-        <!-- Sağ İçerik Alanı -->
-        <main class="flex-1 flex flex-col min-w-0 bg-darkBg">
-            <header class="bg-cardBg border-b border-borderClr px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-                <div>
-                    <span class="text-[10px] bg-indigo-950 text-indigo-400 border border-indigo-800/30 px-2 py-1 rounded font-black uppercase tracking-wider">Yarışma Başlangıcı</span>
-                    <h2 id="tabTitle" class="text-2xl font-extrabold text-white tracking-tight mt-1.5">1. Adım: Takım Check-In</h2>
-                </div>
-                
-                <div class="flex items-center space-x-3 self-end sm:self-auto">
-                    <div class="bg-[#111625] border border-borderClr px-5 py-2.5 rounded-xl text-center min-w-[80px]">
-                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">TOPLAM</p>
-                        <h4 id="headerStatTotal" class="text-lg font-black text-white mt-0.5">0</h4>
-                    </div>
-                    <div class="bg-[#111625] border border-[#10b981]/20 px-5 py-2.5 rounded-xl text-center min-w-[80px] shadow-lg shadow-emerald-500/5">
-                        <p class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider">ALANDA</p>
-                        <h4 id="headerStatCheckedIn" class="text-lg font-black text-emerald-400 mt-0.5">0</h4>
-                    </div>
-                </div>
-            </header>
-
-            <div class="p-8 flex-1 overflow-y-auto">
-                
-                <div id="loader" class="hidden py-32 text-center">
-                    <i class="fas fa-circle-notch fa-spin text-4xl text-indigo-400 mb-4"></i>
-                    <p class="text-slate-400 font-semibold text-sm">Veriler güvenli şekilde senkronize ediliyor...</p>
-                </div>
-
-                <!-- SEKME 1: TAKIM CHECK-IN -->
-                <section id="tab-checkin" class="space-y-6">
-                    
-                    <div class="bg-cardBg rounded-2xl border border-borderClr p-4 flex flex-col lg:flex-row gap-4 justify-between items-center">
-                        <div class="relative w-full lg:max-w-md">
-                            <i class="fas fa-search absolute left-4 top-3.5 text-slate-500"></i>
-                            <input type="text" id="searchInput" onkeyup="tabloFiltrele()" 
-                                   class="w-full pl-11 pr-4 py-3 bg-[#0a0e17] border border-borderClr rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs text-white placeholder-slate-500 font-bold" 
-                                   placeholder="Takım Adı, Okul, Mentör veya Takım No Ara...">
-                        </div>
-
-                        <div class="flex bg-[#0a0e17] p-1 rounded-xl border border-borderClr w-full lg:w-auto overflow-x-auto gap-1">
-                            <button id="filterBtn-all" onclick="setStatusFilter('all')" class="flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 bg-indigo-600 text-white">
-                                TÜMÜ
-                            </button>
-                            <button id="filterBtn-waiting" onclick="setStatusFilter('waiting')" class="flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 text-slate-400 hover:text-white">
-                                ALANDA OLMAYANLAR
-                            </button>
-                            <button id="filterBtn-present" onclick="setStatusFilter('present')" class="flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 text-slate-400 hover:text-white">
-                                GİRİŞ YAPANLAR (ALANDA)
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="bg-cardBg rounded-2xl border border-borderClr shadow-2xl overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="border-b border-borderClr text-[10px] font-black text-slate-400 uppercase tracking-wider bg-[#0e1320]/60">
-                                        <th class="p-5">Takım No</th>
-                                        <th class="p-5">Takım Bilgisi</th>
-                                        <th class="p-5">Kategori</th>
-                                        <th class="p-5">Öğrenciler</th>
-                                        <th class="p-5 text-center">Durum</th>
-                                        <th class="p-5 text-right">Eylem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody" class="divide-y divide-borderClr/60 text-xs font-semibold">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SEKME 2: KATEGORİ DAĞILIMI (KURA ALANI) -->
-                <section id="tab-categoryDistribution" class="hidden space-y-6">
-                    <!-- Kura Çekim Kartı -->
-                    <div class="bg-gradient-to-r from-amber-600/10 via-amber-600/5 to-transparent border-2 border-amber-500/20 rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-2xl flex items-center justify-center text-xl flex-shrink-0">
-                                <i class="fas fa-random"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">MİNİ SUMO OTOMATİK KURA ÇEKİMİ</h3>
-                                <p class="text-xs text-slate-400 mt-1 leading-relaxed max-w-2xl">
-                                    Yoklama (Check-in) aşaması bittikten sonra bu butona basarak turnuva eşleşmelerini rastgele üretebilirsiniz. Eşleşmeler turnuva ağacı boyutuna (Son 16, Son 32 vb.) göre otomatik düzenlenecek ve <strong class="text-amber-400">"BAY" (Bay Geçme)</strong> slotları otomatik atanacaktır.
-                                </p>
-                            </div>
-                        </div>
-                        <button onclick="triggerKuraCekimi()" class="px-6 py-4 bg-amber-600 hover:bg-amber-500 text-white font-black text-xs uppercase tracking-wider rounded-xl transition duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-amber-600/10 shrink-0">
-                            <i class="fas fa-trophy text-sm"></i>
-                            <span>RASTGELE KURA ÇEK VE EŞLEŞTİR</span>
-                        </button>
-                    </div>
-
-                    <div class="bg-cardBg rounded-2xl border border-borderClr p-6 space-y-4">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                            <div>
-                                <h3 class="font-extrabold text-white text-sm uppercase tracking-wider">AŞAMA 2: KATEGORİ SINIFLANDIRMASI</h3>
-                                <p class="text-xs text-slate-400 mt-1">Bu ekran, <strong class="text-indigo-400">yalnızca yoklaması alınmış (alana girmiş)</strong> takımların yarıştığı kategorileri gösterir. Yoklaması yapılmayan takımlar bu sevk listesinde görüntülenmez.</p>
-                            </div>
-                            <div class="relative w-full md:max-w-xs">
-                                <i class="fas fa-search absolute left-3 top-2.5 text-slate-500 text-xs"></i>
-                                <input type="text" id="categorySearchInput" onkeyup="renderCategoryDistribution()" 
-                                       class="w-full pl-9 pr-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs text-white placeholder-slate-500 font-bold" 
-                                       placeholder="Giriş Yapanlar Arasında Ara...">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
-                            <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-robot text-indigo-400 text-sm"></i>
-                                    <h4 class="font-black text-xs text-white uppercase tracking-wider">MİNİ SUMO</h4>
-                                </div>
-                                <span id="count-miniSumo" class="text-[10px] bg-indigo-950 text-indigo-400 border border-indigo-800/30 px-2 py-1 rounded font-black">0 Alanda</span>
-                            </div>
-                            <div id="list-miniSumo" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
-                        </div>
-
-                        <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
-                            <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-building text-indigo-400 text-sm"></i>
-                                    <h4 class="font-black text-xs text-white uppercase tracking-wider">KAĞIT KULE</h4>
-                                </div>
-                                <span id="count-kagitKule" class="text-[10px] bg-indigo-950 text-indigo-400 border border-indigo-800/30 px-2 py-1 rounded font-black">0 Alanda</span>
-                            </div>
-                            <div id="list-kagitKule" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
-                        </div>
-
-                        <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
-                            <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-rocket text-indigo-400 text-sm"></i>
-                                    <h4 class="font-black text-xs text-white uppercase tracking-wider">KAĞIT ROKET</h4>
-                                </div>
-                                <span id="count-kagitRoket" class="text-[10px] bg-indigo-950 text-indigo-400 border border-indigo-800/30 px-2 py-1 rounded font-black">0 Alanda</span>
-                            </div>
-                            <div id="list-kagitRoket" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
-                        </div>
-
-                        <div class="bg-cardBg border border-borderClr rounded-2xl p-5 space-y-4">
-                            <div class="flex items-center justify-between border-b border-borderClr/50 pb-3">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-route text-indigo-400 text-sm"></i>
-                                    <h4 class="font-black text-xs text-white uppercase tracking-wider">ÇİZGİ İZLEYEN</h4>
-                                </div>
-                                <span id="count-cizgiIzleyen" class="text-[10px] bg-indigo-950 text-indigo-400 border border-indigo-800/30 px-2 py-1 rounded font-black">0 Alanda</span>
-                            </div>
-                            <div id="list-cizgiIzleyen" class="space-y-3 min-h-[120px] max-h-[350px] overflow-y-auto pr-1"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SEKME 3: HAKEM SONUÇ GİRİŞİ -->
-                <section id="tab-results" class="hidden space-y-6">
-                    <div class="bg-indigo-950/20 border border-indigo-500/20 rounded-2xl p-6 text-indigo-300 flex items-start space-x-3">
-                        <i class="fas fa-info-circle text-xl mt-0.5 text-indigo-400"></i>
-                        <div>
-                            <h4 class="font-bold text-white text-sm">Sonuç Giriş Ekranı (Hakem Kontrolü)</h4>
-                            <p class="text-xs mt-1 text-slate-400">Kategorilere göre yapılandırılmış formları doldurarak sonuçları doğrudan e-tablo sekmelerine kaydedebilirsiniz.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex bg-cardBg p-1.5 rounded-2xl border border-borderClr overflow-x-auto gap-1">
-                        <button onclick="setResultsCategory('Mini Sumo')" id="resCatBtn-MiniSumo" class="flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 bg-indigo-600 text-white flex items-center justify-center space-x-2">
-                            <i class="fas fa-robot"></i>
-                            <span>Mini Sumo</span>
-                        </button>
-                        <button onclick="setResultsCategory('Cizgi Izleyen')" id="resCatBtn-CizgiIzleyen" class="flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 text-slate-400 hover:text-white flex items-center justify-center space-x-2">
-                            <i class="fas fa-route"></i>
-                            <span>Çizgi İzleyen</span>
-                        </button>
-                        <button onclick="setResultsCategory('Balonlu Araba')" id="resCatBtn-BalonluAraba" class="flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 text-slate-400 hover:text-white flex items-center justify-center space-x-2">
-                            <i class="fas fa-car-side"></i>
-                            <span>Balonlu Araba</span>
-                        </button>
-                        <button onclick="setResultsCategory('Kagit Kule')" id="resCatBtn-KagitKule" class="flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 text-slate-400 hover:text-white flex items-center justify-center space-x-2">
-                            <i class="fas fa-building"></i>
-                            <span>Kağıt Kule</span>
-                        </button>
-                        <button onclick="setResultsCategory('Kagit Roket')" id="resCatBtn-KagitRoket" class="flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 text-slate-400 hover:text-white flex items-center justify-center space-x-2">
-                            <i class="fas fa-rocket"></i>
-                            <span>Kağıt Roket</span>
-                        </button>
-                    </div>
-
-                    <div class="bg-cardBg rounded-2xl border border-borderClr p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-indigo-600/10 border border-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400">
-                                <i id="resCatHeaderIcon" class="fas fa-robot text-lg"></i>
-                            </div>
-                            <div>
-                                <h3 id="resCatHeaderTitle" class="font-extrabold text-white text-sm uppercase tracking-wider">MİNİ SUMO SONUÇ GİRİŞİ</h3>
-                                <p class="text-[10px] text-slate-400 mt-0.5">Sadece alana giriş yapmış olan takımlar için sonuç girişi yapabilirsiniz.</p>
-                            </div>
-                        </div>
-                        <div class="relative w-full sm:max-w-xs">
-                            <i class="fas fa-search absolute left-3 top-2.5 text-slate-500 text-xs"></i>
-                            <input type="text" id="resultsSearchInput" onkeyup="tabloFiltrele()" 
-                                   class="w-full pl-9 pr-3 py-2 bg-[#0a0e17] border border-borderClr rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs text-white placeholder-slate-500 font-bold" 
-                                   placeholder="Seçili Kategoride Takım Ara...">
-                        </div>
-                    </div>
-
-                    <div class="bg-cardBg rounded-2xl border border-borderClr shadow-2xl overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <!-- Diğer Kategoriler İçin Tablo Yapısı -->
-                            <table id="standardResultsTable" class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="border-b border-borderClr text-[10px] font-black text-slate-400 uppercase tracking-wider bg-[#0e1320]/60">
-                                        <th class="p-5">Takım No</th>
-                                        <th class="p-5">Takım Bilgisi (Birleşik)</th>
-                                        <th class="p-5">Okul / Kurum</th>
-                                        <th class="p-5">Kategori Durumu</th>
-                                        <th class="p-5 w-[420px]">Hakem Veri Girişi</th>
-                                        <th class="p-5 text-right">Eylem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="resultsTableBody" class="divide-y divide-borderClr/60 text-xs font-semibold">
-                                </tbody>
-                            </table>
-
-                            <!-- Mini Sumo'ya Özel Maç Bazlı Tablo Yapısı -->
-                            <table id="sumoResultsTable" class="w-full text-left border-collapse hidden">
-                                <thead>
-                                    <tr class="border-b border-borderClr text-[10px] font-black text-slate-400 uppercase tracking-wider bg-[#0e1320]/60">
-                                        <th class="p-5">Maç Kodu / Kademe</th>
-                                        <th class="p-5">Robot 1 (Sol Kanat)</th>
-                                        <th class="p-5 text-center">Maç Skor Girişi</th>
-                                        <th class="p-5 text-right">Robot 2 (Sağ Kanat)</th>
-                                        <th class="p-5 text-center">Maç Kazananı</th>
-                                        <th class="p-5 text-right">Eylem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="sumoResultsTableBody" class="divide-y divide-borderClr/60 text-xs font-semibold">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SEKME 4: İSTATİSTİKLER -->
-                <section id="tab-stats" class="hidden space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <div class="bg-cardBg p-6 rounded-2xl border border-borderClr shadow-lg flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400 text-xl">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Toplam Başvuru</p>
-                                <h3 id="statTotal" class="text-2xl font-black text-white mt-1">0</h3>
-                            </div>
-                        </div>
-                        <div class="bg-cardBg p-6 rounded-2xl border border-[#10b981]/20 shadow-lg flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400 text-xl">
-                                <i class="fas fa-clipboard-check"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Alandaki Takım</p>
-                                <h3 id="statCheckedIn" class="text-2xl font-black text-emerald-400 mt-1">0</h3>
-                            </div>
-                        </div>
-                        <div class="bg-cardBg p-6 rounded-2xl border border-borderClr shadow-lg flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 text-xl">
-                                <i class="fas fa-hourglass-half"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Bekleyen Takım</p>
-                                <h3 id="statWaiting" class="text-2xl font-black text-amber-400 mt-1">0</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-cardBg rounded-2xl border border-borderClr shadow-lg p-6">
-                        <h3 class="font-extrabold text-white text-sm uppercase tracking-wider mb-4"><i class="fas fa-chart-bar mr-2 text-indigo-400"></i>Kategori Bazlı Katılım Durumu</h3>
-                        <div id="categoryStatsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- ÖZEL ONAY MODAL KUTUSU -->
-    <div id="customConfirmModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-cardBg rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-borderClr text-center">
-            <div class="w-14 h-14 bg-amber-500/10 text-amber-400 border border-borderClr rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <h3 class="text-base font-black text-white mb-2">İşlemi Onaylıyor Musunuz?</h3>
-            <p id="confirmModalText" class="text-xs text-slate-400 mb-6 font-semibold">Bu işlemi gerçekleştirmek istediğinizden emin misiniz?</p>
-            <div class="flex space-x-3">
-                <button id="confirmCancelBtn" class="flex-1 py-3 bg-[#171e30] hover:bg-[#1e263d] border border-borderClr text-slate-300 font-bold rounded-xl transition duration-200 text-xs">VAZGEÇ</button>
-                <button id="confirmSuccessBtn" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition duration-200 text-xs">ONAYLA</button>
-            </div>
+          </div>
+          <div class="flex items-center gap-3 soft rounded-2xl px-4 py-3">
+            <div class="w-10 h-10 rounded-full border border-blue/25 bg-blue/10 text-blue flex items-center justify-center"><i class="fas fa-user"></i></div>
+            <div class="leading-tight"><div id="activeUserName" class="text-sm font-black text-white uppercase">---</div><div id="roleName" class="text-xs font-black text-blue uppercase mt-1">Yönetici</div></div>
+          </div>
+          <div class="hidden md:flex items-center gap-3 text-right">
+            <i class="fas fa-calendar-days text-blue text-xl"></i>
+            <div><div id="todayText" class="text-sm font-bold text-slate-300">---</div><div id="clockText" class="text-sm text-slate-400 font-semibold">---</div></div>
+          </div>
+          <button onclick="handleLogout()" class="rounded-2xl border border-red/40 bg-red/10 hover:bg-red hover:text-white text-red px-5 py-4 text-sm font-black uppercase transition"><i class="fas fa-right-from-bracket mr-2"></i>Çıkış</button>
         </div>
-    </div>
-
-    <!-- ÖZEL BİLDİRİM KUTUSU -->
-    <div id="toastContainer" class="fixed top-5 right-5 space-y-3 z-50 pointer-events-none"></div>
-
-    <script>
-        // Yeni Web App URL'si doğrudan tanımlanıyor
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxRp5jIAhNPYm3uPwMwzQW7cx_ZVyvNWaF8TRJjrbXNegE-3m4M5wzFmuH5Uf3Cn5rV/exec';
-        
-        const AUTHORIZED_USERS = {
-            "serkantutuncu": "G.st2807",
-            "eyupkose": "gs1905",
-            "mehmetbulum": "gs1905"
-        };
-
-        let localData = []; 
-        let categoryScoresData = []; // Aktif standard kategori skorlarını saklar
-        let sumoMatchesData = []; // Canlı Mini Sumo maç listesini saklar
-        let modalResolveCallback = null; 
-        let currentStatusFilter = 'all'; 
-        let activeResultsCategory = 'Mini Sumo'; 
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const hasAccess = sessionStorage.getItem("stemAdminSession");
-            if (hasAccess === "granted") {
-                showDashboard();
-            }
-            
-            document.getElementById('confirmCancelBtn').addEventListener('click', () => {
-                closeConfirmModal(false);
-            });
-            document.getElementById('confirmSuccessBtn').addEventListener('click', () => {
-                closeConfirmModal(true);
-            });
-        });
-
-        // Kategori adlarındaki Türkçe karakterleri temizler ve standartlaştırır
-        function temizleKategori(kat) {
-            if (!kat) return "";
-            return kat.toString().toLowerCase()
-                .replace(/ç/g, "c")
-                .replace(/ğ/g, "g")
-                .replace(/ı/g, "i")
-                .replace(/ö/g, "o")
-                .replace(/ş/g, "s")
-                .replace(/ü/g, "u")
-                .replace(/[^a-z0-9]/g, "");
-        }
-
-        function setConnectionStatus(status) {
-            const dot = document.getElementById("connectionDot");
-            const title = document.getElementById("connectionTitle");
-            const desc = document.getElementById("connectionDesc");
-
-            dot.className = "w-2.5 h-2.5 rounded-full mt-1.5";
-
-            if (status === "loading") {
-                dot.className += " bg-slate-500 border border-slate-600 animate-spin";
-                dot.style.borderRadius = "50%";
-                dot.style.borderTopColor = "transparent";
-                title.innerText = "E-Tablo okunuyor...";
-                desc.innerText = "E-Tablonuzdaki gerçek başvurular çekiliyor.";
-            } else if (status === "active") {
-                dot.className += " bg-emerald-500 animate-pulse";
-                title.innerText = "Bağlantı Aktif";
-                desc.innerText = "E-Tablonuzdaki gerçek başvurular çekiliyor.";
-            } else if (status === "error") {
-                dot.className += " bg-rose-500";
-                title.innerText = "Bağlantı Kesildi";
-                desc.innerText = "E-Tablo verilerine şu an erişilemiyor.";
-            }
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `flex items-center space-x-3 px-4 py-3 bg-cardBg border rounded-xl shadow-2xl transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto max-w-sm`;
-            
-            let iconClass = 'fa-info-circle text-indigo-400';
-            let borderClass = 'border-borderClr';
-            
-            if (type === 'success') {
-                iconClass = 'fa-check-circle text-emerald-400';
-                borderClass = 'border-emerald-500/20';
-            } else if (type === 'error') {
-                iconClass = 'fa-times-circle text-rose-400';
-                borderClass = 'border-rose-500/20';
-            } else if (type === 'warning') {
-                iconClass = 'fa-exclamation-circle text-amber-400';
-                borderClass = 'border-amber-500/20';
-            }
-
-            toast.classList.add(borderClass);
-            toast.innerHTML = `
-                <div class="text-lg"><i class="fas ${iconClass}"></i></div>
-                <div class="text-xs font-bold text-slate-200">${message}</div>
-            `;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 50);
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
-            }, 3500);
-        }
-
-        function showConfirmModal(text) {
-            return new Promise((resolve) => {
-                document.getElementById('confirmModalText').innerText = text;
-                const modal = document.getElementById('customConfirmModal');
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                modalResolveCallback = resolve;
-            });
-        }
-
-        function closeConfirmModal(result) {
-            const modal = document.getElementById('customConfirmModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            if (modalResolveCallback) {
-                modalResolveCallback(result);
-                modalResolveCallback = null;
-            }
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const usernameInput = document.getElementById("adminUsername").value.trim().toLowerCase();
-            const passwordInput = document.getElementById("adminPassword").value;
-            const errorLabel = document.getElementById("loginError");
-
-            if (AUTHORIZED_USERS[usernameInput] && AUTHORIZED_USERS[usernameInput] === passwordInput) {
-                errorLabel.classList.add("hidden");
-                sessionStorage.setItem("stemAdminSession", "granted");
-                sessionStorage.setItem("stemAdminUser", usernameInput);
-                showDashboard();
-                showToast("Sisteme başarıyla giriş yapıldı.", "success");
-            } else {
-                errorLabel.classList.remove("hidden");
-                document.getElementById("adminPassword").value = "";
-                showToast("Kullanıcı adı veya şifre yanlış!", "error");
-            }
-        }
-
-        function showDashboard() {
-            document.getElementById("loginScreen").classList.add("hidden");
-            document.getElementById("dashboard").classList.remove("hidden");
-            const loggedInUser = sessionStorage.getItem("stemAdminUser") || "Yönetici";
-            document.getElementById("activeUserSpan").innerText = loggedInUser;
-            verileriYukle();
-        }
-
-        function handleLogout() {
-            sessionStorage.removeItem("stemAdminSession");
-            sessionStorage.removeItem("stemAdminUser");
-            document.getElementById("loginScreen").classList.remove("hidden");
-            document.getElementById("dashboard").classList.add("hidden");
-            document.getElementById("adminUsername").value = "";
-            document.getElementById("adminPassword").value = "";
-            showToast("Oturum güvenli bir şekilde kapatıldı.", "info");
-        }
-
-        function setStatusFilter(filterType) {
-            currentStatusFilter = filterType;
-            const buttons = {
-                'all': document.getElementById('filterBtn-all'),
-                'waiting': document.getElementById('filterBtn-waiting'),
-                'present': document.getElementById('filterBtn-present')
-            };
-            Object.keys(buttons).forEach(key => {
-                if (key === filterType) {
-                    buttons[key].className = "flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 bg-indigo-600 text-white";
-                } else {
-                    buttons[key].className = "flex-1 lg:flex-none text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-lg transition duration-200 text-slate-400 hover:text-white";
-                }
-            });
-            renderCheckinTable();
-        }
-
-        function setResultsCategory(categoryName) {
-            activeResultsCategory = categoryName;
-            const categories = ["Mini Sumo", "Cizgi Izleyen", "Balonlu Araba", "Kagit Kule", "Kagit Roket"];
-            const icons = {
-                "Mini Sumo": "fa-robot",
-                "Cizgi Izleyen": "fa-route",
-                "Balonlu Araba": "fa-car-side",
-                "Kagit Kule": "fa-building",
-                "Kagit Roket": "fa-rocket"
-            };
-
-            categories.forEach(cat => {
-                const btn = document.getElementById(`resCatBtn-${cat.replace(" ", "")}`);
-                if (btn) {
-                    if (cat === categoryName) {
-                        btn.className = "flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 bg-indigo-600 text-white flex items-center justify-center space-x-2";
-                    } else {
-                        btn.className = "flex-1 min-w-[140px] text-[10px] font-black uppercase tracking-wider px-4 py-3 rounded-xl transition duration-200 text-slate-400 hover:text-white flex items-center justify-center space-x-2";
-                    }
-                }
-            });
-
-            document.getElementById("resCatHeaderIcon").className = `fas ${icons[categoryName]} text-lg`;
-            document.getElementById("resCatHeaderTitle").innerText = `${categoryName === 'Cizgi Izleyen' ? 'ÇİZGİ İZLEYEN' : categoryName.toUpperCase()} SONUÇ GİRİŞİ`;
-
-            const standardTable = document.getElementById("standardResultsTable");
-            const sumoTable = document.getElementById("sumoResultsTable");
-
-            if (categoryName === "Mini Sumo") {
-                standardTable.classList.add("hidden");
-                sumoTable.classList.remove("hidden");
-                fetchSumoMatches();
-            } else {
-                sumoTable.classList.add("hidden");
-                standardTable.classList.remove("hidden");
-                fetchCategoryScores(categoryName);
-            }
-        }
-
-        function fetchCategoryScores(categoryName) {
-            setConnectionStatus("loading");
-            const cleanCat = temizleKategori(categoryName);
-            fetch(`${scriptURL}?action=getScores&kategori=${cleanCat}&t=${Date.now()}`)
-                .then(res => {
-                    if (!res.ok) throw new Error("HTTP Hata Kodu: " + res.status);
-                    return res.text();
-                })
-                .then(text => {
-                    let json;
-                    try {
-                        json = JSON.parse(text);
-                    } catch (e) {
-                        console.error("Skor JSON Ayrıştırma Hatası. Gelen ham veri:", text);
-                        throw new Error("Geçersiz JSON formatı.");
-                    }
-
-                    if (json.success && Array.isArray(json.data)) {
-                        categoryScoresData = json.data;
-                    } else {
-                        categoryScoresData = [];
-                    }
-                    renderResultsTable();
-                    setConnectionStatus("active");
-                })
-                .catch(err => {
-                    setConnectionStatus("error");
-                    categoryScoresData = [];
-                    renderResultsTable();
-                    console.error("Skorlar yüklenirken hata oluştu:", err);
-                });
-        }
-
-        function fetchSumoMatches() {
-            setConnectionStatus("loading");
-            fetch(`${scriptURL}?action=getScores&kategori=minisumo&t=${Date.now()}`)
-                .then(res => {
-                    if (!res.ok) throw new Error("HTTP Hata Kodu: " + res.status);
-                    return res.text();
-                })
-                .then(text => {
-                    let json;
-                    try {
-                        json = JSON.parse(text);
-                    } catch (e) {
-                        console.error("Sumo JSON Ayrıştırma Hatası. Gelen ham veri:", text);
-                        throw new Error("Geçersiz JSON formatı.");
-                    }
-
-                    if (json.success && Array.isArray(json.data)) {
-                        sumoMatchesData = json.data.map(m => {
-                            let r1No = "BAY", r1Name = "BAY";
-                            if (m.id && m.id !== "BAY") {
-                                let parts = m.id.split(" - ");
-                                r1No = parts[0] || "";
-                                r1Name = parts.slice(1).join(" - ") || "";
-                            }
-                            
-                            let r2No = "BAY", r2Name = "BAY";
-                            if (m.takimAdi && m.takimAdi !== "BAY") {
-                                let parts = m.takimAdi.split(" - ");
-                                r2No = parts[0] || "";
-                                r2Name = parts.slice(1).join(" - ") || "";
-                            }
-                            
-                            let winnerNo = "";
-                            if (m.kolon6 && m.kolon6 !== "BAY" && m.kolon6 !== "") {
-                                winnerNo = m.kolon6.split(" - ")[0] || "";
-                            }
-
-                            return {
-                                MacKodu: m.sira,
-                                robot1No: r1No,
-                                robot1Name: r1Name,
-                                robot2No: r2No,
-                                robot2Name: r2Name,
-                                robot1Skor: m.kolon4 || "0",
-                                robot2Skor: m.kolon5 || "0",
-                                kazananNo: winnerNo,
-                                rawRobot1: m.id,
-                                rawRobot2: m.takimAdi,
-                                rawWinner: m.kolon6
-                            };
-                        });
-                        renderSumoResultsTable();
-                    } else {
-                        sumoMatchesData = [];
-                        renderSumoResultsTable();
-                    }
-                    setConnectionStatus("active");
-                })
-                .catch(err => {
-                    setConnectionStatus("error");
-                    showToast("Sumo maç listesi e-tablodan alınamadı!", "error");
-                    console.error(err);
-                });
-        }
-
-        function verileriYukle() {
-            setConnectionStatus("loading");
-            document.getElementById("loader").classList.remove("hidden");
-            
-            fetch(`${scriptURL}?t=${Date.now()}`)
-                .then(res => {
-                    if (!res.ok) throw new Error("HTTP Hata Kodu: " + res.status);
-                    return res.text();
-                })
-                .then(text => {
-                    let json;
-                    try {
-                        json = JSON.parse(text);
-                    } catch (jsonErr) {
-                        console.error("Takım JSON Ayrıştırma Hatası. Gelen ham veri:", text);
-                        showToast("E-Tablo verisi ayrıştırılamadı. Konsolu kontrol edin.", "error");
-                        throw new Error("Geçersiz JSON formatı.");
-                    }
-
-                    // Sürüm 3.3.1 Apps Script raw array [] döndürdüğü için doğrudan json maplenir
-                    let rawList = Array.isArray(json) ? json : (json.data || []);
-
-                    localData = rawList.map(t => {
-                        const normalizedId = t.id || t.takimNo || "";
-                        const normalizedOkul = t.kurum || t.okul || "";
-                        const studentsList = [t.ogrenci1, t.ogrenci2, t.ogrenci3].filter(Boolean).join(", ");
-                        const normalizedDurum = t.durum ? t.durum.toString().trim() : "Bekliyor";
-
-                        return {
-                            takimNo: normalizedId,
-                            id: normalizedId,
-                            takimAdi: t.takimAdi || "",
-                            okul: normalizedOkul,
-                            kurum: normalizedOkul,
-                            mentor: t.mentor || "",
-                            kategori: t.kategori || "",
-                            ogrenciler: studentsList,
-                            durum: normalizedDurum
-                        };
-                    });
-                    renderAll();
-                })
-                .catch(err => {
-                    setConnectionStatus("error");
-                    showToast("Google Sheets bağlantı hatası!", "error");
-                    console.error(err);
-                })
-                .finally(() => {
-                    document.getElementById("loader").classList.add("hidden");
-                    setConnectionStatus("active");
-                });
-        }
-
-        function renderAll() {
-            updateStats();
-            renderCheckinTable();
-            renderCategoryDistribution();
-            tabloFiltrele();
-        }
-
-        function updateStats() {
-            const total = localData.length;
-            const checkedIn = localData.filter(t => t.durum === "Check-in Yapıldı").length;
-            const waiting = total - checkedIn;
-
-            document.getElementById("headerStatTotal").innerText = total;
-            document.getElementById("headerStatCheckedIn").innerText = checkedIn;
-            document.getElementById("statTotal").innerText = total;
-            document.getElementById("statCheckedIn").innerText = checkedIn;
-            document.getElementById("statWaiting").innerText = waiting;
-
-            const catCounts = {};
-            localData.forEach(t => {
-                if(!catCounts[t.kategori]) catCounts[t.kategori] = { total: 0, present: 0 };
-                catCounts[t.kategori].total++;
-                if(t.durum === "Check-in Yapıldı") catCounts[t.kategori].present++;
-            });
-
-            const grid = document.getElementById("categoryStatsGrid");
-            grid.innerHTML = "";
-            Object.keys(catCounts).forEach(cat => {
-                const item = catCounts[cat];
-                const card = document.createElement("div");
-                card.className = "bg-[#0e1320] border border-borderClr p-4 rounded-xl flex flex-col justify-between";
-                card.innerHTML = `
-                    <h5 class="text-[11px] font-black uppercase text-slate-300 tracking-wider truncate">${cat}</h5>
-                    <div class="flex items-baseline space-x-2 mt-2">
-                        <span class="text-lg font-black text-white">${item.present}</span>
-                        <span class="text-[10px] text-slate-500 font-bold">/ ${item.total} Takım</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-1 rounded-full mt-2.5 overflow-hidden">
-                        <div class="bg-indigo-500 h-full rounded-full" style="width: ${(item.present/item.total)*100}%"></div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function renderCheckinTable() {
-            const tbody = document.getElementById("tableBody");
-            tbody.innerHTML = "";
-            const search = document.getElementById("searchInput").value.toLowerCase().trim();
-
-            let filtered = localData;
-
-            if (currentStatusFilter === "waiting") {
-                filtered = filtered.filter(t => t.durum !== "Check-in Yapıldı");
-            } else if (currentStatusFilter === "present") {
-                filtered = filtered.filter(t => t.durum === "Check-in Yapıldı");
-            }
-
-            if (search) {
-                filtered = filtered.filter(t => 
-                    t.takimNo.toString().toLowerCase().includes(search) ||
-                    t.takimAdi.toLowerCase().includes(search) ||
-                    t.okul.toLowerCase().includes(search) ||
-                    t.mentor.toLowerCase().includes(search)
-                );
-            }
-
-            if(filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-bold">Kayıt bulunamadı.</td></tr>`;
-                return;
-            }
-
-            filtered.forEach(t => {
-                const tr = document.createElement("tr");
-                tr.className = "hover:bg-[#161b2e]/40 transition border-b border-borderClr/40";
-                
-                const isAlanda = t.durum === "Check-in Yapıldı";
-                const statusBadge = isAlanda 
-                    ? `<span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-black text-[9px] uppercase tracking-wider"><i class="fas fa-check-circle mr-1"></i>Alanda</span>`
-                    : `<span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-black text-[9px] uppercase tracking-wider"><i class="fas fa-clock mr-1"></i>Bekliyor</span>`;
-
-                const actionButton = isAlanda
-                    ? `<button onclick="toggleCheckin(${t.takimNo}, 'Bekliyor')" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-500/20 text-rose-400 font-bold text-[10px] rounded-lg transition uppercase">Giriş İptal</button>`
-                    : `<button onclick="toggleCheckin(${t.takimNo}, 'Check-in Yapıldı')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[10px] rounded-lg transition shadow-md uppercase">Alandan Onayla</button>`;
-
-                tr.innerHTML = `
-                    <td class="p-5 font-black text-indigo-400 text-sm">#${t.takimNo}</td>
-                    <td class="p-5">
-                        <div class="font-extrabold text-white text-sm">${t.takimAdi}</div>
-                        <div class="text-[10px] text-slate-400 font-medium mt-0.5">${t.okul} <span class="mx-1 text-slate-600">•</span> Mentör: ${t.mentor}</div>
-                    </td>
-                    <td class="p-5"><span class="bg-[#171e31] text-slate-300 border border-borderClr px-2 py-1 rounded font-bold text-[10px] uppercase">${t.kategori}</span></td>
-                    <td class="p-5 text-slate-400 font-medium text-[11px] max-w-[200px] truncate">${t.ogrenciler || "-"}</td>
-                    <td class="p-5 text-center">${statusBadge}</td>
-                    <td class="p-5 text-right flex justify-end items-center space-x-2 mt-1">
-                        ${actionButton}
-                        <button onclick="takimSil(${t.takimNo})" class="p-1.5 bg-transparent hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 text-slate-500 hover:text-rose-400 rounded-lg transition" title="Takımı Tamamen Sil">
-                            <i class="fas fa-trash-alt text-xs"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function toggleCheckin(takimNo, yeniDurum) {
-            setConnectionStatus("loading");
-            const params = new URLSearchParams();
-            params.append("action", "checkin");
-            params.append("id", takimNo);
-            params.append("status", yeniDurum);
-
-            fetch(`${scriptURL}?t=${Date.now()}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: params.toString()
-            })
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    showToast(`#${takimNo} numaralı takım durumu güncellendi.`, "success");
-                    verileriYukle();
-                } else {
-                    showToast("Durum güncellenemedi: " + json.message, "error");
-                }
-            })
-            .catch(err => {
-                showToast("İşlem başarısız oldu!", "error");
-                console.error(err);
-            })
-            .finally(() => setConnectionStatus("active"));
-        }
-
-        async function takimSil(takimNo) {
-            const onay = await showConfirmModal(`#${takimNo} numaralı takımı sistemden tamamen silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`);
-            if(!onay) return;
-
-            setConnectionStatus("loading");
-            const params = new URLSearchParams();
-            params.append("action", "deleteTeam");
-            params.append("id", takimNo);
-
-            fetch(`${scriptURL}?t=${Date.now()}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: params.toString()
-            })
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    showToast(`#${takimNo} numaralı takım tamamen silindi.`, "success");
-                    verileriYukle();
-                } else {
-                    showToast("Silme işlemi başarısız: " + json.message, "error");
-                }
-            })
-            .catch(err => {
-                showToast("Silme hatası oluştu!", "error");
-                console.error(err);
-            })
-            .finally(() => setConnectionStatus("active"));
-        }
-
-        function renderCategoryDistribution() {
-            const search = document.getElementById("categorySearchInput").value.toLowerCase().trim();
-            const alandakiler = localData.filter(t => t.durum === "Check-in Yapıldı");
-
-            const lists = {
-                "minisumo": document.getElementById("list-miniSumo"),
-                "kagitkule": document.getElementById("list-kagitKule"),
-                "kagitroket": document.getElementById("list-kagitRoket"),
-                "cizgiizleyen": document.getElementById("list-cizgiIzleyen")
-            };
-
-            const counts = { "minisumo": 0, "kagitkule": 0, "kagitroket": 0, "cizgiizleyen": 0 };
-
-            Object.keys(lists).forEach(k => { if(lists[k]) lists[k].innerHTML = ""; });
-
-            alandakiler.forEach(t => {
-                const cCat = temizleKategori(t.kategori);
-                if (counts[cCat] !== undefined) {
-                    counts[cCat]++;
-                }
-
-                if (search && !(
-                    t.takimNo.toString().includes(search) ||
-                    t.takimAdi.toLowerCase().includes(search) ||
-                    t.okul.toLowerCase().includes(search)
-                )) return;
-
-                const container = lists[cCat];
-                if(container) {
-                    const row = document.createElement("div");
-                    row.className = "flex items-center justify-between p-3 bg-[#0a0e17]/60 border border-borderClr/40 rounded-xl hover:border-indigo-500/30 transition text-xs";
-                    row.innerHTML = `
-                        <div class="min-w-0 flex-1 pr-2">
-                            <div class="flex items-center space-x-1.5">
-                                <span class="font-black text-indigo-400">#${t.takimNo}</span>
-                                <span class="font-bold text-white truncate">${t.takimAdi}</span>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-semibold truncate mt-0.5">${t.okul}</div>
-                        </div>
-                        <span class="flex-shrink-0 px-2 py-0.5 bg-indigo-950 text-indigo-400 border border-indigo-900/40 rounded font-black text-[9px]">SEVK EDİLDİ</span>
-                    `;
-                    container.appendChild(row);
-                }
-            });
-
-            if(document.getElementById("count-miniSumo")) document.getElementById("count-miniSumo").innerText = `${counts["minisumo"]} Alanda`;
-            if(document.getElementById("count-kagitKule")) document.getElementById("count-kagitKule").innerText = `${counts["kagitkule"]} Alanda`;
-            if(document.getElementById("count-kagitRoket")) document.getElementById("count-kagitRoket").innerText = `${counts["kagitroket"]} Alanda`;
-            if(document.getElementById("count-cizgiIzleyen")) document.getElementById("count-cizgiIzleyen").innerText = `${counts["cizgiizleyen"]} Alanda`;
-
-            Object.keys(lists).forEach(k => {
-                if(lists[k] && lists[k].innerHTML === "") {
-                    lists[k].innerHTML = `<div class="text-center py-6 text-slate-600 font-bold text-[11px]">Alanda veya kriterlere uygun takım yok.</div>`;
-                }
-            });
-        }
-
-        async function triggerKuraCekimi() {
-            const onay = await showConfirmModal("Mevcut tüm Mini Sumo kuralarını ve maç kodlarını sıfırlayıp, alandaki takımlarla YENİDEN rastgele turnuva ağacı oluşturmak istediğinize emin misiniz?");
-            if(!onay) return;
-
-            setConnectionStatus("loading");
-            showToast("Otomatik kura çekiliyor ve turnuva ağacı matrisi oluşturuluyor...", "warning");
-
-            const params = new URLSearchParams();
-            params.append("action", "generateBracket");
-
-            fetch(`${scriptURL}?${params.toString()}&t=${Date.now()}`, {
-                method: 'POST'
-            })
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    showToast("Rastgele kura çekimi başarıyla tamamlandı! Maçlar listelendi.", "success");
-                    verileriYukle();
-                } else {
-                    showToast("Kura çekilemedi: " + json.error, "error");
-                }
-            })
-            .catch(err => {
-                showToast("Kura servisinde teknik hata!", "error");
-                console.error(err);
-            })
-            .finally(() => setConnectionStatus("active"));
-        }
-
-        function renderResultsTable() {
-            const tbody = document.getElementById("resultsTableBody");
-            tbody.innerHTML = "";
-            const search = document.getElementById("resultsSearchInput").value.toLowerCase().trim();
-
-            const targetClean = temizleKategori(activeResultsCategory);
-            const alandakiler = localData.filter(t => temizleKategori(t.kategori) === targetClean && t.durum === "Check-in Yapıldı");
-
-            if(alandakiler.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-bold">Bu kategoride henüz alana giriş yapmış takım yok.</td></tr>`;
-                return;
-            }
-
-            let filtered = alandakiler;
-            if(search) {
-                filtered = filtered.filter(t => 
-                    t.takimNo.toString().includes(search) ||
-                    t.takimAdi.toLowerCase().includes(search) ||
-                    t.okul.toLowerCase().includes(search)
-                );
-            }
-
-            filtered.forEach(t => {
-                const tr = document.createElement("tr");
-                tr.className = "hover:bg-[#161b2e]/40 transition border-b border-borderClr/40 text-xs";
-
-                const cached = categoryScoresData.find(s => s.id.toString() === t.id.toString()) || {};
-                
-                let inputHtml = "";
-                let saveActionCall = `saveStandardScore('${t.id}')`;
-
-                const hasSaved = Object.keys(cached).length > 0 && (cached.kolon4 !== "0" && cached.kolon4 !== "" || cached.kolon5 !== "0" && cached.kolon5 !== "");
-                const disabledAttr = hasSaved ? 'disabled="true"' : '';
-
-                if (targetClean === "cizgiizleyen") {
-                    const valSure = cached.kolon4 !== undefined ? cached.kolon4 : "";
-                    const valCeza = cached.kolon5 !== undefined ? cached.kolon5 : "";
-                    inputHtml = `
-                        <div class="flex items-center space-x-2">
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">SÜRE:</span>
-                                <input type="number" step="0.01" id="scoreSure-${t.id}" value="${valSure}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">CEZA:</span>
-                                <input type="number" step="0.01" id="scoreCeza-${t.id}" value="${valCeza}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                        </div>
-                    `;
-                } else if (targetClean === "balonluaraba") {
-                    const valD1 = cached.kolon4 !== undefined ? cached.kolon4 : "";
-                    const valD2 = cached.kolon5 !== undefined ? cached.kolon5 : "";
-                    inputHtml = `
-                        <div class="flex items-center space-x-2">
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D1:</span>
-                                <input type="number" step="0.01" id="scoreD1-${t.id}" value="${valD1}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D2:</span>
-                                <input type="number" step="0.01" id="scoreD2-${t.id}" value="${valD2}" ${disabledAttr} placeholder="0.00" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                        </div>
-                    `;
-                } else if (targetClean === "kagitkule") {
-                    const valDurum = cached.kolon4 || "Ayakta";
-                    const valYuk = cached.kolon5 !== undefined ? cached.kolon5 : "";
-                    const valSure = cached.kolon6 !== undefined ? cached.kolon6 : "";
-                    inputHtml = `
-                        <div class="flex items-center space-x-2">
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">DURUM:</span>
-                                <select id="scoreDurum-${t.id}" ${disabledAttr} class="bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                                    <option value="Ayakta" ${valDurum === 'Ayakta' ? 'selected' : ''} class="bg-cardBg">Ayakta</option>
-                                    <option value="Yıkıldı" ${valDurum === 'Yıkıldı' ? 'selected' : ''} class="bg-cardBg">Yıkıldı</option>
-                                </select>
-                            </div>
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">YÜKSEKLİK:</span>
-                                <input type="number" id="scoreYuk-${t.id}" value="${valYuk}" ${disabledAttr} placeholder="cm" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">SÜRE:</span>
-                                <input type="number" step="0.01" id="scoreKuleSure-${t.id}" value="${valSure}" ${disabledAttr} placeholder="sn" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                        </div>
-                    `;
-                } else if (targetClean === "kagitroket") {
-                    const valD1 = cached.kolon4 !== undefined ? cached.kolon4 : "";
-                    const valD2 = cached.kolon5 !== undefined ? cached.kolon5 : "";
-                    inputHtml = `
-                        <div class="flex items-center space-x-2">
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D1:</span>
-                                <input type="number" step="0.1" id="scoreD1-${t.id}" value="${valD1}" ${disabledAttr} placeholder="m" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                            <div class="flex items-center bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5">
-                                <span class="text-[9px] text-slate-500 font-black mr-1 uppercase">D2:</span>
-                                <input type="number" step="0.1" id="scoreD2-${t.id}" value="${valD2}" ${disabledAttr} placeholder="m" class="w-16 bg-transparent text-white focus:outline-none font-bold text-xs disabled:opacity-50">
-                            </div>
-                        </div>
-                    `;
-                }
-
-                const birlesikTakimAdi = `${t.id} ${t.takimAdi}`;
-                const isCheckedIn = t.durum === "Check-in Yapıldı";
-
-                // Düzelt / Gönder Buton Mekanizması
-                let btnHtml = "";
-                if (isCheckedIn) {
-                    if (hasSaved) {
-                        btnHtml = `<button id="btn_action_${t.id}" onclick="toggleEditResult('${t.id}', '${activeResultsCategory}')" class="text-xs bg-[#6d28d9] hover:bg-[#7c3aed] text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg flex items-center space-x-1.5"><i class="fas fa-edit text-xs"></i> <span>Düzelt</span></button>`;
-                    } else {
-                        btnHtml = `<button id="btn_action_${t.id}" onclick="${saveActionCall}" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/10 flex items-center space-x-1.5"><i class="fas fa-save"></i> <span>Gönder</span></button>`;
-                    }
-                } else {
-                    btnHtml = `<button disabled class="text-xs bg-[#171e30]/40 border border-borderClr/60 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed flex items-center space-x-1"><i class="fas fa-ban"></i> <span>Bekleniyor</span></button>`;
-                }
-
-                tr.innerHTML = `
-                    <td class="p-5 font-black text-indigo-400 text-sm">#${t.id}</td>
-                    <td class="p-5">
-                        <div class="font-extrabold text-white text-xs">${birlesikTakimAdi}</div>
-                    </td>
-                    <td class="p-5 text-slate-300 font-semibold">${t.kurum || t.okul}</td>
-                    <td class="p-5"><span class="px-2 py-0.5 ${hasSaved ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400 border border-borderClr'} rounded font-bold text-[10px]">${hasSaved ? 'KAYDEDİLMİŞ' : 'EKSİK'}</span></td>
-                    <td class="p-5">${inputHtml}</td>
-                    <td class="p-5 flex justify-end items-center h-full pt-6">${btnHtml}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function toggleEditResult(takimId, kategori) {
-            const btn = document.getElementById(`btn_action_${takimId}`);
-            
-            if (btn.classList.contains('bg-[#6d28d9]')) {
-                enableRowInputs(takimId, kategori, true);
-                
-                btn.className = "text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-lg flex items-center space-x-1.5";
-                btn.innerHTML = `<i class="fas fa-check"></i> <span>Kaydet</span>`;
-                btn.onclick = () => saveEditedResult(takimId, kategori);
-            }
-        }
-
-        function enableRowInputs(takimId, kategori, enable) {
-            const clean = temizleKategori(kategori);
-            if (clean === 'cizgiizleyen') {
-                document.getElementById(`scoreSure-${takimId}`).disabled = !enable;
-                document.getElementById(`scoreCeza-${takimId}`).disabled = !enable;
-            } else if (clean === 'balonluaraba') {
-                document.getElementById(`scoreD1-${takimId}`).disabled = !enable;
-                document.getElementById(`scoreD2-${takimId}`).disabled = !enable;
-            } else if (clean === 'kagitkule') {
-                document.getElementById(`scoreDurum-${takimId}`).disabled = !enable;
-                document.getElementById(`scoreYuk-${takimId}`).disabled = !enable;
-                document.getElementById(`scoreKuleSure-${takimId}`).disabled = !enable;
-            } else if (clean === 'kagitroket') {
-                document.getElementById(`scoreD1-${takimId}`).disabled = !enable;
-                document.getElementById(`scoreD2-${takimId}`).disabled = !enable;
-            }
-        }
-
-        function saveEditedResult(takimId, kategori) {
-            saveStandardScore(takimId);
-        }
-
-        function saveStandardScore(takimId) {
-            const targetClean = temizleKategori(activeResultsCategory);
-            const params = new URLSearchParams();
-            params.append("action", "saveResult");
-            params.append("takimid", takimId);
-            params.append("kategori", activeResultsCategory);
-
-            if (targetClean === "cizgiizleyen") {
-                const sure = document.getElementById(`scoreSure-${takimId}`).value;
-                const ceza = document.getElementById(`scoreCeza-${takimId}`).value;
-                params.append("sure", sure);
-                params.append("ceza", ceza);
-            } else if (targetClean === "balonluaraba") {
-                const d1 = document.getElementById(`scoreD1-${takimId}`).value;
-                const d2 = document.getElementById(`scoreD2-${takimId}`).value;
-                params.append("deneme1", d1);
-                params.append("deneme2", d2);
-            } else if (targetClean === "kagitkule") {
-                const durum = document.getElementById(`scoreDurum-${takimId}`).value;
-                const yukseklik = document.getElementById(`scoreYuk-${takimId}`).value;
-                const sure = document.getElementById(`scoreKuleSure-${takimId}`).value;
-                params.append("durum", durum);
-                params.append("yukseklik", yukseklik);
-                params.append("sure", sure);
-            } else if (targetClean === "kagitroket") {
-                const d1 = document.getElementById(`scoreD1-${takimId}`).value;
-                const d2 = document.getElementById(`scoreD2-${takimId}`).value;
-                params.append("deneme1", d1);
-                params.append("deneme2", d2);
-            }
-
-            setConnectionStatus("loading");
-            fetch(`${scriptURL}?t=${Date.now()}`, { 
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: params.toString() 
-            })
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    showToast(`#${takimId} numaralı takım skoru başarıyla kaydedildi.`, "success");
-                    fetchCategoryScores(activeResultsCategory);
-                } else {
-                    showToast("Skor kaydedilemedi: " + json.error, "error");
-                }
-            })
-            .catch(err => {
-                showToast("Ağ hatası oluştu!", "error");
-                console.error(err);
-            })
-            .finally(() => setConnectionStatus("active"));
-        }
-
-        function renderSumoResultsTable() {
-            const tbody = document.getElementById('sumoResultsTableBody');
-            tbody.innerHTML = '';
-            const search = document.getElementById("resultsSearchInput").value.toLowerCase().trim();
-
-            let filtered = sumoMatchesData;
-
-            if(search) {
-                filtered = filtered.filter(m => 
-                    m.MacKodu.toLowerCase().includes(search) ||
-                    m.robot1Name.toLowerCase().includes(search) ||
-                    m.robot2Name.toLowerCase().includes(search)
-                );
-            }
-
-            if(filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-bold">Kura çekimi yapılmamış veya arama kriterine uygun eşleşme bulunamadı.</td></tr>`;
-                return;
-            }
-
-            filtered.forEach(m => {
-                const tr = document.createElement("tr");
-                tr.className = "hover:bg-[#161b2e]/40 transition border-b border-borderClr/40 text-xs";
-
-                const isBay1 = m.robot1No === "BAY" || m.robot1Name.toUpperCase() === "BAY";
-                const isBay2 = m.robot2No === "BAY" || m.robot2Name.toUpperCase() === "BAY";
-
-                let r1Display = isBay1 ? `<span class="text-amber-500 font-black">BAY (Boş Geçti)</span>` : `<div class="font-extrabold text-white">#${m.robot1No} - ${m.robot1Name}</div>`;
-                let r2Display = isBay2 ? `<span class="text-amber-500 font-black">BAY (Boş Geçti)</span>` : `<div class="font-extrabold text-white text-right">#${m.robot2No} - ${m.robot2Name}</div>`;
-
-                let formHtml = "";
-                let kazananHtml = "";
-                let eylemHtml = "";
-
-                if (isBay1 || isBay2) {
-                    formHtml = `<div class="text-center text-slate-500 font-bold text-[11px]">Otomatik Geçiş Pasif</div>`;
-                    kazananHtml = `<div class="text-center"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded font-black text-[10px]">${isBay1 ? m.robot2Name : m.robot1Name}</span></div>`;
-                    eylemHtml = `<div class="text-right text-[10px] text-slate-500 font-semibold italic">İşlem Gerekmiyor</div>`;
-                } else {
-                    formHtml = `
-                        <div class="flex items-center justify-center space-x-2">
-                            <input type="number" min="0" max="3" id="sumoSkor1-${m.MacKodu}" value="${m.robot1Skor || 0}" class="w-14 text-center px-2 py-1.5 bg-[#0a0e17] border border-borderClr rounded-lg text-white font-black text-sm focus:ring-2 focus:ring-indigo-500">
-                            <span class="text-slate-600 font-bold">-</span>
-                            <input type="number" min="0" max="3" id="sumoSkor2-${m.MacKodu}" value="${m.robot2Skor || 0}" class="w-14 text-center px-2 py-1.5 bg-[#0a0e17] border border-borderClr rounded-lg text-white font-black text-sm focus:ring-2 focus:ring-indigo-500">
-                        </div>
-                    `;
-
-                    // Winner select matching with raw ID string (id - name)
-                    const isR1Selected = m.rawWinner === m.rawRobot1;
-                    const isR2Selected = m.rawWinner === m.rawRobot2;
-
-                    kazananHtml = `
-                        <div class="text-center">
-                            <select id="sumo_winner_${m.MacKodu}" class="bg-[#0a0e17] border border-borderClr rounded-xl px-2.5 py-1.5 focus:outline-none text-white text-xs font-bold w-48">
-                                <option value="" ${m.rawWinner === "" ? "selected" : ""}>Seçilmedi</option>
-                                <option value="${m.rawRobot1}" ${isR1Selected ? "selected" : ""}>#${m.robot1No} - ${m.robot1Name}</option>
-                                <option value="${m.rawRobot2}" ${isR2Selected ? "selected" : ""}>#${m.robot2No} - ${m.robot2Name}</option>
-                            </select>
-                        </div>
-                    `;
-
-                    eylemHtml = `
-                        <div class="text-right">
-                            <button onclick="saveSumoMatchScore('${m.MacKodu}')" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-black text-[10px] uppercase tracking-wider rounded-lg transition shadow-md">
-                                Skor Gir
-                            </button>
-                        </div>
-                    `;
-                }
-
-                tr.innerHTML = `
-                    <td class="p-5 font-black text-slate-400 uppercase tracking-wider bg-[#0f1424]/40">${m.MacKodu}</td>
-                    <td class="p-5">${r1Display}</td>
-                    <td class="p-5">${formHtml}</td>
-                    <td class="p-5">${r2Display}</td>
-                    <td class="p-5">${kazananHtml}</td>
-                    <td class="p-5">${eylemHtml}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function saveSumoMatchScore(macKodu) {
-            const s1 = document.getElementById(`sumoSkor1-${macKodu}`).value;
-            const s2 = document.getElementById(`sumoSkor2-${macKodu}`).value;
-            const winnerSelect = document.getElementById(`sumo_winner_${macKodu}`);
-            const winner = winnerSelect ? winnerSelect.value : "";
-
-            if (winner === "" && (parseInt(s1) > 0 || parseInt(s2) > 0)) {
-                showToast("Skor girilmişse lütfen bir Maç Kazananı seçin!", "warning");
-                return;
-            }
-
-            setConnectionStatus("loading");
-            const params = new URLSearchParams();
-            params.append("action", "saveResult");
-            params.append("takimid", MacKoduNormalize(macKodu)); // MatchID normalleştirilerek backend'e gönderilir
-            params.append("kategori", "minisumo");
-            params.append("kolon4", s1);
-            params.append("kolon5", s2);
-            params.append("kolon6", winner);
-
-            fetch(`${scriptURL}?t=${Date.now()}`, { 
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: params.toString() 
-            })
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    showToast(`${macKodu} kodlu maç sonucu kaydedildi.`, "success");
-                    fetchSumoMatches();
-                } else {
-                    showToast("Skor kaydedilemedi: " + json.error, "error");
-                }
-            })
-            .catch(err => {
-                showToast("Bağlantı hatası!", "error");
-                console.error(err);
-            })
-            .finally(() => setConnectionStatus("active"));
-        }
-
-        // MacKodu değerinin (örn: QF_1, SF_2) backend'in (örn: qf_1, sf_2) eşleştirmesiyle tam uyuşması için normalleştirici
-        function MacKoduNormalize(macKodu) {
-            if (!macKodu) return "";
-            return macKodu.toString().toLowerCase().trim();
-        }
-
-        function tabloFiltrele() {
-            if (activeResultsCategory === "Mini Sumo" && !document.getElementById("tab-results").classList.contains("hidden")) {
-                renderSumoResultsTable();
-            } else {
-                renderResultsTable();
-            }
-            renderCheckinTable();
-        }
-
-        function switchTab(tabName) {
-            const tabs = ['checkin', 'categoryDistribution', 'results', 'stats'];
-            const titles = {
-                'checkin': '1. Adım: Takım Check-In',
-                'categoryDistribution': '2. Adım: Kategori Dağılımı',
-                'results': '3. Adım: Hakem Sonuç Girişi',
-                'stats': '4. Adım: İstatistikler'
-            };
-
-            document.getElementById('tabTitle').innerText = titles[tabName];
-
-            tabs.forEach(t => {
-                const sect = document.getElementById(`tab-${t}`);
-                const btn = document.getElementById(`tabBtn-${t}`);
-                
-                if (t === tabName) {
-                    sect.classList.remove('hidden');
-                    btn.className = "w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left bg-indigo-600 text-white shadow-lg shadow-indigo-600/10";
-                } else {
-                    sect.classList.add('hidden');
-                    btn.className = "w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition font-semibold text-xs text-left text-slate-400 hover:bg-slate-800/40 hover:text-white";
-                }
-            });
-
-            if (tabName === 'results') {
-                setResultsCategory(activeResultsCategory);
-            }
-        }
-    </script>
+      </div>
+
+      <nav id="navTabs" class="mt-7 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3"></nav>
+    </header>
+
+    <!-- STATS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-blue/10 border border-blue/25 text-blue"><i class="fas fa-users"></i></div><div><p class="text-sm text-slate-400 font-bold">Toplam Takım</p><h3 id="statTotal" class="text-3xl font-black text-white mt-1">0</h3><p class="text-xs text-slate-500 font-semibold mt-1">Kayıtlı takım</p></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-green/10 border border-green/25 text-green"><i class="fas fa-clipboard-check"></i></div><div><p class="text-sm text-slate-400 font-bold">Alanda</p><h3 id="statPresent" class="text-3xl font-black text-green mt-1">0</h3><p class="text-xs text-slate-500 font-semibold mt-1">Takım alanda</p></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-purple/10 border border-purple/25 text-purple"><i class="fas fa-trophy"></i></div><div><p class="text-sm text-slate-400 font-bold">Aktif Yarışma</p><h3 class="text-3xl font-black text-white mt-1">5</h3><p class="text-xs text-slate-500 font-semibold mt-1">Kategori aktif</p></div></div>
+      <div class="panel rounded-3xl p-6 flex items-center gap-5"><div class="statIcon bg-amber/10 border border-amber/25 text-amber"><i class="fas fa-user-shield"></i></div><div><p class="text-sm text-slate-400 font-bold">Aktif Kullanıcı</p><h3 id="statUsers" class="text-3xl font-black text-white mt-1">0</h3><p class="text-xs text-slate-500 font-semibold mt-1">Yetkili kullanıcı</p></div></div>
+    </section>
+
+    <!-- HOME -->
+    <section id="tab-home" class="tabPage space-y-6">
+      <div class="grid grid-cols-1 xl:grid-cols-[1fr_520px] gap-6">
+        <div class="panel rounded-3xl p-6">
+          <div class="flex items-center justify-between gap-4 mb-6"><h2 class="text-xl font-black text-white"><i class="fas fa-trophy text-amber mr-3"></i>Yarışmaların Durumu</h2><button onclick="switchTab('competitions')" class="text-blue hover:text-white font-black text-sm transition">Tümünü Yönet <i class="fas fa-arrow-right ml-1"></i></button></div>
+          <div id="competitionMiniGrid" class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4"></div>
+          <div class="mt-5 rounded-2xl border border-blue/20 bg-blue/5 px-4 py-3 text-sm text-slate-400"><i class="fas fa-circle-info text-blue mr-2"></i>Kura çekimi sadece Mini Sumo kategorisi için yapılmaktadır.</div>
+        </div>
+
+        <div class="panel rounded-3xl p-6">
+          <h2 class="text-xl font-black text-white mb-1"><i class="fas fa-bolt text-cyan mr-3"></i>Hızlı İşlemler</h2>
+          <div class="space-y-4 mt-6">
+            <button id="quickCheckin" onclick="switchTab('checkin')" class="w-full rounded-2xl border border-green/30 bg-green/10 hover:bg-green/20 text-green px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-user-check text-2xl"></i><span class="text-left"><b class="block text-lg">Check-in Yap</b><small class="text-slate-400 font-semibold">Takım giriş/çıkış işlemleri</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
+            <button id="quickResults" onclick="switchTab('results')" class="w-full rounded-2xl border border-blue/30 bg-blue/10 hover:bg-blue/20 text-blue px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-clipboard-list text-2xl"></i><span class="text-left"><b class="block text-lg">Sonuç Girişi</b><small class="text-slate-400 font-semibold">Yarışma sonuçlarını girin</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
+            <button id="quickUsers" onclick="switchTab('users')" class="w-full rounded-2xl border border-amber/30 bg-amber/10 hover:bg-amber/20 text-amber px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-users-gear text-2xl"></i><span class="text-left"><b class="block text-lg">Yetki Yönetimi</b><small class="text-slate-400 font-semibold">Kullanıcı ve yetki ayarları</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
+            <button onclick="switchTab('stats')" class="w-full rounded-2xl border border-purple/30 bg-purple/10 hover:bg-purple/20 text-purple px-6 py-5 flex items-center justify-between transition"><span class="flex items-center gap-4"><i class="fas fa-chart-simple text-2xl"></i><span class="text-left"><b class="block text-lg">İstatistikler</b><small class="text-slate-400 font-semibold">Raporlar ve analizler</small></span></span><i class="fas fa-chevron-right text-xl"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div class="panel rounded-3xl p-6"><div class="flex items-center justify-between mb-5"><h2 class="text-xl font-black text-white"><i class="fas fa-clock text-slate-300 mr-3"></i>Son Check-in İşlemleri</h2><button onclick="switchTab('checkin')" class="text-blue font-black text-sm">Tümünü Gör <i class="fas fa-arrow-right ml-1"></i></button></div><div id="recentCheckins"></div></div>
+        <div class="panel rounded-3xl p-6"><div class="flex items-center justify-between mb-5"><h2 class="text-xl font-black text-white"><i class="fas fa-clipboard-list text-slate-300 mr-3"></i>Sonuç Giriş Özeti</h2><button onclick="switchTab('results')" class="text-blue font-black text-sm">Tümünü Gör <i class="fas fa-arrow-right ml-1"></i></button></div><div id="resultSummary"></div></div>
+      </div>
+    </section>
+
+    <!-- CHECKIN -->
+    <section id="tab-checkin" class="tabPage hidden space-y-6">
+      <div class="panel rounded-3xl p-6 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4"><div><h2 class="text-xl font-black text-white">Check-in İşlemleri</h2><p id="checkinNote" class="text-sm text-slate-400 mt-1"></p></div><div class="relative w-full xl:max-w-md"><i class="fas fa-search absolute left-4 top-4 text-slate-500"></i><input id="checkinSearch" oninput="renderCheckinTable()" class="input w-full pl-11" placeholder="Takım, okul, mentor ara..."></div></div>
+      <div class="panel rounded-3xl overflow-hidden"><div class="overflow-x-auto"><table class="w-full min-w-[920px] text-left"><thead class="bg-[#0a1020]"><tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Takım</th><th class="p-5">Okul / Mentor</th><th class="p-5">Kategori</th><th class="p-5 text-center">Durum</th><th class="p-5 text-right">İşlem</th></tr></thead><tbody id="checkinBody" class="divide-y divide-line/60"></tbody></table></div></div>
+    </section>
+
+    <!-- CATEGORY -->
+    <section id="tab-category" class="tabPage hidden space-y-6">
+      <div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">Kategori Dağılımı</h2><p class="text-sm text-slate-400 mt-1">Sadece alana giriş yapmış takımlar listelenir.</p></div>
+      <div id="categoryGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5"></div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="tab-results" class="tabPage hidden space-y-6">
+      <div class="panel rounded-3xl p-6"><div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4"><div><h2 class="text-xl font-black text-white">Sonuç Girişi</h2><p id="resultNote" class="text-sm text-slate-400 mt-1"></p></div><div id="resultCats" class="flex flex-wrap gap-2"></div></div></div>
+      <div class="panel rounded-3xl overflow-hidden"><div class="p-6 border-b border-line"><h3 id="activeResultTitle" class="font-black text-white text-lg">---</h3></div><div class="overflow-x-auto"><table class="w-full min-w-[1000px] text-left"><thead id="resultsHead" class="bg-[#0a1020]"></thead><tbody id="resultsBody" class="divide-y divide-line/60"></tbody></table></div></div>
+    </section>
+
+    <!-- COMPETITIONS -->
+    <section id="tab-competitions" class="tabPage hidden space-y-6">
+      <div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">Yarışmalar</h2><p class="text-sm text-slate-400 mt-1">Kura, yarışmayı bitir tetikleyicisi ve yarışma durumları.</p></div>
+      <div id="competitionCards" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- USERS -->
+    <section id="tab-users" class="tabPage hidden space-y-6">
+      <div class="grid grid-cols-1 xl:grid-cols-[430px_1fr] gap-6">
+        <div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white mb-1">Yeni Kullanıcı</h2><p class="text-sm text-slate-400 mb-6">Yönetici, başhakem, hakem veya görevli ekle.</p><form onsubmit="addUser(event)" class="space-y-4"><input id="newFullName" class="input w-full" placeholder="Ad Soyad" required><input id="newUsername" class="input w-full" placeholder="Kullanıcı adı" required><input id="newPassword" class="input w-full" placeholder="Şifre" required><select id="newRole" onchange="syncRoleDefaults()" class="input w-full"><option value="judge">Hakem</option><option value="headjudge">Başhakem</option><option value="officer">Görevli</option><option value="admin">Yönetici</option></select><div class="soft rounded-2xl p-4 space-y-3"><h4 class="text-xs text-slate-400 font-black uppercase">İşlem Yetkileri</h4><label class="flex items-center gap-2 text-sm font-bold"><input id="permCheckin" type="checkbox" class="accent-blue"> Check-in yapabilir</label><label class="flex items-center gap-2 text-sm font-bold"><input id="permResultEntry" type="checkbox" class="accent-blue" checked> Sonuç girebilir</label><label class="flex items-center gap-2 text-sm font-bold"><input id="permResultEdit" type="checkbox" class="accent-blue"> Sonuç düzeltebilir</label></div><div class="soft rounded-2xl p-4 space-y-3"><h4 class="text-xs text-slate-400 font-black uppercase">Kategori Yetkileri</h4><div id="newCategoryChecks" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div></div><button class="w-full rounded-2xl bg-blue hover:bg-blue/90 py-3.5 text-sm font-black text-white uppercase">Kullanıcı Ekle</button></form></div>
+        <div class="panel rounded-3xl overflow-hidden"><div class="p-6 border-b border-line flex items-center justify-between"><div><h2 class="text-xl font-black text-white">Kullanıcı Listesi</h2><p class="text-sm text-slate-400 mt-1">Sadece sisteme eklenen kullanıcılar görünür.</p></div><span class="badge bg-purple/10 text-purple border border-purple/25">Admin Alanı</span></div><div class="overflow-x-auto"><table class="w-full min-w-[900px] text-left"><thead class="bg-[#0a1020]"><tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Kullanıcı</th><th class="p-5">Rol</th><th class="p-5">Yetkiler</th><th class="p-5">Kategoriler</th><th class="p-5 text-center">Durum</th></tr></thead><tbody id="usersBody" class="divide-y divide-line/60"></tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="tab-stats" class="tabPage hidden space-y-6"><div class="panel rounded-3xl p-6"><h2 class="text-xl font-black text-white">İstatistikler</h2><p class="text-sm text-slate-400 mt-1">Kategori bazlı katılım ve sonuç durumu.</p></div><div id="statsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5"></div></section>
+  </div>
+</div>
+
+<div id="toastContainer" class="fixed top-5 right-5 z-50 space-y-3 pointer-events-none"></div>
+
+<script>
+const scriptURL='https://script.google.com/macros/s/AKfycbxRp5jIAhNPYm3uPwMwzQW7cx_ZVyvNWaF8TRJjrbXNegE-3m4M5wzFmuH5Uf3Cn5rV/exec';
+const categories=[{id:'Mini Sumo',key:'minisumo',icon:'fa-people-arrows'},{id:'Çizgi İzleyen',key:'cizgiizleyen',icon:'fa-link'},{id:'Balonlu Araba',key:'balonluaraba',icon:'fa-balloon'},{id:'Kağıt Kule',key:'kagitkule',icon:'fa-chess-rook'},{id:'Kağıt Roket',key:'kagitroket',icon:'fa-rocket'}];
+let users=[
+ {username:'serkantutuncu',password:'G.st2807',fullName:'SERKAN TÜTÜNCÜ',role:'admin',active:true,canCheckin:true,canCancelCheckin:true,canResultEntry:true,canResultEdit:true,canManageUsers:true,canManageBracket:true,categories:['all']},
+ {username:'eyupkose',password:'gs1905',fullName:'EYÜP KÖSE',role:'admin',active:true,canCheckin:true,canCancelCheckin:true,canResultEntry:true,canResultEdit:true,canManageUsers:true,canManageBracket:true,categories:['all']},
+ {username:'mehmetbulum',password:'gs1905',fullName:'MEHMET BULUM',role:'admin',active:true,canCheckin:true,canCancelCheckin:true,canResultEntry:true,canResultEdit:true,canManageUsers:true,canManageBracket:true,categories:['all']}
+];
+let currentUser=null,activeTab='home',activeResultCategory='Mini Sumo';
+let teams=[];
+let competitions=[
+ {name:'Mini Sumo',key:'minisumo',status:'active',bracketStatus:'empty',finished:false,champion:'',ranking:[],matches:[]},
+ {name:'Çizgi İzleyen',key:'cizgiizleyen',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]},
+ {name:'Balonlu Araba',key:'balonluaraba',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]},
+ {name:'Kağıt Kule',key:'kagitkule',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]},
+ {name:'Kağıt Roket',key:'kagitroket',status:'active',bracketStatus:'none',finished:false,champion:'',ranking:[]}
+];
+const fallbackTeams=[];
+function ncat(v){return(v||'').toString().toLowerCase().replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u').replace(/[^a-z0-9]/g,'')}
+function roleName(r){return{admin:'Yönetici',headjudge:'Başhakem',judge:'Hakem',officer:'Görevli'}[r]||'Kullanıcı'}
+function canSeeCategory(c){return currentUser&&(currentUser.categories.includes('all')||currentUser.categories.includes(c))}
+function isAdmin(){return currentUser&&currentUser.role==='admin'}
+function handleLogin(e){e.preventDefault();const u=document.getElementById('loginUsername').value.trim().toLowerCase(),p=document.getElementById('loginPassword').value;const found=users.find(x=>x.username.toLowerCase()===u&&x.password===p&&x.active);if(!found){document.getElementById('loginError').classList.remove('hidden');return}currentUser=found;document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').classList.remove('hidden');bootstrap();showToast('Sisteme başarıyla giriş yapıldı.','success')}
+function handleLogout(){currentUser=null;document.getElementById('app').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('loginPassword').value=''}
+async function bootstrap(){teams=[...fallbackTeams];renderIdentity();renderNav();renderNewCategoryChecks();await loadTeams();renderAll();switchTab('home')}
+async function loadTeams(){try{const res=await fetch(`${scriptURL}?t=${Date.now()}`);const json=await res.json();const raw=Array.isArray(json)?json:(json.data||[]);teams=raw.map(t=>({id:t.id||t.takimNo||'',takimAdi:t.takimAdi||'',okul:t.kurum||t.okul||'',mentor:t.mentor||'',kategori:t.kategori||'',durum:(t.durum||'Bekliyor').toString().trim(),resultsSaved:false})).filter(t=>t.id||t.takimAdi)}catch(e){teams=[...fallbackTeams];showToast('E-Tablo okunamadı. Liste boş gösteriliyor.','warning')}}
+function renderIdentity(){document.getElementById('activeUserName').innerText=currentUser.fullName;document.getElementById('roleName').innerText=roleName(currentUser.role)}
+function renderNav(){const tabs=[{id:'home',label:'Ana Sayfa',icon:'fa-house',show:true},{id:'checkin',label:'Check-in',icon:'fa-id-card',show:currentUser.canCheckin||currentUser.canCancelCheckin||isAdmin()},{id:'category',label:'Kategoriler',icon:'fa-sitemap',show:true},{id:'results',label:'Sonuçlar',icon:'fa-square-poll-vertical',show:currentUser.canResultEntry||currentUser.canResultEdit||isAdmin()},{id:'competitions',label:'Yarışmalar',icon:'fa-trophy',show:true},{id:'users',label:'Yetkiler',icon:'fa-users-gear',show:currentUser.canManageUsers},{id:'stats',label:'İstatistik',icon:'fa-chart-simple',show:true}];const box=document.getElementById('navTabs');box.innerHTML='';tabs.filter(t=>t.show).forEach(t=>{const b=document.createElement('button');b.id='nav-'+t.id;b.onclick=()=>switchTab(t.id);b.className='navBtn';b.innerHTML=`<i class="fas ${t.icon}"></i>${t.label}`;box.appendChild(b)});document.getElementById('quickUsers').classList.toggle('hidden',!currentUser.canManageUsers);document.getElementById('quickCheckin').classList.toggle('hidden',!currentUser.canCheckin&&!currentUser.canCancelCheckin);document.getElementById('quickResults').classList.toggle('hidden',!currentUser.canResultEntry&&!currentUser.canResultEdit)}
+function switchTab(t){activeTab=t;document.querySelectorAll('.tabPage').forEach(x=>x.classList.add('hidden'));document.getElementById('tab-'+t).classList.remove('hidden');document.querySelectorAll('[id^="nav-"]').forEach(x=>x.classList.remove('navActive'));document.getElementById('nav-'+t)?.classList.add('navActive');renderAll()}
+function renderAll(){renderStats();renderCompetitionMiniGrid();renderRecentCheckins();renderResultSummary();renderCheckinTable();renderCategoryGrid();renderResultCats();renderResultsTable();renderCompetitionCards();renderUsersTable();renderStatsGrid()}
+function renderStats(){const total=teams.length,p=teams.filter(t=>t.durum==='Check-in Yapıldı').length;document.getElementById('statTotal').innerText=total;document.getElementById('statPresent').innerText=p;document.getElementById('statUsers').innerText=users.filter(u=>u.active).length}
+function renderCompetitionMiniGrid(){const box=document.getElementById('competitionMiniGrid');box.innerHTML=competitions.map(c=>{const cat=categories.find(x=>x.key===c.key)||categories[0];return`<div class="soft rounded-3xl p-5 relative overflow-hidden"><span class="badge bg-green/10 text-green border border-green/25 absolute top-4 left-4">Aktif</span><div class="mt-8 flex items-center gap-5"><div class="w-16 h-16 rounded-full bg-green/10 border border-green/20 text-green flex items-center justify-center text-2xl"><i class="fas ${cat.icon}"></i></div><div><h3 class="text-lg font-black text-white">${c.name}</h3><p class="text-sm text-slate-400 mt-1">${c.key==='minisumo'?(c.bracketStatus==='active'?'Kura aktif':'Kura bekliyor'):'Skor tablosu aktif'}</p></div></div><button onclick="switchTab('competitions')" class="mt-5 w-full rounded-xl border border-line hover:border-blue/40 bg-bg2/60 px-4 py-3 text-sm font-black text-slate-200 flex items-center justify-between">Yönet <i class="fas fa-chevron-right"></i></button></div>`}).join('')}
+function renderRecentCheckins(){const list=teams.filter(t=>t.durum==='Check-in Yapıldı').slice(0,5);document.getElementById('recentCheckins').innerHTML=`<div class="grid grid-cols-5 gap-3 text-xs text-slate-400 font-bold border-b border-line pb-3"><span>Takım Adı</span><span>Kategori</span><span>İşlem</span><span>Saat</span><span>Kullanıcı</span></div>`+(list.map(t=>`<div class="grid grid-cols-5 gap-3 text-sm border-b border-line/60 py-4"><b class="text-white truncate">${t.takimAdi}</b><span>${t.kategori}</span><span><span class="badge bg-green/10 text-green border border-green/20">Giriş</span></span><span>${new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</span><span>${currentUser.fullName}</span></div>`).join('')||`<div class="py-8 text-center text-sm text-slate-500 font-bold">Henüz check-in kaydı yok.</div>`)}
+function renderResultSummary(){document.getElementById('resultSummary').innerHTML=`<div class="grid grid-cols-4 gap-3 text-xs text-slate-400 font-bold border-b border-line pb-3"><span>Kategori</span><span>Girilen</span><span>Bekleyen</span><span>Toplam</span></div>`+categories.map(c=>{const l=teams.filter(t=>ncat(t.kategori)===ncat(c.id)),s=l.filter(t=>t.resultsSaved).length;return`<div class="grid grid-cols-4 gap-3 text-sm border-b border-line/60 py-4"><b class="text-white">${c.id}</b><span class="text-green font-black">${s}</span><span class="text-amber font-black">${Math.max(l.length-s,0)}</span><span>${l.length}</span></div>`}).join('')}
+function renderCheckinTable(){const body=document.getElementById('checkinBody');const q=(document.getElementById('checkinSearch')?.value||'').toLowerCase();document.getElementById('checkinNote').innerText=currentUser.canCheckin?'Check-in yapabilirsiniz. İptal/düzeltme sadece yöneticidedir.':'Bu kullanıcı check-in işlemi yapamaz.';const filtered=teams.filter(t=>`${t.id} ${t.takimAdi} ${t.okul} ${t.mentor}`.toLowerCase().includes(q));body.innerHTML=filtered.map(t=>{const present=t.durum==='Check-in Yapıldı',canCheck=currentUser.canCheckin&&!present,canCancel=currentUser.canCancelCheckin&&present;return`<tr class="tableRow"><td class="p-5"><b class="text-white">#${t.id} ${t.takimAdi}</b></td><td class="p-5"><div>${t.okul}</div><small class="text-slate-500">Mentör: ${t.mentor}</small></td><td class="p-5"><span class="badge bg-blue/10 text-blue border border-blue/20">${t.kategori}</span></td><td class="p-5 text-center">${present?'<span class="badge bg-green/10 text-green border border-green/20">Alanda</span>':'<span class="badge bg-amber/10 text-amber border border-amber/20">Bekliyor</span>'}</td><td class="p-5 text-right"><button ${canCheck?'':'disabled'} onclick="setCheckin('${t.id}',true)" class="rounded-xl px-4 py-2 text-xs font-black ${canCheck?'bg-blue text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">Onayla</button> <button ${canCancel?'':'disabled'} onclick="setCheckin('${t.id}',false)" class="rounded-xl px-4 py-2 text-xs font-black ${canCancel?'bg-red text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">İptal</button></td></tr>`}).join('')||`<tr><td colspan="5" class="p-10 text-center text-slate-500 font-bold">Takım bulunamadı.</td></tr>`}
+async function setCheckin(id,val){
+  const t=teams.find(x=>x.id===id); if(!t) return;
+  if(!val&&!currentUser.canCancelCheckin){showToast('Check-in iptal yetkisi sadece yöneticidedir.','warning');return}
+  if(val&&!currentUser.canCheckin){showToast('Check-in yapma yetkiniz yok.','warning');return}
+
+  const newStatus = val ? 'Check-in Yapıldı' : 'Bekliyor';
+  const oldStatus = t.durum;
+  t.durum = newStatus;
+  renderAll();
+  showToast('Check-in e-tabloya gönderiliyor...', 'info');
+
+  try{
+    const params = new URLSearchParams();
+    params.append('action','checkin');
+    params.append('id',id);
+    params.append('status',newStatus);
+    params.append('user',currentUser ? currentUser.username : '');
+
+    const res = await fetch(`${scriptURL}?t=${Date.now()}`,{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:params.toString()
+    });
+    const json = await res.json();
+    if(!json.success){
+      t.durum = oldStatus;
+      renderAll();
+      showToast(json.message || json.error || 'Check-in e-tabloya kaydedilemedi.', 'error');
+      return;
+    }
+    await loadTeams();
+    renderAll();
+    showToast('Check-in e-tabloya kaydedildi.', 'success');
+  }catch(err){
+    t.durum = oldStatus;
+    renderAll();
+    console.error(err);
+    showToast('Check-in bağlantı hatası. E-tablo güncellenmedi.', 'error');
+  }
+}
+function renderCategoryGrid(){document.getElementById('categoryGrid').innerHTML=categories.map(c=>{const list=teams.filter(t=>t.durum==='Check-in Yapıldı'&&ncat(t.kategori)===ncat(c.id));return`<div class="panel rounded-3xl overflow-hidden"><div class="p-5 border-b border-line flex items-center justify-between"><h3 class="font-black text-white"><i class="fas ${c.icon} text-blue mr-2"></i>${c.id}</h3><span class="badge bg-green/10 text-green border border-green/20">${list.length}</span></div><div class="p-4 space-y-3 min-h-[180px]">${list.map(t=>`<div class="soft rounded-2xl p-3"><b class="text-sm text-white">#${t.id} ${t.takimAdi}</b><div class="text-xs text-slate-500 mt-1">${t.okul}</div></div>`).join('')||'<div class="text-center py-10 text-sm text-slate-500 font-bold">Takım yok.</div>'}</div></div>`}).join('')}
+function renderResultCats(){const allowed=categories.filter(c=>canSeeCategory(c.id));const box=document.getElementById('resultCats');if(!allowed.length){box.innerHTML='<span class="text-red font-bold text-sm">Kategori yetkisi yok.</span>';return}if(!allowed.some(c=>c.id===activeResultCategory))activeResultCategory=allowed[0].id;box.innerHTML=allowed.map(c=>`<button onclick="activeResultCategory='${c.id}';renderAll();" class="rounded-2xl px-4 py-3 text-xs font-black ${activeResultCategory===c.id?'bg-blue text-white':'soft text-slate-300 hover:text-white'}"><i class="fas ${c.icon} mr-1"></i>${c.id}</button>`).join('');document.getElementById('resultNote').innerText=currentUser.canResultEdit?'Sonuç girebilir ve düzeltebilirsiniz.':'Sadece yetkili olduğunuz kategorilerde sonuç girebilirsiniz.'}
+function renderResultsTable(){
+  const head=document.getElementById('resultsHead');
+  const body=document.getElementById('resultsBody');
+  document.getElementById('activeResultTitle').innerText=activeResultCategory+' Sonuç Girişi';
+
+  if(ncat(activeResultCategory)==='minisumo'){
+    head.innerHTML=`<tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Maç</th><th class="p-5">Robot 1</th><th class="p-5 text-center">Skor</th><th class="p-5">Robot 2</th><th class="p-5 text-center">Kazanan</th><th class="p-5 text-right">İşlem</th></tr>`;
+    renderMiniSumoMatchRows();
+    return;
+  }
+
+  head.innerHTML=`<tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Takım</th><th class="p-5">Okul</th><th class="p-5">Veri Girişi</th><th class="p-5">Durum</th><th class="p-5 text-right">İşlem</th></tr>`;
+  const list=teams.filter(t=>ncat(t.kategori)===ncat(activeResultCategory)&&t.durum==='Check-in Yapıldı');
+  body.innerHTML=list.map(t=>{const canEdit=!t.resultsSaved||currentUser.canResultEdit;return`<tr class="tableRow"><td class="p-5"><b class="text-white">#${t.id} ${t.takimAdi}</b></td><td class="p-5">${t.okul}</td><td class="p-5">${standardScoreInput(activeResultCategory,t.id,canEdit)}</td><td class="p-5">${t.resultsSaved?'<span class="badge bg-green/10 text-green border border-green/20">Kaydedildi</span>':'<span class="badge bg-amber/10 text-amber border border-amber/20">Eksik</span>'}</td><td class="p-5 text-right"><button ${canEdit?'':'disabled'} onclick="saveDemoResult('${t.id}')" class="rounded-xl px-4 py-2 text-xs font-black ${canEdit?'bg-blue text-white':'bg-slate-800 text-slate-500 cursor-not-allowed'}">${t.resultsSaved?'Düzelt':'Gönder'}</button></td></tr>`}).join('')||`<tr><td colspan="5" class="p-10 text-center text-slate-500 font-bold">Bu kategoride alanda takım yok.</td></tr>`
+}
+
+function standardScoreInput(category,id,canEdit){
+  const disabled=canEdit?'':'disabled';
+  const cls='input w-64 disabled:opacity-40';
+  if(ncat(category)==='cizgiizleyen') return `<div class="flex gap-2"><input ${disabled} class="${cls} w-28" placeholder="Süre"><input ${disabled} class="${cls} w-28" placeholder="Ceza"></div>`;
+  if(ncat(category)==='kagitkule') return `<div class="flex flex-wrap gap-2"><select ${disabled} class="${cls} w-32"><option>Ayakta</option><option>Yıkıldı</option></select><input ${disabled} class="${cls} w-28" placeholder="Yükseklik cm"><input ${disabled} class="${cls} w-32" placeholder="Süre sn"></div>`;
+  if(ncat(category)==='balonluaraba'||ncat(category)==='kagitroket') return `<div class="flex gap-2"><input ${disabled} class="${cls} w-28" placeholder="1. deneme"><input ${disabled} class="${cls} w-28" placeholder="2. deneme"></div>`;
+  return `<input ${disabled} class="${cls}" placeholder="Skor / süre / değer">`;
+}
+
+function renderMiniSumoMatchRows(){
+  const body=document.getElementById('resultsBody');
+  const comp=competitions.find(c=>c.key==='minisumo');
+  if(!comp||comp.bracketStatus!=='active'||!Array.isArray(comp.matches)||comp.matches.length===0){
+    body.innerHTML=`<tr><td colspan="6" class="p-10 text-center text-slate-500 font-bold">Mini Sumo için henüz kura çekilmemiş. Maç sonucu girişi için önce yönetici kura oluşturmalı.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML=comp.matches.map((m,i)=>{
+    const waiting=!m.robot1||!m.robot2;
+    const isBay=m.robot1==='BAY'||m.robot2==='BAY';
+    const locked=(m.saved&&!currentUser.canResultEdit)||waiting;
+    const r1=m.robot1||'Rakip bekleniyor';
+    const r2=m.robot2||'Rakip bekleniyor';
+    const winnerOptions=waiting
+      ? `<option value="">Rakip bekleniyor</option>`
+      : isBay
+        ? `<option value="${m.robot1==='BAY'?m.robot2:m.robot1}" selected>${m.robot1==='BAY'?m.robot2:m.robot1}</option>`
+        : `<option value="">Seçiniz</option><option value="${m.robot1}" ${m.winner===m.robot1?'selected':''}>${m.robot1}</option><option value="${m.robot2}" ${m.winner===m.robot2?'selected':''}>${m.robot2}</option>`;
+    const roundLabel=roundDisplayName(m.round);
+    const rowMuted=waiting?'opacity-55':'';
+    return `<tr class="tableRow ${rowMuted}"><td class="p-5"><div class="font-black text-blue">${m.code}</div><div class="text-xs text-slate-500 mt-1">${roundLabel}</div></td><td class="p-5"><b class="${m.robot1?'text-white':'text-slate-500'}">${r1}</b></td><td class="p-5"><div class="flex items-center justify-center gap-2"><input ${isBay||locked?'disabled':''} id="sumo_s1_${i}" type="number" min="0" max="3" value="${m.score1||0}" class="input w-20 text-center disabled:opacity-40"><span class="font-black text-slate-500">-</span><input ${isBay||locked?'disabled':''} id="sumo_s2_${i}" type="number" min="0" max="3" value="${m.score2||0}" class="input w-20 text-center disabled:opacity-40"></div></td><td class="p-5"><b class="${m.robot2==='BAY'?'text-amber':m.robot2?'text-white':'text-slate-500'}">${r2}</b>${isBay?'<div class="text-xs text-slate-500 mt-1">Bay geçti</div>':''}</td><td class="p-5 text-center"><select ${locked?'disabled':''} id="sumo_winner_${i}" class="input w-56 text-center disabled:opacity-40">${winnerOptions}</select></td><td class="p-5 text-right"><button ${locked?'disabled':''} onclick="saveSumoMatch(${i})" class="rounded-xl px-4 py-2 text-xs font-black ${locked?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber text-black'}">${waiting?'Bekliyor':m.saved?'Düzelt':'Kaydet'}</button></td></tr>`;
+  }).join('');
+}
+
+function roundDisplayName(round){
+  const map={R64:'Son 64',R32:'Son 32',R16:'Son 16',QF:'Çeyrek Final',SF:'Yarı Final',F:'Final'};
+  return map[round]||round||'Maç';
+}
+
+function getNextRound(round){
+  const order=['R64','R32','R16','QF','SF','F'];
+  const idx=order.indexOf(round);
+  return idx>=0&&idx<order.length-1?order[idx+1]:null;
+}
+
+function createEmptyNextRoundIfNeeded(comp,round){
+  const next=getNextRound(round);
+  if(!next) return;
+  const current=comp.matches.filter(m=>m.round===round);
+  if(comp.matches.some(m=>m.round===next)) return;
+  const nextCount=Math.ceil(current.length/2);
+  for(let i=0;i<nextCount;i++){
+    comp.matches.push({code:`${next}-${i+1}`,round:next,robot1:'',robot2:'',score1:0,score2:0,winner:'',saved:false,source1:null,source2:null});
+  }
+}
+
+function advanceMiniSumoWinner(comp,matchIndex,winner){
+  const match=comp.matches[matchIndex];
+  const nextRound=getNextRound(match.round);
+  if(!nextRound){
+    comp.champion=winner;
+    comp.finished=true;
+    comp.status='finished';
+    if(!comp.ranking.includes(winner)) comp.ranking.unshift(winner);
+    return;
+  }
+  createEmptyNextRoundIfNeeded(comp,match.round);
+  const sameRound=comp.matches.filter(m=>m.round===match.round);
+  const roundIndex=sameRound.findIndex(m=>m.code===match.code);
+  const nextSlotIndex=Math.floor(roundIndex/2);
+  const nextMatches=comp.matches.filter(m=>m.round===nextRound);
+  const target=nextMatches[nextSlotIndex];
+  if(!target) return;
+  if(roundIndex%2===0) target.robot1=winner; else target.robot2=winner;
+  target.saved=false;
+  target.winner='';
+  target.score1=0;
+  target.score2=0;
+  if(target.robot1&&target.robot2&&target.robot2!=='BAY'&&target.robot1!=='BAY'){
+    showToast(`${winner} üst tura taşındı. ${roundDisplayName(nextRound)} maçı hazır.`, 'success');
+  } else {
+    showToast(`${winner} üst tura taşındı. Rakip bekleniyor.`, 'success');
+  }
+}
+
+function saveSumoMatch(index){
+  const comp=competitions.find(c=>c.key==='minisumo'); if(!comp||!comp.matches[index]) return;
+  const m=comp.matches[index];
+  if(!m.robot1||!m.robot2){ showToast('Bu maç için rakipler henüz tamamlanmadı.','warning'); return; }
+  if(m.robot1==='BAY'||m.robot2==='BAY'){
+    const winner=m.robot1==='BAY'?m.robot2:m.robot1;
+    m.score1=m.robot1==='BAY'?0:1; m.score2=m.robot2==='BAY'?0:1; m.winner=winner; m.saved=true;
+    advanceMiniSumoWinner(comp,index,winner);
+    renderAll(); return;
+  }
+  const s1=parseInt(document.getElementById('sumo_s1_'+index).value||'0',10);
+  const s2=parseInt(document.getElementById('sumo_s2_'+index).value||'0',10);
+  const winner=document.getElementById('sumo_winner_'+index).value;
+  if(!winner){ showToast('Lütfen maç kazananını seçin.','warning'); return; }
+  if(s1===s2){ showToast('Mini Sumo maçında kazanan için skor eşit olmamalı.','warning'); return; }
+  if((winner===m.robot1 && s1<s2)||(winner===m.robot2 && s2<s1)){ showToast('Seçilen kazanan skorla uyuşmuyor.','warning'); return; }
+  m.score1=s1; m.score2=s2; m.winner=winner; m.saved=true;
+  advanceMiniSumoWinner(comp,index,winner);
+  renderAll(); showToast('Mini Sumo maç sonucu kaydedildi.','success');
+}
+
+function saveDemoResult(id){const t=teams.find(x=>x.id===id);if(t){t.resultsSaved=true;renderAll();showToast('Sonuç kaydedildi.','success')}}
+function renderCompetitionCards(){document.getElementById('competitionCards').innerHTML=competitions.map(c=>{const isMini=c.key==='minisumo',cat=categories.find(x=>x.key===c.key)||categories[0];const can=currentUser.canManageBracket;const drawDisabled=!can||c.bracketStatus==='active',deleteDisabled=!can||c.bracketStatus!=='active',finishDisabled=!can||c.finished;return`<div class="panel rounded-3xl p-6 space-y-5"><div class="flex items-center justify-between"><div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-green/10 border border-green/20 text-green flex items-center justify-center text-xl"><i class="fas ${cat.icon}"></i></div><div><h3 class="text-xl font-black text-white">${c.name}</h3><p class="text-sm text-slate-400">${c.finished?'Yarışma bitirildi':'Yarışma aktif'}</p></div></div>${c.finished?'<span class="badge bg-amber/10 text-amber border border-amber/20">Bitti</span>':'<span class="badge bg-green/10 text-green border border-green/20">Aktif</span>'}</div><div class="soft rounded-2xl p-4 text-center"><b class="${isMini?(c.bracketStatus==='active'?'text-green':'text-amber'):'text-blue'}">${isMini?(c.bracketStatus==='active'?'Kura Aktif':'Kura Bekliyor'):'Skor Tablosu'}</b><p class="text-xs text-slate-400 mt-2">${isMini?'Yeni kura için önce mevcut kurayı silmelisiniz.':'Bu yarışma sonuç tablosundan sıralanır.'}</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${isMini?`<button ${drawDisabled?'disabled':''} onclick="drawBracket('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${drawDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-amber text-black'}"><i class="fas fa-random mr-1"></i>Kura Çek</button><button ${deleteDisabled?'disabled':''} onclick="deleteBracket('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${deleteDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-red text-white'}"><i class="fas fa-trash mr-1"></i>Kurayı Sil</button>`:`<button disabled class="rounded-2xl py-3 text-xs font-black bg-slate-800 text-slate-500 cursor-not-allowed sm:col-span-2">Kura Yok</button>`}<button ${finishDisabled?'disabled':''} onclick="finishCompetition('${c.key}')" class="rounded-2xl py-3 text-xs font-black ${finishDisabled?'bg-slate-800 text-slate-500 cursor-not-allowed':'bg-purple text-white'}"><i class="fas fa-flag-checkered mr-1"></i>Yarışmayı Bitir</button></div><div class="soft rounded-2xl p-4"><div class="text-xs text-slate-500 font-black uppercase">Public Sayfa Tetikleyicisi</div><code class="block mt-2 text-xs text-blue break-all">competitionStatus: ${c.finished?'finished':'active'} | championTeam: ${c.champion||'-'}</code></div></div>`}).join('')}
+function drawBracket(key){
+  const c=competitions.find(x=>x.key===key); if(!c||c.bracketStatus==='active') return;
+  const sumoTeams=teams.filter(t=>ncat(t.kategori)==='minisumo'&&t.durum==='Check-in Yapıldı');
+  if(sumoTeams.length<2){ showToast('Kura için alanda en az 2 Mini Sumo takımı olmalı.','warning'); return; }
+  const shuffled=[...sumoTeams].sort(()=>Math.random()-.5).map(t=>`#${t.id} ${t.takimAdi}`);
+  const bracketSize=Math.pow(2,Math.ceil(Math.log2(shuffled.length)));
+  while(shuffled.length<bracketSize) shuffled.push('BAY');
+  const firstRound=getFirstRoundName(bracketSize);
+  c.bracketStatus='active'; c.finished=false; c.champion=''; c.ranking=[]; c.matches=[];
+  for(let i=0;i<shuffled.length;i+=2){
+    const r1=shuffled[i], r2=shuffled[i+1];
+    const saved=r1==='BAY'||r2==='BAY';
+    const winner=saved?(r1==='BAY'?r2:r1):'';
+    c.matches.push({code:`${firstRound}-${Math.floor(i/2)+1}`,round:firstRound,robot1:r1,robot2:r2,score1:saved?(r1==='BAY'?0:1):0,score2:saved?(r2==='BAY'?0:1):0,winner,saved});
+  }
+  c.matches.forEach((m,idx)=>{ if(m.saved&&m.winner) advanceMiniSumoWinner(c,idx,m.winner); });
+  renderAll(); showToast('Mini Sumo kura çekildi ve turnuva ağacı oluşturuldu.','success');
+}
+
+function getFirstRoundName(size){
+  if(size>=64) return 'R64';
+  if(size>=32) return 'R32';
+  if(size>=16) return 'R16';
+  if(size>=8) return 'QF';
+  if(size>=4) return 'SF';
+  return 'F';
+}
+function deleteBracket(key){const c=competitions.find(x=>x.key===key);if(!c)return;if(!confirm('Mevcut kurayı silmek istediğinize emin misiniz?'))return;c.bracketStatus='empty';c.matches=[];renderAll();showToast('Kura silindi. Yeni kura çekilebilir.','success')}
+function finishCompetition(key){const c=competitions.find(x=>x.key===key);if(!c)return;if(!confirm(`${c.name} yarışmasını bitirmek istiyor musunuz? Public sonuç sayfası şampiyon görünümüne geçer.`))return;const first=teams.find(t=>ncat(t.kategori)===ncat(c.name));c.finished=true;c.status='finished';c.champion=first?.takimAdi||'Şampiyon Takım';c.ranking=teams.filter(t=>ncat(t.kategori)===ncat(c.name)).map(t=>t.takimAdi);renderAll();showToast('Yarışmayı bitir tetikleyicisi kaydedildi.','success')}
+function renderUsersTable(){document.getElementById('usersBody').innerHTML=users.map(u=>{const ops=[u.canCheckin?'Check-in':'',u.canCancelCheckin?'Check-in düzeltme':'',u.canResultEntry?'Sonuç girişi':'',u.canResultEdit?'Sonuç düzeltme':'',u.canManageBracket?'Kura yönetimi':''].filter(Boolean).join(' • ')||'Yetki yok';const cats=u.categories.includes('all')?'Tüm kategoriler':(u.categories.join(', ')||'Kategori yok');return`<tr class="tableRow"><td class="p-5"><b class="text-white">${u.fullName}</b><div class="text-xs text-slate-500 mt-1">${u.username}</div></td><td class="p-5"><span class="badge bg-blue/10 text-blue border border-blue/20">${roleName(u.role)}</span></td><td class="p-5 text-sm text-slate-300">${ops}</td><td class="p-5 text-sm text-slate-400">${cats}</td><td class="p-5 text-center"><span class="badge bg-green/10 text-green border border-green/20">Aktif</span></td></tr>`}).join('')}
+function renderNewCategoryChecks(){document.getElementById('newCategoryChecks').innerHTML=categories.map(c=>`<label class="flex items-center gap-2 text-sm font-bold"><input type="checkbox" value="${c.id}" class="newCat accent-blue"> ${c.id}</label>`).join('')}
+function syncRoleDefaults(){const r=document.getElementById('newRole')?.value||'judge';document.getElementById('permCheckin').checked=r==='admin'||r==='officer';document.getElementById('permResultEntry').checked=r==='admin'||r==='headjudge'||r==='judge';document.getElementById('permResultEdit').checked=r==='admin'||r==='headjudge'}
+function addUser(e){e.preventDefault();const r=document.getElementById('newRole').value;const cats=r==='admin'?['all']:Array.from(document.querySelectorAll('.newCat:checked')).map(x=>x.value);users.push({username:document.getElementById('newUsername').value.trim(),password:document.getElementById('newPassword').value,fullName:document.getElementById('newFullName').value.trim().toUpperCase(),role:r,active:true,canCheckin:r==='admin'?true:document.getElementById('permCheckin').checked,canCancelCheckin:r==='admin',canResultEntry:r==='admin'?true:document.getElementById('permResultEntry').checked,canResultEdit:r==='admin'||r==='headjudge'?true:document.getElementById('permResultEdit').checked,canManageUsers:r==='admin',canManageBracket:r==='admin',categories:cats});e.target.reset();syncRoleDefaults();renderAll();showToast('Kullanıcı eklendi.','success')}
+function renderStatsGrid(){document.getElementById('statsGrid').innerHTML=categories.map(c=>{const l=teams.filter(t=>ncat(t.kategori)===ncat(c.id)),p=l.filter(t=>t.durum==='Check-in Yapıldı').length;return`<div class="panel rounded-3xl p-6"><div class="w-14 h-14 rounded-2xl bg-blue/10 border border-blue/20 text-blue flex items-center justify-center text-xl mb-4"><i class="fas ${c.icon}"></i></div><h3 class="text-lg font-black text-white">${c.id}</h3><div class="mt-4 text-3xl font-black text-white">${p}<span class="text-base text-slate-500">/${l.length}</span></div><div class="mt-4 h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-blue rounded-full" style="width:${l.length?(p/l.length)*100:0}%"></div></div></div>`}).join('')}
+function showToast(msg,type='info'){const color=type==='success'?'green':type==='warning'?'amber':type==='error'?'red':'blue';const el=document.createElement('div');el.className=`pointer-events-auto rounded-2xl border border-${color}/25 bg-card px-4 py-3 shadow-2xl text-sm font-bold text-white`;el.innerHTML=`<i class="fas fa-circle-info text-${color} mr-2"></i>${msg}`;document.getElementById('toastContainer').appendChild(el);setTimeout(()=>el.remove(),3200)}
+function updateClock(){const d=new Date();document.getElementById('todayText').innerText=d.toLocaleDateString('tr-TR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});document.getElementById('clockText').innerText=d.toLocaleTimeString('tr-TR')}
+setInterval(updateClock,1000);updateClock();
+</script>
 </body>
 </html>
