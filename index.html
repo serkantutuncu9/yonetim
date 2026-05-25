@@ -142,8 +142,45 @@
 
     <!-- CHECKIN -->
     <section id="tab-checkin" class="tabPage hidden space-y-6">
-      <div class="panel rounded-3xl p-6 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4"><div><h2 class="text-xl font-black text-white">Check-in İşlemleri</h2><p id="checkinNote" class="text-sm text-slate-400 mt-1"></p></div><div class="relative w-full xl:max-w-md"><i class="fas fa-search absolute left-4 top-4 text-slate-500"></i><input id="checkinSearch" oninput="renderCheckinTable()" class="input w-full pl-11" placeholder="Takım, okul, mentor ara..."></div></div>
-      <div class="panel rounded-3xl overflow-hidden"><div class="overflow-x-auto"><table class="w-full min-w-[920px] text-left"><thead class="bg-[#0a1020]"><tr class="border-b border-line text-xs text-slate-400 uppercase font-black"><th class="p-5">Takım</th><th class="p-5">Okul / Mentor</th><th class="p-5">Kategori</th><th class="p-5 text-center">Durum</th><th class="p-5 text-right">İşlem</th></tr></thead><tbody id="checkinBody" class="divide-y divide-line/60"></tbody></table></div></div>
+      <div class="panel rounded-3xl p-6 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-black text-white">Check-in İşlemleri</h2>
+          <p id="checkinNote" class="text-sm text-slate-400 mt-1"></p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-3 w-full xl:w-auto xl:items-center xl:justify-end">
+          <div id="bulkCheckinActions" class="hidden flex flex-col sm:flex-row gap-2">
+            <button onclick="bulkCheckin(true)" class="rounded-2xl border border-green/40 bg-green/10 hover:bg-green hover:text-black text-green px-4 py-3 text-xs font-black uppercase transition">
+              <i class="fas fa-users-line mr-2"></i>Tümünü Check-in Yap
+            </button>
+            <button onclick="bulkCheckin(false)" class="rounded-2xl border border-red/40 bg-red/10 hover:bg-red hover:text-white text-red px-4 py-3 text-xs font-black uppercase transition">
+              <i class="fas fa-users-slash mr-2"></i>Tümünü İptal Et
+            </button>
+          </div>
+
+          <div class="relative w-full lg:w-[420px]">
+            <i class="fas fa-search absolute left-4 top-4 text-slate-500"></i>
+            <input id="checkinSearch" oninput="renderCheckinTable()" class="input w-full pl-11" placeholder="Takım, okul, mentor ara...">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel rounded-3xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[1040px] text-left">
+            <thead class="bg-[#0a1020]">
+              <tr class="border-b border-line text-xs text-slate-400 uppercase font-black">
+                <th class="p-5">Takım</th>
+                <th class="p-5">Okul / Mentor</th>
+                <th class="p-5">Kategori</th>
+                <th class="p-5 text-center">Durum</th>
+                <th class="p-5 text-right">İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="checkinBody" class="divide-y divide-line/60"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- CATEGORY -->
@@ -312,7 +349,7 @@ function parseMiniSumoRow(r){
 }
 
 function renderIdentity(){document.getElementById('activeUserName').innerText=currentUser.fullName;document.getElementById('roleName').innerText=roleName(currentUser.role)}
-function renderNav(){const tabs=[{id:'home',label:'Ana Sayfa',icon:'fa-house',show:true},{id:'checkin',label:'Check-in',icon:'fa-id-card',show:currentUser.canCheckin||currentUser.canCancelCheckin||isAdmin()},{id:'category',label:'Kategoriler',icon:'fa-sitemap',show:true},{id:'results',label:'Sonuçlar',icon:'fa-square-poll-vertical',show:currentUser.canResultEntry||currentUser.canResultEdit||isAdmin()},{id:'competitions',label:'Yarışmalar',icon:'fa-trophy',show:true},{id:'users',label:'Yetkiler',icon:'fa-users-gear',show:currentUser.canManageUsers},{id:'stats',label:'İstatistik',icon:'fa-chart-simple',show:true}];const box=document.getElementById('navTabs');box.innerHTML='';tabs.filter(t=>t.show).forEach(t=>{const b=document.createElement('button');b.id='nav-'+t.id;b.onclick=()=>switchTab(t.id);b.className='navBtn';b.innerHTML=`<i class="fas ${t.icon}"></i>${t.label}`;box.appendChild(b)});document.getElementById('quickUsers').classList.toggle('hidden',!currentUser.canManageUsers);document.getElementById('quickCheckin').classList.toggle('hidden',!currentUser.canCheckin&&!currentUser.canCancelCheckin);document.getElementById('quickResults').classList.toggle('hidden',!currentUser.canResultEntry&&!currentUser.canResultEdit)}
+function renderNav(){const tabs=[{id:'home',label:'Ana Sayfa',icon:'fa-house',show:true},{id:'checkin',label:'Check-in',icon:'fa-id-card',show:currentUser.canCheckin||currentUser.canCancelCheckin||isAdmin()},{id:'category',label:'Kategoriler',icon:'fa-sitemap',show:true},{id:'results',label:'Sonuçlar',icon:'fa-square-poll-vertical',show:currentUser.canResultEntry||currentUser.canResultEdit||isAdmin()},{id:'competitions',label:'Yarışmalar',icon:'fa-trophy',show:true},{id:'users',label:'Yetkiler',icon:'fa-users-gear',show:currentUser.canManageUsers},{id:'stats',label:'İstatistik',icon:'fa-chart-simple',show:true}];const box=document.getElementById('navTabs');box.innerHTML='';tabs.filter(t=>t.show).forEach(t=>{const b=document.createElement('button');b.id='nav-'+t.id;b.onclick=()=>switchTab(t.id);b.className='navBtn';b.innerHTML=`<i class="fas ${t.icon}"></i>${t.label}`;box.appendChild(b)});document.getElementById('quickUsers').classList.toggle('hidden',!currentUser.canManageUsers);document.getElementById('quickCheckin').classList.toggle('hidden',!currentUser.canCheckin&&!currentUser.canCancelCheckin);document.getElementById('quickResults').classList.toggle('hidden',!currentUser.canResultEntry&&!currentUser.canResultEdit);document.getElementById('bulkCheckinActions')?.classList.toggle('hidden',!isAdmin())}
 function switchTab(t){activeTab=t;document.querySelectorAll('.tabPage').forEach(x=>x.classList.add('hidden'));document.getElementById('tab-'+t).classList.remove('hidden');document.querySelectorAll('[id^="nav-"]').forEach(x=>x.classList.remove('navActive'));document.getElementById('nav-'+t)?.classList.add('navActive');renderAll()}
 function renderAll(){renderStats();renderCompetitionMiniGrid();renderRecentCheckins();renderResultSummary();renderCheckinTable();renderCategoryGrid();renderResultCats();renderResultsTable();renderCompetitionCards();renderUsersTable();renderStatsGrid()}
 function renderStats(){const total=teams.length,p=teams.filter(t=>t.durum==='Check-in Yapıldı').length;document.getElementById('statTotal').innerText=total;document.getElementById('statPresent').innerText=p;document.getElementById('statUsers').innerText=users.filter(u=>u.active).length}
@@ -366,6 +403,78 @@ async function setCheckin(id,val){
     showToast('Check-in bağlantı hatası. E-tablo güncellenmedi.','error');
   }
 }
+
+async function bulkCheckin(val){
+  if(!isAdmin()){
+    showToast('Toplu check-in işlemi sadece yöneticilere açıktır.','warning');
+    return;
+  }
+
+  const message=val
+    ? 'Tüm takımlar check-in yapılsın mı? Takımlar ait oldukları yarışma tablolarına eklenecek.'
+    : 'Tüm check-inler iptal edilsin mi? Takımlar diğer yarışma tablolarından kaldırılacak.';
+
+  if(!confirm(message)) return;
+
+  const status=val?'Check-in Yapıldı':'Bekliyor';
+  showToast(val?'Tüm takımlar check-in yapılıyor...':'Tüm check-inler iptal ediliyor...','info');
+
+  try{
+    const json=await apiPost({
+      action:'bulkCheckin',
+      status:status,
+      user:currentUser?currentUser.username:''
+    });
+
+    if(!json.success){
+      showToast(json.error||json.message||'Toplu işlem yapılamadı.','error');
+      return;
+    }
+
+    await loadTeams();
+    await loadMiniSumoMatches();
+    renderAll();
+    showToast(json.message||'Toplu check-in işlemi tamamlandı.','success');
+  }catch(err){
+    console.error(err);
+    showToast('Toplu check-in bağlantı hatası.','error');
+  }
+}
+
+async function deleteTeam(id,name){
+  if(!isAdmin()){
+    showToast('Takım silme işlemi sadece yöneticilere açıktır.','warning');
+    return;
+  }
+
+  if(!confirm(`#${id} ${name||''} takımı tamamen silinsin mi?
+
+Bu işlem basvurular tablosundan ve yarışma tablolarından kaldırır.`)) return;
+
+  showToast('Takım siliniyor...','info');
+
+  try{
+    const json=await apiPost({
+      action:'deleteTeam',
+      id:id,
+      user:currentUser?currentUser.username:''
+    });
+
+    if(!json.success){
+      showToast(json.error||json.message||'Takım silinemedi.','error');
+      return;
+    }
+
+    await loadTeams();
+    await loadMiniSumoMatches();
+    renderAll();
+    showToast(json.message||'Takım silindi.','success');
+  }catch(err){
+    console.error(err);
+    showToast('Takım silme bağlantı hatası.','error');
+  }
+}
+
 function renderCategoryGrid(){document.getElementById('categoryGrid').innerHTML=categories.map(c=>{const list=teams.filter(t=>t.durum==='Check-in Yapıldı'&&ncat(t.kategori)===ncat(c.id));return`<div class="panel rounded-3xl overflow-hidden"><div class="p-5 border-b border-line flex items-center justify-between"><h3 class="font-black text-white"><i class="fas ${c.icon} text-blue mr-2"></i>${c.id}</h3><span class="badge bg-green/10 text-green border border-green/20">${list.length}</span></div><div class="p-4 space-y-3 min-h-[180px]">${list.map(t=>`<div class="soft rounded-2xl p-3"><b class="text-sm text-white">#${t.id} ${t.takimAdi}</b><div class="text-xs text-slate-500 mt-1">${t.okul}</div></div>`).join('')||'<div class="text-center py-10 text-sm text-slate-500 font-bold">Takım yok.</div>'}</div></div>`}).join('')}
 function renderResultCats(){const allowed=categories.filter(c=>canSeeCategory(c.id));const box=document.getElementById('resultCats');if(!allowed.length){box.innerHTML='<span class="text-red font-bold text-sm">Kategori yetkisi yok.</span>';return}if(!allowed.some(c=>c.id===activeResultCategory))activeResultCategory=allowed[0].id;box.innerHTML=allowed.map(c=>`<button onclick="activeResultCategory='${c.id}';renderAll();" class="rounded-2xl px-4 py-3 text-xs font-black ${activeResultCategory===c.id?'bg-blue text-white':'soft text-slate-300 hover:text-white'}"><i class="fas ${c.icon} mr-1"></i>${c.id}</button>`).join('');document.getElementById('resultNote').innerText=currentUser.canResultEdit?'Sonuç girebilir ve düzeltebilirsiniz.':'Sadece yetkili olduğunuz kategorilerde sonuç girebilirsiniz.'}
 function renderResultsTable(){
