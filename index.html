@@ -73,9 +73,14 @@
 <body class="font-sans selection:bg-blue selection:text-white">
 
 <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-  <button onclick="toggleTheme()" class="themeToggle absolute top-5 right-5" title="Aydınlık / karanlık mod">
-    <i class="fas fa-lightbulb"></i>
-  </button>
+  <div class="absolute top-5 right-5 flex items-center gap-3">
+    <button onclick="refreshSystem()" class="themeToggle refreshToggle" title="Sistemi yenile">
+      <i class="fas fa-rotate-right"></i>
+    </button>
+    <button onclick="toggleTheme()" class="themeToggle" title="Aydınlık / karanlık mod">
+      <i class="fas fa-lightbulb"></i>
+    </button>
+  </div>
   <div class="panel w-full max-w-md rounded-[28px] p-8 relative overflow-hidden">
     <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue via-purple to-green"></div>
     <div class="text-center">
@@ -109,6 +114,9 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-4 xl:justify-end">
+          <button onclick="refreshSystem()" class="themeToggle refreshToggle" title="Sistemi yenile">
+            <i class="fas fa-rotate-right"></i>
+          </button>
           <button onclick="toggleTheme()" class="themeToggle" title="Aydınlık / karanlık mod">
             <i class="fas fa-lightbulb"></i>
           </button>
@@ -349,7 +357,24 @@ function toggleUserActive(username){const u=findUserByUsername(username);if(!u)r
 function removeUser(username){if(currentUser&&String(currentUser.username).toLowerCase()===String(username).toLowerCase()){showToast('Kendi kullanıcınızı silemezsiniz.','warning');return}const u=findUserByUsername(username);if(!u)return;if(!confirm(`${u.fullName} kullanıcısı silinsin mi?`))return;users=users.filter(x=>String(x.username).toLowerCase()!==String(username).toLowerCase());saveUsers();renderAll();showToast('Kullanıcı silindi.','success')}
 function renderStatsGrid(){document.getElementById('statsGrid').innerHTML=categories.map(c=>{const l=teams.filter(t=>ncat(t.kategori)===ncat(c.id)),p=l.filter(t=>t.durum==='Check-in Yapıldı').length;return`<div class="panel rounded-3xl p-6"><div class="w-14 h-14 rounded-2xl bg-blue/10 border border-blue/20 text-blue flex items-center justify-center text-xl mb-4"><i class="fas ${c.icon}"></i></div><h3 class="text-lg font-black text-white">${c.id}</h3><div class="mt-4 text-3xl font-black text-white">${p}<span class="text-base text-slate-500">/${l.length}</span></div><div class="mt-4 h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-blue rounded-full" style="width:${l.length?(p/l.length)*100:0}%"></div></div></div>`}).join('')}
 function showToast(msg,type='info'){const color=type==='success'?'green':type==='warning'?'amber':type==='error'?'red':'blue';const el=document.createElement('div');el.className=`pointer-events-auto rounded-2xl border border-${color}/25 bg-card px-4 py-3 shadow-2xl text-sm font-bold text-white`;el.innerHTML=`<i class="fas fa-circle-info text-${color} mr-2"></i>${msg}`;document.getElementById('toastContainer').appendChild(el);setTimeout(()=>el.remove(),3200)}
-function applyTheme(theme){const isDark=theme==='dark';document.body.classList.toggle('dark-mode',isDark);document.body.classList.toggle('light-mode',!isDark);localStorage.setItem('turkiyeStemTheme',isDark?'dark':'light');document.querySelectorAll('.themeToggle').forEach(btn=>{btn.title=isDark?'Aydınlık moda geç':'Karanlık moda geç';const icon=btn.querySelector('i');if(icon){icon.className=isDark?'fas fa-lightbulb':'far fa-lightbulb'}})}
+async function refreshSystem(){
+  const app=document.getElementById('app');
+  if(!currentUser||app.classList.contains('hidden')){location.reload();return}
+  showToast('Sistem yenileniyor...','info');
+  try{
+    await loadTeams();
+    await loadMiniSumoMatches();
+    renderIdentity();
+    renderNav();
+    renderAll();
+    switchTab(activeTab||'home');
+    showToast('Sistem başarıyla yenilendi.','success');
+  }catch(err){
+    console.error(err);
+    showToast('Sistem yenilenirken bağlantı hatası oluştu.','error');
+  }
+}
+function applyTheme(theme){const isDark=theme==='dark';document.body.classList.toggle('dark-mode',isDark);document.body.classList.toggle('light-mode',!isDark);localStorage.setItem('turkiyeStemTheme',isDark?'dark':'light');document.querySelectorAll('.themeToggle:not(.refreshToggle)').forEach(btn=>{btn.title=isDark?'Aydınlık moda geç':'Karanlık moda geç';const icon=btn.querySelector('i');if(icon){icon.className=isDark?'fas fa-lightbulb':'far fa-lightbulb'}})}
 function toggleTheme(){const next=document.body.classList.contains('dark-mode')?'light':'dark';applyTheme(next)}
 function initTheme(){applyTheme(localStorage.getItem('turkiyeStemTheme')||'dark')}
 document.addEventListener('DOMContentLoaded',function(){initTheme();restoreSession()});
